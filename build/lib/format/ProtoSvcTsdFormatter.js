@@ -28,7 +28,6 @@ var ProtoSvcTsdFormatter;
         let upToRoot = Utility_1.Utility.getPathToRoot(fileName);
         let imports = [];
         let services = [];
-        let serviceTypeNames = [];
         // Need to import the non-service file that was generated for this .proto file
         imports.push(`import * as grpc from "grpc";`);
         let asPseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(fileName);
@@ -55,25 +54,18 @@ var ProtoSvcTsdFormatter;
                 methodData.responseStream = method.getServerStreaming();
                 methodData.requestTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(FieldTypesFormatter_1.MESSAGE_TYPE, method.getInputType().slice(1), "", exportMap);
                 methodData.responseTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(FieldTypesFormatter_1.MESSAGE_TYPE, method.getOutputType().slice(1), "", exportMap);
-                if (serviceTypeNames.indexOf(methodData.requestTypeName) === -1) {
-                    serviceTypeNames.push(methodData.requestTypeName);
-                }
-                if (serviceTypeNames.indexOf(methodData.responseTypeName) === -1) {
-                    serviceTypeNames.push(methodData.responseTypeName);
-                }
                 serviceData.methods.push(methodData);
             });
             services.push(serviceData);
         });
-        TplEngine_1.TplEngine.registerHelper('dotToUnderline', function (str) {
-            return str.replace(/\./g, '_');
+        TplEngine_1.TplEngine.registerHelper('lcFirst', function (str) {
+            return str.charAt(0).toLowerCase() + str.slice(1);
         });
         return TplEngine_1.TplEngine.render('svc_tsd', {
             packageName: packageName,
             fileName: fileName,
             imports: imports,
             services: services,
-            serviceTypeNames: serviceTypeNames
         });
     }
     ProtoSvcTsdFormatter.format = format;

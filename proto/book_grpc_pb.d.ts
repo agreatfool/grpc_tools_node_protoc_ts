@@ -4,23 +4,23 @@
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
 
-const serialize_book_pb_GetBookRequest = function (arg: book_pb.GetBookRequest): Buffer;
-const deserialize_book_pb_GetBookRequest = function (buffer_arg: Uint8Array): book_pb.GetBookRequest;
-const serialize_book_pb_Book = function (arg: book_pb.Book): Buffer;
-const deserialize_book_pb_Book = function (buffer_arg: Uint8Array): book_pb.Book;
+interface IBookServiceService {
+    getBook: IGetBook;
+}
 
-export const BookServiceService = {
-    GetBook: {
-        path: "/com.book.BookService/GetBook",
-        requestStream: false,
-        responseStream: false,
-        requestType: book_pb.GetBookRequest,
-        responseType: book_pb.Book,
-        requestSerialize: serialize_book_pb_GetBookRequest,
-        requestDeserialize: deserialize_book_pb_GetBookRequest,
-        responseSerialize: serialize_book_pb_Book,
-        responseDeserialize: deserialize_book_pb_Book,
-    },
-};
+interface IGetBook {
+    path: string; // "/com.book.BookService/GetBook"
+    requestStream: boolean; // false
+    responseStream: boolean; // false
+    requestType: book_pb.GetBookRequest,
+    responseType: book_pb.Book,
+    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
+    responseSerialize: (arg: book_pb.Book) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+}
 
-export const BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);
+export const BookServiceService: IBookServiceService;
+export class BookServiceClient extends grpc.Client {
+    getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.GetBookRequest) => void);
+}

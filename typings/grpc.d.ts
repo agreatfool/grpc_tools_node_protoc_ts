@@ -464,7 +464,7 @@ declare module 'grpc' {
          * @param credentials Credentials to use to connect to the server
          * @param options Options to pass to the underlying channel
          */
-        constructor(address: string, credentials: any, options: IClientOptions)
+        constructor(address: string, credentials: any, options?: IClientOptions)
     }
 
     export interface IClientOptions {

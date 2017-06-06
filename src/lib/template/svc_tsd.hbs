@@ -4,28 +4,32 @@
 {{#each imports}}
 {{{this}}}
 {{/each}}
-
-{{#each serviceTypeNames}}
-const serialize_{{dotToUnderline this}} = function (arg: {{{this}}}): Buffer;
-const deserialize_{{dotToUnderline this}} = function (buffer_arg: Uint8Array): {{{this}}};
-{{/each}}
 {{#each services}}
 
-export const {{{serviceName}}}Service = {
+interface I{{{serviceName}}}Service {
     {{#each methods}}
-    {{{methodName}}}: {
-        path: "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}",
-        requestStream: {{{requestStream}}},
-        responseStream: {{{responseStream}}},
-        requestType: {{{requestTypeName}}},
-        responseType: {{{responseTypeName}}},
-        requestSerialize: serialize_{{dotToUnderline requestTypeName}},
-        requestDeserialize: deserialize_{{dotToUnderline requestTypeName}},
-        responseSerialize: serialize_{{dotToUnderline responseTypeName}},
-        responseDeserialize: deserialize_{{dotToUnderline responseTypeName}},
-    },
+    {{lcFirst methodName}}: I{{{methodName}}};
     {{/each}}
-};
+}
 
-export const {{{this.serviceName}}}Client = grpc.makeGenericClientConstructor({{{this.serviceName}}}Service);
+    {{#each methods}}
+interface I{{{methodName}}} {
+    path: string; // "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}"
+    requestStream: boolean; // {{{requestStream}}}
+    responseStream: boolean; // {{{responseStream}}}
+    requestType: {{{requestTypeName}}},
+    responseType: {{{responseTypeName}}},
+    requestSerialize: (arg: {{{requestTypeName}}}) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => {{{requestTypeName}}};
+    responseSerialize: (arg: {{{responseTypeName}}}) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => {{{responseTypeName}}};
+}
+    {{/each}}
+
+export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
+export class {{{serviceName}}}Client extends grpc.Client {
+    {{#each methods}}
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{requestTypeName}}}) => void);
+    {{/each}}
+}
 {{/each}}

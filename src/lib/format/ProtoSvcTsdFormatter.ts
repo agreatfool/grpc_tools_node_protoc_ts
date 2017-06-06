@@ -48,7 +48,6 @@ export namespace ProtoSvcTsdFormatter {
 
         let imports: Array<string> = [];
         let services: Array<ServiceType> = [];
-        let serviceTypeNames: Array<string> = [];
 
         // Need to import the non-service file that was generated for this .proto file
         imports.push(`import * as grpc from "grpc";`);
@@ -81,21 +80,14 @@ export namespace ProtoSvcTsdFormatter {
                 methodData.requestTypeName = FieldTypesFormatter.getFieldType(MESSAGE_TYPE, method.getInputType().slice(1), "", exportMap);
                 methodData.responseTypeName = FieldTypesFormatter.getFieldType(MESSAGE_TYPE, method.getOutputType().slice(1), "", exportMap);
 
-                if (serviceTypeNames.indexOf(methodData.requestTypeName) === -1) {
-                    serviceTypeNames.push(methodData.requestTypeName);
-                }
-                if (serviceTypeNames.indexOf(methodData.responseTypeName) === -1) {
-                    serviceTypeNames.push(methodData.responseTypeName);
-                }
-
                 serviceData.methods.push(methodData);
             });
 
             services.push(serviceData);
         });
 
-        TplEngine.registerHelper('dotToUnderline', function (str) {
-            return str.replace(/\./g, '_');
+        TplEngine.registerHelper('lcFirst', function (str) {
+            return str.charAt(0).toLowerCase() + str.slice(1);
         });
 
         return TplEngine.render('svc_tsd', {
@@ -103,7 +95,6 @@ export namespace ProtoSvcTsdFormatter {
             fileName: fileName,
             imports: imports,
             services: services,
-            serviceTypeNames: serviceTypeNames
         });
     }
 
