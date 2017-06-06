@@ -1,0 +1,31 @@
+// package: {{{packageName}}}
+// file: {{{fileName}}}
+
+{{#each imports}}
+{{{this}}}
+{{/each}}
+
+{{#each serviceTypeNames}}
+const serialize_{{dotToUnderline this}} = function (arg: {{{this}}}): Buffer;
+const deserialize_{{dotToUnderline this}} = function (buffer_arg: Uint8Array): {{{this}}};
+{{/each}}
+{{#each services}}
+
+export const {{{serviceName}}}Service = {
+    {{#each methods}}
+    {{{methodName}}}: {
+        path: "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}",
+        requestStream: {{{requestStream}}},
+        responseStream: {{{responseStream}}},
+        requestType: {{{requestTypeName}}},
+        responseType: {{{responseTypeName}}},
+        requestSerialize: serialize_{{dotToUnderline requestTypeName}},
+        requestDeserialize: deserialize_{{dotToUnderline requestTypeName}},
+        responseSerialize: serialize_{{dotToUnderline responseTypeName}},
+        responseDeserialize: deserialize_{{dotToUnderline responseTypeName}},
+    },
+    {{/each}}
+};
+
+export const {{{this.serviceName}}}Client = grpc.makeGenericClientConstructor({{{this.serviceName}}}Service);
+{{/each}}
