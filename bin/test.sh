@@ -17,6 +17,6 @@ proto/*.proto
 
 protoc \
 --plugin=protoc-gen-ts=./bin/protoc-gen-ts \
---ts_out=service=true:${PROTO_DEST} \
+--ts_out=${PROTO_DEST} \
 -I ./proto \
 proto/*.proto
