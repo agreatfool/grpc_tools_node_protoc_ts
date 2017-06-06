@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package com.book;
+
+message Book {
+    int64 isbn = 1;
+    string title = 2;
+    string author = 3;
+}
+
+message GetBookRequest {
+    int64 isbn = 1;
+}
+
+service BookService {
+    rpc GetBook (GetBookRequest) returns (Book) {
+    }
+}
+
+message BookStore {
+    string name = 1;
+    map<int64, string> books = 2;
+}
+
+enum EnumSample {
+    option allow_alias = true;
+    UNKNOWN = 0;
+    STARTED = 1;
+    RUNNING = 1;
+}
