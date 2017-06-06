@@ -4,7 +4,6 @@ BASEDIR=$(dirname "$0")
 cd ${BASEDIR}/../
 
 PROTO_DEST=./proto
-BUILD_DEST=./proto
 
 mkdir -p ${PROTO_DEST}
 
