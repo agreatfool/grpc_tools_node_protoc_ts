@@ -22,5 +22,5 @@ interface IGetBook {
 
 export const BookServiceService: IBookServiceService;
 export class BookServiceClient extends grpc.Client {
-    getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.GetBookRequest) => void);
+    getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void);
 }
