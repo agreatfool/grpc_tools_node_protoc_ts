@@ -29,7 +29,7 @@ interface I{{{methodName}}} {
 export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
 export class {{{serviceName}}}Client extends grpc.Client {
     {{#each methods}}
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{requestTypeName}}}) => void);
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void);
     {{/each}}
 }
 {{/each}}
