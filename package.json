@@ -36,6 +36,7 @@
     "@types/google-protobuf": "^3.2.6",
     "@types/handlebars": "^4.0.33",
     "@types/node": "^7.0.27",
+    "grpc-tsd": "^1.0.0",
     "protobufjs": "^6.7.3"
   }
 }

@@ -10,7 +10,7 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "typings/**/*.d.ts",
+    "node_modules/grpc-tsd/src/grpc.d.ts",
     "src/**/*.ts"
   ],
   "exclude": [

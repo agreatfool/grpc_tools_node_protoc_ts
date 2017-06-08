@@ -53,6 +53,27 @@ export namespace GetBookRequest {
     }
 }
 
+export class GetBookViaAuthor extends jspb.Message { 
+    getAuthor(): string;
+    setAuthor(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetBookViaAuthor.AsObject;
+    static toObject(includeInstance: boolean, msg: GetBookViaAuthor): GetBookViaAuthor.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetBookViaAuthor, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetBookViaAuthor;
+    static deserializeBinaryFromReader(message: GetBookViaAuthor, reader: jspb.BinaryReader): GetBookViaAuthor;
+}
+
+export namespace GetBookViaAuthor {
+    export type AsObject = {
+        author: string,
+    }
+}
+
 export class BookStore extends jspb.Message { 
     getName(): string;
     setName(value: string): void;

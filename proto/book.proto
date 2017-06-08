@@ -12,9 +12,15 @@ message GetBookRequest {
     int64 isbn = 1;
 }
 
+message GetBookViaAuthor {
+    string author = 1;
+}
+
 service BookService {
-    rpc GetBook (GetBookRequest) returns (Book) {
-    }
+    rpc GetBook (GetBookRequest) returns (Book) {}
+    rpc GetBooksViaAuthor (GetBookViaAuthor) returns (stream Book) {}
+    rpc GetGreatestBook (stream GetBookRequest) returns (Book) {}
+    rpc GetBooks (stream GetBookRequest) returns (stream Book) {}
 }
 
 message BookStore {

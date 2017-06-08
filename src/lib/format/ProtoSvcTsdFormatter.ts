@@ -4,6 +4,7 @@ import {Utility} from "../Utility";
 import {TplEngine} from "../TplEngine";
 import {WellKnownTypesMap} from "../WellKnown";
 import {FieldTypesFormatter, MESSAGE_TYPE} from "./partial/FieldTypesFormatter";
+import {Debug} from "../Debug";
 
 export namespace ProtoSvcTsdFormatter {
 
@@ -25,6 +26,7 @@ export namespace ProtoSvcTsdFormatter {
         responseStream: boolean;
         requestTypeName: string;
         responseTypeName: string;
+        type: string; // "ClientUnaryCall" || "ClientWritableStream" || "ClientReadableStream" || "ClientDuplexStream"
     }
 
     export const defaultServiceMethodType = JSON.stringify({
@@ -35,6 +37,7 @@ export namespace ProtoSvcTsdFormatter {
         responseStream: false,
         requestTypeName: "",
         responseTypeName: "",
+        type: "",
     } as ServiceMethodType);
 
     export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): string {
@@ -79,6 +82,16 @@ export namespace ProtoSvcTsdFormatter {
                 methodData.responseStream = method.getServerStreaming();
                 methodData.requestTypeName = FieldTypesFormatter.getFieldType(MESSAGE_TYPE, method.getInputType().slice(1), "", exportMap);
                 methodData.responseTypeName = FieldTypesFormatter.getFieldType(MESSAGE_TYPE, method.getOutputType().slice(1), "", exportMap);
+
+                if (!methodData.requestStream && !methodData.responseStream) {
+                    methodData.type = 'ClientUnaryCall';
+                } else if (methodData.requestStream && !methodData.responseStream) {
+                    methodData.type = 'ClientWritableStream';
+                } else if (!methodData.requestStream && methodData.responseStream) {
+                    methodData.type = 'ClientReadableStream';
+                } else if (methodData.requestStream && methodData.responseStream) {
+                    methodData.type = 'ClientDuplexStream';
+                }
 
                 serviceData.methods.push(methodData);
             });

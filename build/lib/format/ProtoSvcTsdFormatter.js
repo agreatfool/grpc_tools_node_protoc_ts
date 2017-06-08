@@ -18,6 +18,7 @@ var ProtoSvcTsdFormatter;
         responseStream: false,
         requestTypeName: "",
         responseTypeName: "",
+        type: "",
     });
     function format(descriptor, exportMap) {
         if (descriptor.getServiceList().length === 0) {
@@ -54,6 +55,18 @@ var ProtoSvcTsdFormatter;
                 methodData.responseStream = method.getServerStreaming();
                 methodData.requestTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(FieldTypesFormatter_1.MESSAGE_TYPE, method.getInputType().slice(1), "", exportMap);
                 methodData.responseTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(FieldTypesFormatter_1.MESSAGE_TYPE, method.getOutputType().slice(1), "", exportMap);
+                if (!methodData.requestStream && !methodData.responseStream) {
+                    methodData.type = 'ClientUnaryCall';
+                }
+                else if (methodData.requestStream && !methodData.responseStream) {
+                    methodData.type = 'ClientWritableStream';
+                }
+                else if (!methodData.requestStream && methodData.responseStream) {
+                    methodData.type = 'ClientReadableStream';
+                }
+                else if (methodData.requestStream && methodData.responseStream) {
+                    methodData.type = 'ClientDuplexStream';
+                }
                 serviceData.methods.push(methodData);
             });
             services.push(serviceData);
