@@ -58,6 +58,7 @@ interface IGetBooks {
 
 export const BookServiceService: IBookServiceService;
 export class BookServiceClient extends grpc.Client {
+    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
     getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     getBooksViaAuthor(request: book_pb.GetBookViaAuthor): grpc.ClientReadableStream;
     getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream;

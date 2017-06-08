@@ -28,6 +28,7 @@ interface I{{{methodName}}} {
 
 export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
 export class {{{serviceName}}}Client extends grpc.Client {
+    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
