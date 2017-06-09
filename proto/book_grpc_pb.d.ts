@@ -4,7 +4,7 @@
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
 
-interface IBookServiceService {
+interface IBookServiceService extends grpc.IMethodsMap {
     getBook: IGetBook;
     getBooksViaAuthor: IGetBooksViaAuthor;
     getGreatestBook: IGetGreatestBook;

@@ -6,7 +6,7 @@
 {{/each}}
 {{#each services}}
 
-interface I{{{serviceName}}}Service {
+interface I{{{serviceName}}}Service extends grpc.IMethodsMap {
     {{#each methods}}
     {{lcFirst methodName}}: I{{{methodName}}};
     {{/each}}
