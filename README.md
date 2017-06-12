@@ -28,6 +28,255 @@ protoc \
 ./your_proto_dir/*.proto
 ```
 
+## Sample
+### book.proto
+```proto
+syntax = "proto3";
+
+package com.book;
+
+message Book {
+    int64 isbn = 1;
+    string title = 2;
+    string author = 3;
+}
+
+message GetBookRequest {
+    int64 isbn = 1;
+}
+
+message GetBookViaAuthor {
+    string author = 1;
+}
+
+service BookService {
+    rpc GetBook (GetBookRequest) returns (Book) {}
+    rpc GetBooksViaAuthor (GetBookViaAuthor) returns (stream Book) {}
+    rpc GetGreatestBook (stream GetBookRequest) returns (Book) {}
+    rpc GetBooks (stream GetBookRequest) returns (stream Book) {}
+}
+
+service TestService {
+    rpc Test (GetBookRequest) returns (Book) {}
+}
+
+message BookStore {
+    string name = 1;
+    map<int64, string> books = 2;
+}
+
+enum EnumSample {
+    option allow_alias = true;
+    UNKNOWN = 0;
+    STARTED = 1;
+    RUNNING = 1;
+}
+```
+
+### book_pb.d.ts
+```typescript
+// package: com.book
+// file: book.proto
+
+import * as jspb from "google-protobuf";
+
+export class Book extends jspb.Message { 
+    getIsbn(): number;
+    setIsbn(value: number): void;
+
+    getTitle(): string;
+    setTitle(value: string): void;
+
+    getAuthor(): string;
+    setAuthor(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Book.AsObject;
+    static toObject(includeInstance: boolean, msg: Book): Book.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Book, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Book;
+    static deserializeBinaryFromReader(message: Book, reader: jspb.BinaryReader): Book;
+}
+
+export namespace Book {
+    export type AsObject = {
+        isbn: number,
+        title: string,
+        author: string,
+    }
+}
+
+export class GetBookRequest extends jspb.Message { 
+    getIsbn(): number;
+    setIsbn(value: number): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetBookRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetBookRequest): GetBookRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetBookRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetBookRequest;
+    static deserializeBinaryFromReader(message: GetBookRequest, reader: jspb.BinaryReader): GetBookRequest;
+}
+
+export namespace GetBookRequest {
+    export type AsObject = {
+        isbn: number,
+    }
+}
+
+export class GetBookViaAuthor extends jspb.Message { 
+    getAuthor(): string;
+    setAuthor(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetBookViaAuthor.AsObject;
+    static toObject(includeInstance: boolean, msg: GetBookViaAuthor): GetBookViaAuthor.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetBookViaAuthor, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetBookViaAuthor;
+    static deserializeBinaryFromReader(message: GetBookViaAuthor, reader: jspb.BinaryReader): GetBookViaAuthor;
+}
+
+export namespace GetBookViaAuthor {
+    export type AsObject = {
+        author: string,
+    }
+}
+
+export class BookStore extends jspb.Message { 
+    getName(): string;
+    setName(value: string): void;
+
+
+    getBooksMap(): jspb.Map<number, string>;
+    clearBooksMap(): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): BookStore.AsObject;
+    static toObject(includeInstance: boolean, msg: BookStore): BookStore.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: BookStore, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): BookStore;
+    static deserializeBinaryFromReader(message: BookStore, reader: jspb.BinaryReader): BookStore;
+}
+
+export namespace BookStore {
+    export type AsObject = {
+        name: string,
+
+        booksMap: Array<[number, string]>,
+    }
+}
+
+export enum EnumSample {
+    UNKNOWN = 0,
+    STARTED = 1,
+    RUNNING = 1,
+}
+```
+
+### book_grpc_pb.d.ts
+```typescript
+// package: com.book
+// file: book.proto
+
+import * as grpc from "grpc";
+import * as book_pb from "./book_pb";
+
+interface IBookServiceService extends grpc.IMethodsMap {
+    getBook: IGetBook;
+    getBooksViaAuthor: IGetBooksViaAuthor;
+    getGreatestBook: IGetGreatestBook;
+    getBooks: IGetBooks;
+}
+
+interface IGetBook {
+    path: string; // "/com.book.BookService/GetBook"
+    requestStream: boolean; // false
+    responseStream: boolean; // false
+    requestType: book_pb.GetBookRequest,
+    responseType: book_pb.Book,
+    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
+    responseSerialize: (arg: book_pb.Book) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+}
+interface IGetBooksViaAuthor {
+    path: string; // "/com.book.BookService/GetBooksViaAuthor"
+    requestStream: boolean; // false
+    responseStream: boolean; // true
+    requestType: book_pb.GetBookViaAuthor,
+    responseType: book_pb.Book,
+    requestSerialize: (arg: book_pb.GetBookViaAuthor) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookViaAuthor;
+    responseSerialize: (arg: book_pb.Book) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+}
+interface IGetGreatestBook {
+    path: string; // "/com.book.BookService/GetGreatestBook"
+    requestStream: boolean; // true
+    responseStream: boolean; // false
+    requestType: book_pb.GetBookRequest,
+    responseType: book_pb.Book,
+    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
+    responseSerialize: (arg: book_pb.Book) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+}
+interface IGetBooks {
+    path: string; // "/com.book.BookService/GetBooks"
+    requestStream: boolean; // true
+    responseStream: boolean; // true
+    requestType: book_pb.GetBookRequest,
+    responseType: book_pb.Book,
+    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
+    responseSerialize: (arg: book_pb.Book) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+}
+
+export const BookServiceService: IBookServiceService;
+export class BookServiceClient extends grpc.Client {
+    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
+    getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
+    getBooksViaAuthor(request: book_pb.GetBookViaAuthor): grpc.ClientReadableStream;
+    getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream;
+    getBooks(): grpc.ClientDuplexStream;
+}
+
+interface ITestServiceService extends grpc.IMethodsMap {
+    test: ITest;
+}
+
+interface ITest {
+    path: string; // "/com.book.TestService/Test"
+    requestStream: boolean; // false
+    responseStream: boolean; // false
+    requestType: book_pb.GetBookRequest,
+    responseType: book_pb.Book,
+    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
+    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
+    responseSerialize: (arg: book_pb.Book) => Buffer;
+    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+}
+
+export const TestServiceService: ITestServiceService;
+export class TestServiceClient extends grpc.Client {
+    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
+    test(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
+}
+```
+
 ## Environment
 ```bash
 node --version
