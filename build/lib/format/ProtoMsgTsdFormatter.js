@@ -19,7 +19,7 @@ var ProtoMsgTsdFormatter;
         let upToRoot = Utility_1.Utility.getPathToRoot(fileName);
         imports.push(`import * as jspb from "google-protobuf";`);
         descriptor.getDependencyList().forEach((dependency) => {
-            if (DependencyFilter_1.DependencyFilter.indexOf(dependency)) {
+            if (DependencyFilter_1.DependencyFilter.indexOf(dependency) !== -1) {
                 return; // filtered
             }
             let pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);

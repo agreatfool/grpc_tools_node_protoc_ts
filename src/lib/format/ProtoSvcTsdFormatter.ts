@@ -58,7 +58,7 @@ export namespace ProtoSvcTsdFormatter {
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility.filePathFromProtoWithoutExt(fileName)}";`);
 
         descriptor.getDependencyList().forEach((dependency: string) => {
-            if (DependencyFilter.indexOf(dependency)) {
+            if (DependencyFilter.indexOf(dependency) !== -1) {
                 return; // filtered
             }
             let pseudoNamespace = Utility.filePathToPseudoNamespace(dependency);

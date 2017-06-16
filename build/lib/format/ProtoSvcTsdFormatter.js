@@ -35,7 +35,7 @@ var ProtoSvcTsdFormatter;
         let asPseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(fileName);
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility_1.Utility.filePathFromProtoWithoutExt(fileName)}";`);
         descriptor.getDependencyList().forEach((dependency) => {
-            if (DependencyFilter_1.DependencyFilter.indexOf(dependency)) {
+            if (DependencyFilter_1.DependencyFilter.indexOf(dependency) !== -1) {
                 return; // filtered
             }
             let pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);

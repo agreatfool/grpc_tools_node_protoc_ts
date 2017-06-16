@@ -23,7 +23,7 @@ export namespace ProtoMsgTsdFormatter {
 
         imports.push(`import * as jspb from "google-protobuf";`);
         descriptor.getDependencyList().forEach((dependency: string) => {
-            if (DependencyFilter.indexOf(dependency)) {
+            if (DependencyFilter.indexOf(dependency) !== -1) {
                 return; // filtered
             }
             let pseudoNamespace = Utility.filePathToPseudoNamespace(dependency);
