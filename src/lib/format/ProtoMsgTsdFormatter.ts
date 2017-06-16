@@ -6,6 +6,7 @@ import {TplEngine} from "../TplEngine";
 import {MessageFormatter} from "./partial/MessageFormatter";
 import {ExtensionFormatter} from "./partial/ExtensionFormatter";
 import {EnumFormatter} from "./partial/EnumFormatter";
+import {DependencyFilter} from "../DependencyFilter";
 
 export namespace ProtoMsgTsdFormatter {
 
@@ -22,6 +23,9 @@ export namespace ProtoMsgTsdFormatter {
 
         imports.push(`import * as jspb from "google-protobuf";`);
         descriptor.getDependencyList().forEach((dependency: string) => {
+            if (DependencyFilter.indexOf(dependency)) {
+                return; // filtered
+            }
             let pseudoNamespace = Utility.filePathToPseudoNamespace(dependency);
             if (dependency in WellKnownTypesMap) {
                 imports.push(`import * as ${pseudoNamespace} from "${WellKnownTypesMap[dependency]}";`);

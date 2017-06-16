@@ -6,6 +6,7 @@ const TplEngine_1 = require("../TplEngine");
 const MessageFormatter_1 = require("./partial/MessageFormatter");
 const ExtensionFormatter_1 = require("./partial/ExtensionFormatter");
 const EnumFormatter_1 = require("./partial/EnumFormatter");
+const DependencyFilter_1 = require("../DependencyFilter");
 var ProtoMsgTsdFormatter;
 (function (ProtoMsgTsdFormatter) {
     function format(descriptor, exportMap) {
@@ -18,6 +19,9 @@ var ProtoMsgTsdFormatter;
         let upToRoot = Utility_1.Utility.getPathToRoot(fileName);
         imports.push(`import * as jspb from "google-protobuf";`);
         descriptor.getDependencyList().forEach((dependency) => {
+            if (DependencyFilter_1.DependencyFilter.indexOf(dependency)) {
+                return; // filtered
+            }
             let pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);
             if (dependency in WellKnown_1.WellKnownTypesMap) {
                 imports.push(`import * as ${pseudoNamespace} from "${WellKnown_1.WellKnownTypesMap[dependency]}";`);

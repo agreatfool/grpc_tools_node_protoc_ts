@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Utility_1 = require("../Utility");
 const TplEngine_1 = require("../TplEngine");
 const WellKnown_1 = require("../WellKnown");
+const DependencyFilter_1 = require("../DependencyFilter");
 const FieldTypesFormatter_1 = require("./partial/FieldTypesFormatter");
 var ProtoSvcTsdFormatter;
 (function (ProtoSvcTsdFormatter) {
@@ -34,6 +35,9 @@ var ProtoSvcTsdFormatter;
         let asPseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(fileName);
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility_1.Utility.filePathFromProtoWithoutExt(fileName)}";`);
         descriptor.getDependencyList().forEach((dependency) => {
+            if (DependencyFilter_1.DependencyFilter.indexOf(dependency)) {
+                return; // filtered
+            }
             let pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);
             if (dependency in WellKnown_1.WellKnownTypesMap) {
                 imports.push(`import * as ${pseudoNamespace} from "${WellKnown_1.WellKnownTypesMap[dependency]}";`);

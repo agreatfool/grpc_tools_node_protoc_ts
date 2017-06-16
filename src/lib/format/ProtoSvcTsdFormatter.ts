@@ -3,8 +3,8 @@ import {ExportMap} from "../ExportMap";
 import {Utility} from "../Utility";
 import {TplEngine} from "../TplEngine";
 import {WellKnownTypesMap} from "../WellKnown";
+import {DependencyFilter} from "../DependencyFilter";
 import {FieldTypesFormatter, MESSAGE_TYPE} from "./partial/FieldTypesFormatter";
-import {Debug} from "../Debug";
 
 export namespace ProtoSvcTsdFormatter {
 
@@ -58,6 +58,9 @@ export namespace ProtoSvcTsdFormatter {
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility.filePathFromProtoWithoutExt(fileName)}";`);
 
         descriptor.getDependencyList().forEach((dependency: string) => {
+            if (DependencyFilter.indexOf(dependency)) {
+                return; // filtered
+            }
             let pseudoNamespace = Utility.filePathToPseudoNamespace(dependency);
             if (dependency in WellKnownTypesMap) {
                 imports.push(`import * as ${pseudoNamespace} from "${WellKnownTypesMap[dependency]}";`);
