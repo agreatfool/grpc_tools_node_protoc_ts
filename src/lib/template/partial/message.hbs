@@ -8,14 +8,14 @@
     {{~else~}}{{!-- map spec else --}}
         {{~#if this.hasFieldPresence~}}{{!-- hasFieldPresence start --}}
 {{{indent}}}    has{{{this.camelUpperName}}}(): boolean;
-            {{~#if not this.hasClearMethodCreated~}}
+            {{#is this.hasClearMethodCreated false}}
 {{{indent}}}    {{printClearIfNotPresent this}}
-            {{~/if~}}
+            {{/is}}
         {{~/if~}}{{!-- hasFieldPresence end --}}
         {{~#if this.isRepeatField~}}{{!-- repeat start --}}
-            {{~#if not this.hasClearMethodCreated~}}
+            {{~#is this.hasClearMethodCreated false~}}
 {{{indent}}}    {{printClearIfNotPresent this}}
-            {{~/if~}}
+            {{/is}}
             {{~#is this.type BYTES_TYPE~}}
 {{{indent}}}    get{{{this.camelUpperName}}}List(): Array<Uint8Array | string>;
 {{{indent}}}    get{{{this.camelUpperName}}}List_asU8(): Array<Uint8Array>;
@@ -23,8 +23,8 @@
 {{{indent}}}    set{{{this.camelUpperName}}}List(value: Array<Uint8Array | string>): void;
 {{{indent}}}    {{printRepeatedAddMethod this "Uint8Array | string"}}
             {{~else~}}
-{{{indent}}}    get{{{this.camelUpperName}}}List(): Array<${exportType}>;
-{{{indent}}}    set{{{this.camelUpperName}}}List(value: Array<${exportType}>): void;
+{{{indent}}}    get{{{this.camelUpperName}}}List(): Array<{{{this.exportType}}}>;
+{{{indent}}}    set{{{this.camelUpperName}}}List(value: Array<{{{this.exportType}}}>): void;
 {{{indent}}}    {{printRepeatedAddMethod this this.exportType}}
             {{~/is~}}
         {{~else~}}{{!-- repeat else --}}
