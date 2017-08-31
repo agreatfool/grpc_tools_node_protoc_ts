@@ -32,15 +32,19 @@ export class {{{serviceName}}}Client extends grpc.Client {
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
     {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream;
+    {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
     {{lcFirst methodName}}(request: {{{requestTypeName}}}): grpc.ClientReadableStream;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata): grpc.ClientReadableStream;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
     {{lcFirst methodName}}(): grpc.ClientDuplexStream;
+    {{lcFirst methodName}}(metadata: grpc.Metadata): grpc.ClientDuplexStream;
         {{/eq}}
     {{/each}}
 }
