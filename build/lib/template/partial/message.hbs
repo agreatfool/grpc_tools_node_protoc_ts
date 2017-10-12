@@ -43,7 +43,7 @@
 {{/each}}{{!-- fields end --}}
 {{~#if message.oneofDeclList~}}{{!-- oneofDeclList start --}}
 {{#each message.oneofDeclList}}
-{{{indent}}}    get{{oneOfName this}}Case(): {{{message.messageName}}}.{{oneOfName this}}Case;
+{{{indent}}}    get{{oneOfName this}}Case(): {{{../message.messageName}}}.{{oneOfName this}}Case;
 {{/each}}
 {{~/if~}}{{!-- oneofDeclList end --}}
 {{{indent}}}    serializeBinary(): Uint8Array;
