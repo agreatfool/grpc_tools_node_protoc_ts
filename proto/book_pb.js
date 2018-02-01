@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -57,6 +59,7 @@ proto.com.book.Book.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.com.book.Book} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.Book.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -136,6 +139,7 @@ proto.com.book.Book.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.com.book.Book} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.Book.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -251,6 +255,7 @@ proto.com.book.GetBookRequest.prototype.toObject = function(opt_includeInstance)
  *     http://goto/soy-param-migration
  * @param {!proto.com.book.GetBookRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.GetBookRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -320,6 +325,7 @@ proto.com.book.GetBookRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.com.book.GetBookRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.GetBookRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -391,6 +397,7 @@ proto.com.book.GetBookViaAuthor.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.com.book.GetBookViaAuthor} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.GetBookViaAuthor.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -460,6 +467,7 @@ proto.com.book.GetBookViaAuthor.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.com.book.GetBookViaAuthor} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.GetBookViaAuthor.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -531,6 +539,7 @@ proto.com.book.BookStore.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.com.book.BookStore} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.BookStore.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -607,6 +616,7 @@ proto.com.book.BookStore.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.com.book.BookStore} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.com.book.BookStore.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
