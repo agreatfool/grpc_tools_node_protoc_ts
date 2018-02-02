@@ -6,7 +6,7 @@
 {{/each}}
 {{#each services}}
 
-interface I{{{serviceName}}}Service extends grpc.IMethodsMap {
+interface I{{{serviceName}}}Service extends grpc.ServiceDefinition {
     {{#each methods}}
     {{lcFirst methodName}}: I{{{methodName}}};
     {{/each}}
@@ -48,7 +48,7 @@ export interface I{{{serviceName}}}Client {
 
 export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
 export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceName}}}Client {
-    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
+    constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
@@ -62,8 +62,7 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
-    public {{lcFirst methodName}}(): grpc.ClientDuplexStream;
-    public {{lcFirst methodName}}(metadata: grpc.Metadata): grpc.ClientDuplexStream;
+    public {{lcFirst methodName}}(metadata?: grpc.Metadata): grpc.ClientDuplexStream;
         {{/eq}}
     {{/each}}
 }

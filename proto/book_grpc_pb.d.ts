@@ -4,7 +4,7 @@
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
 
-interface IBookServiceService extends grpc.IMethodsMap {
+interface IBookServiceService extends grpc.ServiceDefinition {
     getBook: IGetBook;
     getBooksViaAuthor: IGetBooksViaAuthor;
     getGreatestBook: IGetGreatestBook;
@@ -68,12 +68,11 @@ export interface IBookServiceClient {
 
 export const BookServiceService: IBookServiceService;
 export class BookServiceClient extends grpc.Client implements IBookServiceClient {
-    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
+    constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     public getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata): grpc.ClientReadableStream;
     public getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream;
     public getGreatestBook(callback: (error: Error | null, metadata: grpc.Metadata, response: book_pb.Book) => void): grpc.ClientWritableStream;
-    public getBooks(): grpc.ClientDuplexStream;
-    public getBooks(metadata: grpc.Metadata): grpc.ClientDuplexStream;
+    public getBooks(metadata?: grpc.Metadata): grpc.ClientDuplexStream;
 }
