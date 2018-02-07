@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const grpc = require("grpc");
-const book_grpc_pb_1 = require("../proto/book_grpc_pb");
-const book_pb_1 = require("../proto/book_pb");
+const book_grpc_pb_1 = require("./src/proto/book_grpc_pb");
+const book_pb_1 = require("./src/proto/book_pb");
 const client = new book_grpc_pb_1.BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
 const fetchBooks = () => {
     const stream = client.getBooks();

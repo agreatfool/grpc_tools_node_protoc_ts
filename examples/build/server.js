@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const grpc = require("grpc");
-const book_grpc_pb_1 = require("../proto/book_grpc_pb");
-const book_pb_1 = require("../proto/book_pb");
+const book_grpc_pb_1 = require("./src/proto/book_grpc_pb");
+const book_pb_1 = require("./src/proto/book_pb");
 function startServer() {
     const server = new grpc.Server();
     server.addService(book_grpc_pb_1.BookServiceService, {

@@ -1,6 +1,6 @@
 import * as grpc from "grpc";
-import { BookServiceService } from "../proto/book_grpc_pb";
-import { Book, GetBookRequest, GetBookViaAuthor } from "../proto/book_pb";
+import { BookServiceService } from "./proto/book_grpc_pb";
+import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
 
 function startServer() {
 
