@@ -51,6 +51,28 @@ Dirs:
     * server.sh: start the sample server
     * client.sh: start the client & send requests
 
+### Note
+In current grpc version:
+
+> $ npm view grpc time
+  ...
+  '1.8.4': '2018-01-18T15:17:25.731Z',
+  '1.9.0-pre3': '2018-02-02T17:38:06.018Z' }
+
+There is some definition confliction, and affects examples codes.
+
+This possible be the issue of version confliction of protobuf.js in grpc and the newer version used outside.
+See: [grpc package.json](https://github.com/grpc/grpc-node/blob/v1.8.x/packages/grpc-native-core/package.json#L35) and [grpc_tools_node_protoc_ts package.json](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v2.1.0/package.json#L40)
+
+The result is, when you tsc under examples, there is some error:
+
+> $ cd ./examples
+  $ ./bash/build.sh
+  src/server.ts(15,21): error TS2345: Argument of type 'IBookServiceService' is not assignable to parameter of type 'Service'.
+    Property 'methods' is missing in type 'IBookServiceService'.
+
+Please ignore it, if dir examples is copied to any other place from current project root, it works fine. Anyway even with these errors, js codes from tsc also works fine.
+
 ### book.proto
 ```proto
 syntax = "proto3";
