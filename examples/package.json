@@ -17,8 +17,8 @@
     "grpc": "^1.8.4"
   },
   "devDependencies": {
-    "@types/node": "^9.4.1",
     "@types/debug": "0.0.30",
-    "@types/google-protobuf": "^3.2.7"
+    "@types/google-protobuf": "^3.2.7",
+    "@types/node": "^9.4.2"
   }
 }

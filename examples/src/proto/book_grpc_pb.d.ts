@@ -1,6 +1,8 @@
 // package: com.book
 // file: book.proto
 
+/* tslint:disable */
+
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
 

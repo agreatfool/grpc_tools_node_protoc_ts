@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/google-protobuf": "^3.2.7",
     "@types/handlebars": "^4.0.36",
-    "@types/node": "^7.0.52",
+    "@types/node": "^9.4.2",
     "@types/protobufjs": "^6.0.0",
     "protobufjs": "^6.8.4"
   }

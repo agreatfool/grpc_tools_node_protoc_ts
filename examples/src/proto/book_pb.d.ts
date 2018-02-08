@@ -1,6 +1,8 @@
 // package: com.book
 // file: book.proto
 
+/* tslint:disable */
+
 import * as jspb from "google-protobuf";
 
 export class Book extends jspb.Message { 

@@ -1,6 +1,8 @@
 // package: {{{packageName}}}
 // file: {{{fileName}}}
 
+/* tslint:disable */
+
 {{#each imports}}
 {{{this}}}
 {{/each}}
@@ -17,8 +19,8 @@ interface I{{{methodName}}} {
     path: string; // "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}"
     requestStream: boolean; // {{{requestStream}}}
     responseStream: boolean; // {{{responseStream}}}
-    requestType: {{{requestTypeName}}},
-    responseType: {{{responseTypeName}}},
+    requestType: {{{requestTypeName}}};
+    responseType: {{{responseTypeName}}};
     requestSerialize: (arg: {{{requestTypeName}}}) => Buffer;
     requestDeserialize: (buffer: Uint8Array) => {{{requestTypeName}}};
     responseSerialize: (arg: {{{responseTypeName}}}) => Buffer;

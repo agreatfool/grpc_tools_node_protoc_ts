@@ -3,10 +3,11 @@
 BASEDIR=$(dirname "$0")
 cd ${BASEDIR}/../
 
-PROTO_DEST=./proto
+PROTO_DEST=./src/proto
 
 mkdir -p ${PROTO_DEST}
 
+# JavaScript code generating
 grpc_tools_node_protoc \
 --js_out=import_style=commonjs,binary:${PROTO_DEST} \
 --grpc_out=${PROTO_DEST} \
@@ -15,7 +16,11 @@ grpc_tools_node_protoc \
 proto/*.proto
 
 protoc \
---plugin=protoc-gen-ts=./bin/protoc-gen-ts \
+--plugin=protoc-gen-ts=../bin/protoc-gen-ts \
 --ts_out=${PROTO_DEST} \
 -I ./proto \
 proto/*.proto
+
+# TypeScript compiling
+cp -R src/proto build/proto
+tsc
