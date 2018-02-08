@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const grpc = require("grpc");
 const debug = require("debug");
+const grpc = require("grpc");
 const book_grpc_pb_1 = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleClient");
@@ -42,7 +42,7 @@ const getBooks = () => {
             resolve();
         });
         for (let i = 0; i < 10; i++) {
-            let req = new book_pb_1.GetBookRequest();
+            const req = new book_pb_1.GetBookRequest();
             req.setIsbn(i);
             log(`[getBooks] Request: ${JSON.stringify(req.toObject())}`);
             stream.write(req);
@@ -91,11 +91,11 @@ function main() {
         yield getGreatestBook();
     });
 }
-main().then(_ => _);
-process.on('uncaughtException', (err) => {
+main().then((_) => _);
+process.on("uncaughtException", (err) => {
     log(`process on uncaughtException error: ${err}`);
 });
-process.on('unhandledRejection', (err) => {
+process.on("unhandledRejection", (err) => {
     log(`process on unhandledRejection error: ${err}`);
 });
 //# sourceMappingURL=client.js.map

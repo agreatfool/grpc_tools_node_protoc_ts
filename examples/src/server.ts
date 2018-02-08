@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import * as grpc from "grpc";
 import * as debug from "debug";
+import * as grpc from "grpc";
 
 import { BookServiceService } from "./proto/book_grpc_pb";
 import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
@@ -13,6 +13,15 @@ function startServer() {
   const server = new grpc.Server();
 
   server.addService(BookServiceService, {
+    getBook: (call: grpc.ServerUnaryCall, callback: grpc.sendUnaryData) => {
+      const book = new Book();
+
+      book.setTitle("DefaultBook");
+      book.setAuthor("DefaultAuthor");
+
+      log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
+      callback(null, book);
+    },
     getBooks: (call: grpc.ServerDuplexStream) => {
       call.on("data", (request: GetBookRequest) => {
         const reply = new Book();
@@ -26,15 +35,6 @@ function startServer() {
         log("[getBooks] Done.");
         call.end();
       });
-    },
-    getBook: (call: grpc.ServerUnaryCall, callback: grpc.sendUnaryData) => {
-      const book = new Book();
-
-      book.setTitle("DefaultBook");
-      book.setAuthor("DefaultAuthor");
-
-      log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
-      callback(null, book);
     },
     getBooksViaAuthor: (call: grpc.ServerWriteableStream) => {
       const request = call.request as GetBookViaAuthor;
@@ -65,7 +65,7 @@ function startServer() {
         log(`[getGreatestBook] Done: ${JSON.stringify(reply.toObject())}`);
         callback(null, reply);
       });
-    }
+    },
   });
 
   server.bind("127.0.0.1:50051", grpc.ServerCredentials.createInsecure());
@@ -76,10 +76,10 @@ function startServer() {
 
 startServer();
 
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
   log(`process on uncaughtException error: ${err}`);
 });
 
-process.on('unhandledRejection', (err) => {
+process.on("unhandledRejection", (err) => {
   log(`process on unhandledRejection error: ${err}`);
 });

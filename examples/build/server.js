@@ -1,14 +1,21 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const grpc = require("grpc");
 const debug = require("debug");
+const grpc = require("grpc");
 const book_grpc_pb_1 = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleServer");
 function startServer() {
     const server = new grpc.Server();
     server.addService(book_grpc_pb_1.BookServiceService, {
+        getBook: (call, callback) => {
+            const book = new book_pb_1.Book();
+            book.setTitle("DefaultBook");
+            book.setAuthor("DefaultAuthor");
+            log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
+            callback(null, book);
+        },
         getBooks: (call) => {
             call.on("data", (request) => {
                 const reply = new book_pb_1.Book();
@@ -22,13 +29,6 @@ function startServer() {
                 log("[getBooks] Done.");
                 call.end();
             });
-        },
-        getBook: (call, callback) => {
-            const book = new book_pb_1.Book();
-            book.setTitle("DefaultBook");
-            book.setAuthor("DefaultAuthor");
-            log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
-            callback(null, book);
         },
         getBooksViaAuthor: (call) => {
             const request = call.request;
@@ -58,17 +58,17 @@ function startServer() {
                 log(`[getGreatestBook] Done: ${JSON.stringify(reply.toObject())}`);
                 callback(null, reply);
             });
-        }
+        },
     });
     server.bind("127.0.0.1:50051", grpc.ServerCredentials.createInsecure());
     server.start();
     log("Server started, listening: 127.0.0.1:50051");
 }
 startServer();
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
     log(`process on uncaughtException error: ${err}`);
 });
-process.on('unhandledRejection', (err) => {
+process.on("unhandledRejection", (err) => {
     log(`process on unhandledRejection error: ${err}`);
 });
 //# sourceMappingURL=server.js.map

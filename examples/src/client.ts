@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import * as grpc from "grpc";
 import * as debug from "debug";
+import * as grpc from "grpc";
 
 import { BookServiceClient } from "./proto/book_grpc_pb";
 import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
@@ -20,7 +20,7 @@ const getBook = async (isbn: number) => {
     client.getBook(request, (err, book) => {
       if (err != null) {
         debug(`[getBook] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
-        reject(err);return;
+        reject(err); return;
       }
       log(`[getBook] Book: ${JSON.stringify(book.toObject())}`);
       resolve(book);
@@ -41,7 +41,7 @@ const getBooks = () => {
     });
 
     for (let i = 0; i < 10; i++) {
-      let req = new GetBookRequest();
+      const req = new GetBookRequest();
       req.setIsbn(i);
       log(`[getBooks] Request: ${JSON.stringify(req.toObject())}`);
       stream.write(req);
@@ -95,12 +95,12 @@ async function main() {
   await getGreatestBook();
 }
 
-main().then(_ => _);
+main().then((_) => _);
 
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
   log(`process on uncaughtException error: ${err}`);
 });
 
-process.on('unhandledRejection', (err) => {
+process.on("unhandledRejection", (err) => {
   log(`process on unhandledRejection error: ${err}`);
 });
