@@ -71,7 +71,7 @@ The result is, when you tsc under examples, there is some error:
   src/server.ts(15,21): error TS2345: Argument of type 'IBookServiceService' is not assignable to parameter of type 'Service'.    
     Property 'methods' is missing in type 'IBookServiceService'.    
 
-Please ignore it, if dir examples is copied to any other place from current project root, it works fine. Anyway even with these errors, js codes from tsc also works fine.
+Please ignore it, if dir examples is copied to any other place from current project root, it works fine. Anyway even with these errors, js codes from tsc also work fine.
 
 ### book.proto
 ```proto
