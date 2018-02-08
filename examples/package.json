@@ -12,8 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^9.4.1",
+    "debug": "^3.1.0",
     "google-protobuf": "^3.5.0",
     "grpc": "^1.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.1",
+    "@types/debug": "0.0.30",
+    "@types/google-protobuf": "^3.2.7"
   }
 }

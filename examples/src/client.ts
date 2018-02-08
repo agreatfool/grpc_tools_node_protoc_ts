@@ -1,77 +1,106 @@
+#!/usr/bin/env node
+
 import * as grpc from "grpc";
+import * as debug from "debug";
 
 import { BookServiceClient } from "./proto/book_grpc_pb";
 import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
 
+const log = debug("SampleClient");
+
 const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
 
-const fetchBooks = () => {
-  const stream:grpc.ClientDuplexStream = client.getBooks();
+const getBook = async (isbn: number) => {
+  return new Promise((resolve, reject) => {
+    const request = new GetBookRequest();
+    request.setIsbn(isbn);
 
-  stream.on("data", (data: Book) => {
-    console.log(data.getIsbn());
-  });
-  stream.on("end", () => {
-    console.log("getBooks done.");
-  });
+    log(`[getBook] Request: ${JSON.stringify(request.toObject())}`);
 
-  for (let i = 0; i < 10; i++) {
-    let req = new GetBookRequest();
-    req.setIsbn(i);
-    stream.write(req);
-  }
-  stream.end();
+    client.getBook(request, (err, book) => {
+      if (err != null) {
+        debug(`[getBook] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
+        reject(err);return;
+      }
+      log(`[getBook] Book: ${JSON.stringify(book.toObject())}`);
+      resolve(book);
+    });
+  });
 };
 
-const fetchBook = (isbn: number) => {
-  const request = new GetBookRequest();
-  request.setIsbn(isbn);
+const getBooks = () => {
+  return new Promise((resolve) => {
+    const stream: grpc.ClientDuplexStream = client.getBooks();
 
+    stream.on("data", (data: Book) => {
+      log(`[getBooks] Book: ${JSON.stringify(data.toObject())}`);
+    });
+    stream.on("end", () => {
+      log("[getBooks] Done.");
+      resolve();
+    });
 
-  client.getBook(request, (err, book) => {
-    if (err != null) {
-      console.error(err);
+    for (let i = 0; i < 10; i++) {
+      let req = new GetBookRequest();
+      req.setIsbn(i);
+      log(`[getBooks] Request: ${JSON.stringify(req.toObject())}`);
+      stream.write(req);
     }
-
-    console.log(`getBook's Title is ${book.getTitle()}`);
+    stream.end();
   });
 };
 
-const fetchBooksViaAuthor = (author: string) => {
-  const request = new GetBookViaAuthor();
-  request.setAuthor(author);
+const getBooksViaAuthor = (author: string) => {
+  return new Promise((resolve) => {
+    const request = new GetBookViaAuthor();
+    request.setAuthor(author);
 
-  const stream = client.getBooksViaAuthor(request);
-  stream.on("data", (data: Book) => {
-    console.log(data.getTitle());
-  });
-  stream.on("end", () => {
-    console.log("fetchBooksViaAuthor done");
+    log(`[getBooksViaAuthor] Request: ${JSON.stringify(request.toObject())}`);
+
+    const stream = client.getBooksViaAuthor(request);
+    stream.on("data", (data: Book) => {
+      log(`[getBooksViaAuthor] Book: ${JSON.stringify(data.toObject())}`);
+    });
+    stream.on("end", () => {
+      log("[getBooksViaAuthor] Done.");
+      resolve();
+    });
   });
 };
 
-const fetchGreatestBook = () => {
-  const stream = client.getGreatestBook((err, data) => {
-    if (err != null) {
-      console.error(err);
+const getGreatestBook = () => {
+  return new Promise((resolve) => {
+    const stream = client.getGreatestBook((err, data) => {
+      if (err != null) {
+        log(`[getGreatestBook] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
+      }
+      log(`[getGreatestBook] Book: ${JSON.stringify(data.toObject())}`);
+      resolve();
+    });
+
+    for (let i = 0; i < 10; i++) {
+      const req = new GetBookRequest();
+      req.setIsbn(i);
+      log(`[getGreatestBook] Request: ${JSON.stringify(req.toObject())}`);
+      stream.write(req);
     }
-
-    console.log(data);
+    stream.end();
   });
-
-  for (let i = 0; i < 10; i++) {
-    const req = new GetBookRequest();
-    req.setIsbn(i);
-    stream.write(req);
-  }
-  stream.end();
 };
 
-function main() {
-  fetchBook(1);
-  // fetchBooksViaAuthor("DefaultAuthor");
-  // fetchGreatestBook();
-  // fetchBooks();
+async function main() {
+  await getBook(1);
+  await getBooks();
+  await getBooksViaAuthor("DefaultAuthor");
+  await getGreatestBook();
 }
 
-main();
+main().then(_ => _);
+
+process.on('uncaughtException', (err) => {
+  log(`process on uncaughtException error: ${err}`);
+});
+
+process.on('unhandledRejection', (err) => {
+  log(`process on unhandledRejection error: ${err}`);
+});
