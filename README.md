@@ -54,10 +54,10 @@ Dirs:
 ### Note
 In current grpc version:
 
-> $ npm view grpc time
-  ...
-  '1.8.4': '2018-01-18T15:17:25.731Z',
-  '1.9.0-pre3': '2018-02-02T17:38:06.018Z' }
+> $ npm view grpc time    
+  ...    
+  '1.8.4': '2018-01-18T15:17:25.731Z',    
+  '1.9.0-pre3': '2018-02-02T17:38:06.018Z' }    
 
 There is some definition confliction, and affects examples codes.
 
@@ -66,10 +66,10 @@ See: [grpc package.json](https://github.com/grpc/grpc-node/blob/v1.8.x/packages/
 
 The result is, when you tsc under examples, there is some error:
 
-> $ cd ./examples
-  $ ./bash/build.sh
-  src/server.ts(15,21): error TS2345: Argument of type 'IBookServiceService' is not assignable to parameter of type 'Service'.
-    Property 'methods' is missing in type 'IBookServiceService'.
+> $ cd ./examples    
+  $ ./bash/build.sh    
+  src/server.ts(15,21): error TS2345: Argument of type 'IBookServiceService' is not assignable to parameter of type 'Service'.    
+    Property 'methods' is missing in type 'IBookServiceService'.    
 
 Please ignore it, if dir examples is copied to any other place from current project root, it works fine. Anyway even with these errors, js codes from tsc also works fine.
 
