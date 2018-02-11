@@ -13,7 +13,7 @@ function startServer() {
   const server = new grpc.Server();
 
   server.addService(BookServiceService, {
-    getBook: (call: grpc.ServerUnaryCall, callback: grpc.sendUnaryData) => {
+    getBook: (call: grpc.ServerUnaryCall<GetBookRequest>, callback: grpc.sendUnaryData<Book>) => {
       const book = new Book();
 
       book.setTitle("DefaultBook");
@@ -22,7 +22,7 @@ function startServer() {
       log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
       callback(null, book);
     },
-    getBooks: (call: grpc.ServerDuplexStream) => {
+    getBooks: (call: grpc.ServerDuplexStream<GetBookRequest, Book>) => {
       call.on("data", (request: GetBookRequest) => {
         const reply = new Book();
         reply.setTitle(`Book${request.getIsbn()}`);
@@ -36,7 +36,7 @@ function startServer() {
         call.end();
       });
     },
-    getBooksViaAuthor: (call: grpc.ServerWriteableStream) => {
+    getBooksViaAuthor: (call: grpc.ServerWriteableStream<GetBookViaAuthor>) => {
       const request = call.request as GetBookViaAuthor;
 
       log(`[getBooksViaAuthor] Request: ${JSON.stringify(request.toObject())}`);
@@ -51,7 +51,7 @@ function startServer() {
       log("[getBooksViaAuthor] Done.");
       call.end();
     },
-    getGreatestBook: (call: grpc.ServerReadableStream, callback: grpc.sendUnaryData) => {
+    getGreatestBook: (call: grpc.ServerReadableStream<GetBookRequest>, callback: grpc.sendUnaryData<Book>) => {
       let lastOne: GetBookRequest;
       call.on("data", (request: GetBookRequest) => {
         log(`[getGreatestBook] Request: ${JSON.stringify(request.toObject())}`);
