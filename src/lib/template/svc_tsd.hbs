@@ -42,7 +42,7 @@ export interface I{{{serviceName}}}Client {
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
-    {{lcFirst methodName}}(): grpc.ClientDuplexStream;
+    {{lcFirst methodName}}(): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
     {{lcFirst methodName}}(metadata: grpc.Metadata): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
         {{/eq}}
     {{/each}}
