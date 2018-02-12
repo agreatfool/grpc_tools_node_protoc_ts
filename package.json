@@ -35,6 +35,6 @@
   "devDependencies": {
     "@types/google-protobuf": "^3.2.7",
     "@types/handlebars": "^4.0.36",
-    "@types/node": "^9.4.2"
+    "@types/node": "^9.4.5"
   }
 }

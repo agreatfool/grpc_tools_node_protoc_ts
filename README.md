@@ -11,13 +11,18 @@ More information about grpc_tools_node_protoc:
 * [doc how to use](https://github.com/grpc/grpc/blob/master/examples/node/static_codegen/README.md)
 
 ## Breaking changes
-Since v2.x.x, current project supports the official definition of grpc, see: [index.d.ts](https://github.com/grpc/grpc-node/blob/v1.8.x/packages/grpc-native-core/index.d.ts). 
+### v2.2.0
+Fix definition changes according to the version change of grpc official TypeScript definition, see: [index.d.ts@1.9.0](https://github.com/grpc/grpc-node/blob/v1.9.0/packages/grpc-native-core/index.d.ts).
+Detailed changes could be found here: [PR#14](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/14/files). 
+
+### v2.0.0
+Since v2.x.x, current project supports the official definition of grpc, see: [index.d.ts@1.8.4](https://github.com/grpc/grpc-node/blob/v1.8.4/packages/grpc-native-core/index.d.ts). 
 Though the usage of tool, and generated codes shall not been changed, it's good to be double checked in your project when upgrade.
 
 TSLint has been disabled in generated files. Please see the conversation: [#13](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/13).
 
-~~## Note~~
-~~This tools is using an unofficial grpc.d.ts definition, see: [grpc-tsd](https://www.npmjs.com/package/grpc-tsd).~~
+## ~~Note~~
+~~This tools is using an unofficial grpc.d.ts definition, see: [grpc-tsd](https://www.npmjs.com/package/grpc-tsd).~~    
 ~~If you want to use this tool, you have to use definition mentioned.~~
 
 ## How to use
@@ -237,7 +242,7 @@ export enum EnumSample {
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
 
-interface IBookServiceService extends grpc.ServiceDefinition {
+interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     getBook: IGetBook;
     getBooksViaAuthor: IGetBooksViaAuthor;
     getGreatestBook: IGetGreatestBook;
@@ -292,11 +297,11 @@ interface IGetBooks {
 export interface IBookServiceClient {
     getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
-    getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata): grpc.ClientReadableStream;
-    getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream;
-    getGreatestBook(callback: (error: Error | null, metadata: grpc.Metadata, response: book_pb.Book) => void): grpc.ClientWritableStream;
-    getBooks(): grpc.ClientDuplexStream;
-    getBooks(metadata: grpc.Metadata): grpc.ClientDuplexStream;
+    getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata): grpc.ClientReadableStream<book_pb.GetBookViaAuthor>;
+    getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
+    getGreatestBook(callback: (error: Error | null, metadata: grpc.Metadata, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
+    getBooks(): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
+    getBooks(metadata: grpc.Metadata): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
 }
 
 export const BookServiceService: IBookServiceService;
@@ -304,15 +309,17 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     public getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
-    public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata): grpc.ClientReadableStream;
-    public getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream;
-    public getGreatestBook(callback: (error: Error | null, metadata: grpc.Metadata, response: book_pb.Book) => void): grpc.ClientWritableStream;
-    public getBooks(metadata?: grpc.Metadata): grpc.ClientDuplexStream;
+    public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata): grpc.ClientReadableStream<book_pb.GetBookViaAuthor>;
+    public getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
+    public getGreatestBook(callback: (error: Error | null, metadata: grpc.Metadata, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
+    public getBooks(metadata?: grpc.Metadata): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
 }
 ```
 
 ## Environment
 ```bash
+# npm install grpc@1.9.0 --save
+
 node --version
 # v8.4.0
 npm --version

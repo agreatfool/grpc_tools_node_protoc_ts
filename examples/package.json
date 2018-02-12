@@ -19,6 +19,6 @@
   "devDependencies": {
     "@types/debug": "0.0.30",
     "@types/google-protobuf": "^3.2.7",
-    "@types/node": "^9.4.2"
+    "@types/node": "^9.4.5"
   }
 }
