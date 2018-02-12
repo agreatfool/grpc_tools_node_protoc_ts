@@ -8,7 +8,7 @@
 {{/each}}
 {{#each services}}
 
-interface I{{{serviceName}}}Service extends grpc.ServiceDefinition {
+interface I{{{serviceName}}}Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     {{#each methods}}
     {{lcFirst methodName}}: I{{{methodName}}};
     {{/each}}
@@ -35,15 +35,15 @@ export interface I{{{serviceName}}}Client {
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
-    {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream;
-    {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream;
+    {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
-    {{lcFirst methodName}}(): grpc.ClientDuplexStream;
-    {{lcFirst methodName}}(metadata: grpc.Metadata): grpc.ClientDuplexStream;
+    {{lcFirst methodName}}(): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+    {{lcFirst methodName}}(metadata: grpc.Metadata): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
         {{/eq}}
     {{/each}}
 }
@@ -57,14 +57,14 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
-    public {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream;
-    public {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream;
+    public {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
-    public {{lcFirst methodName}}(metadata?: grpc.Metadata): grpc.ClientDuplexStream;
+    public {{lcFirst methodName}}(metadata?: grpc.Metadata): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
         {{/eq}}
     {{/each}}
 }

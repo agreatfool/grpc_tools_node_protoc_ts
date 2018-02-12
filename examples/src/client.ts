@@ -30,7 +30,7 @@ const getBook = async (isbn: number) => {
 
 const getBooks = () => {
   return new Promise((resolve) => {
-    const stream: grpc.ClientDuplexStream = client.getBooks();
+    const stream: grpc.ClientDuplexStream<GetBookRequest, Book> = client.getBooks();
 
     stream.on("data", (data: Book) => {
       log(`[getBooks] Book: ${JSON.stringify(data.toObject())}`);
