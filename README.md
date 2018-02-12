@@ -12,11 +12,11 @@ More information about grpc_tools_node_protoc:
 
 ## Breaking changes
 ### v2.2.0
-Fix definition changes according to the version change of grpc official TypeScript definition, see: [index.d.ts@1.9.0](https://github.com/grpc/grpc-node/blob/v1.9.0/packages/grpc-native-core/index.d.ts).
+Fix definition changes according to the version change of grpc official TypeScript definition, see: [index.d.ts@1.9.0](https://github.com/grpc/grpc-node/blob/v1.9.0/packages/grpc-native-core/index.d.ts).    
 Detailed changes could be found here: [PR#14](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/14/files). 
 
 ### v2.0.0
-Since v2.x.x, current project supports the official definition of grpc, see: [index.d.ts@1.8.4](https://github.com/grpc/grpc-node/blob/v1.8.4/packages/grpc-native-core/index.d.ts). 
+Since v2.x.x, current project supports the official definition of grpc, see: [index.d.ts@1.8.4](https://github.com/grpc/grpc-node/blob/v1.8.4/packages/grpc-native-core/index.d.ts).     
 Though the usage of tool, and generated codes shall not been changed, it's good to be double checked in your project when upgrade.
 
 TSLint has been disabled in generated files. Please see the conversation: [#13](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/13).
@@ -55,28 +55,6 @@ Dirs:
     * build.sh: build js & d.ts codes from proto file, and tsc to build/*.js
     * server.sh: start the sample server
     * client.sh: start the client & send requests
-
-### Note
-In current grpc version:
-
-> $ npm view grpc time    
-  ...    
-  '1.8.4': '2018-01-18T15:17:25.731Z',    
-  '1.9.0-pre3': '2018-02-02T17:38:06.018Z' }    
-
-There is some definition confliction, and affects examples codes.
-
-This possible be the issue of version confliction of protobuf.js in grpc and the newer version used outside.
-See: [grpc package.json](https://github.com/grpc/grpc-node/blob/v1.8.x/packages/grpc-native-core/package.json#L35) and [grpc_tools_node_protoc_ts package.json](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v2.1.0/package.json#L40)
-
-The result is, when you tsc under examples, there is some error:
-
-> $ cd ./examples    
-  $ ./bash/build.sh    
-  src/server.ts(15,21): error TS2345: Argument of type 'IBookServiceService' is not assignable to parameter of type 'Service'.    
-    Property 'methods' is missing in type 'IBookServiceService'.    
-
-Please ignore it, if dir examples is copied to any other place from current project root, it works fine. Anyway even with these errors, js codes from tsc also work fine.
 
 ### book.proto
 ```proto
