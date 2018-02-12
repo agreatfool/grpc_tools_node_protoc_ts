@@ -17,7 +17,7 @@ const getBook = async (isbn: number) => {
 
     log(`[getBook] Request: ${JSON.stringify(request.toObject())}`);
 
-    client.getBook(request, (err, book) => {
+    client.getBook(request, (err, book: Book) => {
       if (err != null) {
         debug(`[getBook] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
         reject(err); return;
@@ -57,7 +57,7 @@ const getBooksViaAuthor = (author: string) => {
 
     log(`[getBooksViaAuthor] Request: ${JSON.stringify(request.toObject())}`);
 
-    const stream = client.getBooksViaAuthor(request);
+    const stream: grpc.ClientReadableStream<GetBookViaAuthor> = client.getBooksViaAuthor(request);
     stream.on("data", (data: Book) => {
       log(`[getBooksViaAuthor] Book: ${JSON.stringify(data.toObject())}`);
     });
@@ -70,7 +70,7 @@ const getBooksViaAuthor = (author: string) => {
 
 const getGreatestBook = () => {
   return new Promise((resolve) => {
-    const stream = client.getGreatestBook((err, data) => {
+    const stream: grpc.ClientWritableStream<GetBookRequest> = client.getGreatestBook((err, data: Book) => {
       if (err != null) {
         log(`[getGreatestBook] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
       }
