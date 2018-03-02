@@ -15,7 +15,7 @@ grpc_tools_node_protoc \
 -I ./proto \
 proto/*.proto
 
-protoc \
+grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
 --ts_out=${PROTO_DEST} \
 -I ./proto \
