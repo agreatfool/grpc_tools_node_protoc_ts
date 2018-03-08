@@ -58,7 +58,7 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
     public {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    public {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream<{{{requestTypeName}}}>;
