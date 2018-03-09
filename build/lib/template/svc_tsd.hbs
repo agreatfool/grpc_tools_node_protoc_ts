@@ -36,7 +36,7 @@ export interface I{{{serviceName}}}Client {
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
     {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    {{lcFirst methodName}}(callback: (error: Error | null, metadata: grpc.Metadata, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata): grpc.ClientReadableStream<{{{requestTypeName}}}>;
