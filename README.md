@@ -306,6 +306,12 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 
 ```
 
+## Changes
+### 2.2.3
+Fix definitions.
+
+* [fix: add missing argument grpc.Client~CallOptions for requests](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/15/commits/ea3bff861201446346a2e6dfe511edc8f0cb6fdf)
+
 ## Environment
 ```bash
 # npm install grpc@1.9.0 --save
