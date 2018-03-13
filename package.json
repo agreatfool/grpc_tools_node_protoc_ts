@@ -4,6 +4,7 @@
   "description": "Generate d.ts definitions for generated js files from grpc_tools_node_protoc",
   "main": "build/index.js",
   "scripts": {
+    "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -35,6 +36,8 @@
   "devDependencies": {
     "@types/google-protobuf": "^3.2.7",
     "@types/handlebars": "^4.0.36",
-    "@types/node": "^9.4.5"
+    "@types/node": "^9.4.5",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
   }
 }
