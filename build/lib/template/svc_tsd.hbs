@@ -10,21 +10,19 @@
 
 interface I{{{serviceName}}}Service extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     {{#each methods}}
-    {{lcFirst methodName}}: I{{{methodName}}};
+    {{lcFirst methodName}}: I{{{serviceName}}}Service_I{{{methodName}}};
     {{/each}}
 }
 
     {{#each methods}}
-interface I{{{methodName}}} {
+interface I{{{serviceName}}}Service_I{{{methodName}}} extends grpc.MethodDefinition<{{{requestTypeName}}}, {{{responseTypeName}}}> {
     path: string; // "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}"
     requestStream: boolean; // {{{requestStream}}}
     responseStream: boolean; // {{{responseStream}}}
-    requestType: {{{requestTypeName}}};
-    responseType: {{{responseTypeName}}};
-    requestSerialize: (arg: {{{requestTypeName}}}) => Buffer;
-    requestDeserialize: (buffer: Uint8Array) => {{{requestTypeName}}};
-    responseSerialize: (arg: {{{responseTypeName}}}) => Buffer;
-    responseDeserialize: (buffer: Uint8Array) => {{{responseTypeName}}};
+    requestSerialize: grpc.serialize<{{{requestTypeName}}}>;
+    requestDeserialize: grpc.deserialize<{{{requestTypeName}}}>;
+    responseSerialize: grpc.serialize<{{{responseTypeName}}}>;
+    responseDeserialize: grpc.deserialize<{{{responseTypeName}}}>;
 }
     {{/each}}
 

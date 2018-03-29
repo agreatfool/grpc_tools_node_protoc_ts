@@ -208,7 +208,6 @@ export enum EnumSample {
     STARTED = 1,
     RUNNING = 1,
 }
-
 ```
 
 ### book_grpc_pb.d.ts
@@ -222,55 +221,47 @@ import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
 
 interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    getBook: IGetBook;
-    getBooksViaAuthor: IGetBooksViaAuthor;
-    getGreatestBook: IGetGreatestBook;
-    getBooks: IGetBooks;
+    getBook: IBookServiceService_IGetBook;
+    getBooksViaAuthor: IBookServiceService_IGetBooksViaAuthor;
+    getGreatestBook: IBookServiceService_IGetGreatestBook;
+    getBooks: IBookServiceService_IGetBooks;
 }
 
-interface IGetBook {
+interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBook"
     requestStream: boolean; // false
     responseStream: boolean; // false
-    requestType: book_pb.GetBookRequest;
-    responseType: book_pb.Book;
-    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
-    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
-    responseSerialize: (arg: book_pb.Book) => Buffer;
-    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+    requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
+    requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
+    responseSerialize: grpc.serialize<book_pb.Book>;
+    responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
-interface IGetBooksViaAuthor {
+interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<book_pb.GetBookViaAuthor, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBooksViaAuthor"
     requestStream: boolean; // false
     responseStream: boolean; // true
-    requestType: book_pb.GetBookViaAuthor;
-    responseType: book_pb.Book;
-    requestSerialize: (arg: book_pb.GetBookViaAuthor) => Buffer;
-    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookViaAuthor;
-    responseSerialize: (arg: book_pb.Book) => Buffer;
-    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+    requestSerialize: grpc.serialize<book_pb.GetBookViaAuthor>;
+    requestDeserialize: grpc.deserialize<book_pb.GetBookViaAuthor>;
+    responseSerialize: grpc.serialize<book_pb.Book>;
+    responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
-interface IGetGreatestBook {
+interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetGreatestBook"
     requestStream: boolean; // true
     responseStream: boolean; // false
-    requestType: book_pb.GetBookRequest;
-    responseType: book_pb.Book;
-    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
-    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
-    responseSerialize: (arg: book_pb.Book) => Buffer;
-    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+    requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
+    requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
+    responseSerialize: grpc.serialize<book_pb.Book>;
+    responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
-interface IGetBooks {
+interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBooks"
     requestStream: boolean; // true
     responseStream: boolean; // true
-    requestType: book_pb.GetBookRequest;
-    responseType: book_pb.Book;
-    requestSerialize: (arg: book_pb.GetBookRequest) => Buffer;
-    requestDeserialize: (buffer: Uint8Array) => book_pb.GetBookRequest;
-    responseSerialize: (arg: book_pb.Book) => Buffer;
-    responseDeserialize: (buffer: Uint8Array) => book_pb.Book;
+    requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
+    requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
+    responseSerialize: grpc.serialize<book_pb.Book>;
+    responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 
 export interface IBookServiceClient {
@@ -303,14 +294,14 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
     public getBooks(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
     public getBooks(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
 }
-
 ```
 
 ## Changes
-### 2.2.3
-Fix definitions.
+### 2.2.4
+Fix issue of conflicted I{$MethodName} name, see: [Issue#19](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/19). 
 
-* [fix: add missing argument grpc.Client~CallOptions for requests](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/15/commits/ea3bff861201446346a2e6dfe511edc8f0cb6fdf)
+### 2.2.3
+Fix definitions. [fix: add missing argument grpc.Client~CallOptions for requests](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/15/commits/ea3bff861201446346a2e6dfe511edc8f0cb6fdf)
 
 ## Environment
 ```bash
