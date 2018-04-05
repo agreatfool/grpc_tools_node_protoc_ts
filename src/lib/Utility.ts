@@ -73,4 +73,75 @@ export namespace Utility {
         });
     }
 
+    export function isReserved(name: string): boolean {
+        for (const keyword of reservedKeywords) {
+            if (name === keyword) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // reserved Javascript keywords used by the Javascript generator
+    // src: https://github.com/google/protobuf/blob/ed4321d1cb33199984118d801956822842771e7e/src/google/protobuf/compiler/js/js_generator.cc#L60-L119
+    const reservedKeywords = [
+        "abstract",
+        "boolean",
+        "break",
+        "byte",
+        "case",
+        "catch",
+        "char",
+        "class",
+        "const",
+        "continue",
+        "debugger",
+        "default",
+        "delete",
+        "do",
+        "double",
+        "else",
+        "enum",
+        "export",
+        "extends",
+        "false",
+        "final",
+        "finally",
+        "float",
+        "for",
+        "function",
+        "goto",
+        "if",
+        "implements",
+        "import",
+        "in",
+        "instanceof",
+        "int",
+        "interface",
+        "long",
+        "native",
+        "new",
+        "null",
+        "package",
+        "private",
+        "protected",
+        "public",
+        "return",
+        "short",
+        "static",
+        "super",
+        "switch",
+        "synchronized",
+        "this",
+        "throw",
+        "throws",
+        "transient",
+        "try",
+        "typeof",
+        "var",
+        "void",
+        "volatile",
+        "while",
+        "with",
+    ];
 }
