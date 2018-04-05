@@ -103,6 +103,39 @@ export namespace BookStore {
     }
 }
 
+export class SpecialCases extends jspb.Message { 
+    getNormal(): string;
+    setNormal(value: string): void;
+
+    getDefault(): string;
+    setDefault(value: string): void;
+
+    getFunction(): string;
+    setFunction(value: string): void;
+
+    getVar(): string;
+    setVar(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SpecialCases.AsObject;
+    static toObject(includeInstance: boolean, msg: SpecialCases): SpecialCases.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SpecialCases, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SpecialCases;
+    static deserializeBinaryFromReader(message: SpecialCases, reader: jspb.BinaryReader): SpecialCases;
+}
+
+export namespace SpecialCases {
+    export type AsObject = {
+        normal: string,
+        pb_default: string,
+        pb_function: string,
+        pb_var: string,
+    }
+}
+
 export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,

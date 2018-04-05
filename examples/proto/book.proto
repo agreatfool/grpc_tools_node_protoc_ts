@@ -34,3 +34,13 @@ enum EnumSample {
     STARTED = 1;
     RUNNING = 1;
 }
+
+// Message with reserved keywords
+// see: https://github.com/google/protobuf/blob/cc3fa2ec80d196e045ae05797799f079188106f3/js/compatibility_tests/v3.0.0/test.proto#L66-L72
+message SpecialCases {
+    string normal = 1;
+    // Examples of Js reserved names that are converted to pb_<name>.
+    string default = 2;
+    string function = 3;
+    string var = 4;
+}
