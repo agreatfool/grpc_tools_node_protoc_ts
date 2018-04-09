@@ -94,6 +94,16 @@ enum EnumSample {
     STARTED = 1;
     RUNNING = 1;
 }
+
+// Message with reserved keywords
+// see: https://github.com/google/protobuf/blob/cc3fa2ec80d196e045ae05797799f079188106f3/js/compatibility_tests/v3.0.0/test.proto#L66-L72
+message SpecialCases {
+    string normal = 1;
+    // Examples of Js reserved names that are converted to pb_<name>.
+    string default = 2;
+    string function = 3;
+    string var = 4;
+}
 ```
 
 ### book_pb.d.ts
@@ -203,6 +213,39 @@ export namespace BookStore {
     }
 }
 
+export class SpecialCases extends jspb.Message { 
+    getNormal(): string;
+    setNormal(value: string): void;
+
+    getDefault(): string;
+    setDefault(value: string): void;
+
+    getFunction(): string;
+    setFunction(value: string): void;
+
+    getVar(): string;
+    setVar(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SpecialCases.AsObject;
+    static toObject(includeInstance: boolean, msg: SpecialCases): SpecialCases.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SpecialCases, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SpecialCases;
+    static deserializeBinaryFromReader(message: SpecialCases, reader: jspb.BinaryReader): SpecialCases;
+}
+
+export namespace SpecialCases {
+    export type AsObject = {
+        normal: string,
+        pb_default: string,
+        pb_function: string,
+        pb_var: string,
+    }
+}
+
 export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,
@@ -297,6 +340,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 2.2.5
+Fix issue of reversed JavaScript keyword code generation. See: [Issue#20](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/20) & [PR#21](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/21).
+
 ### 2.2.4
 Fix issue of conflicted I{$MethodName} name, see: [Issue#19](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/19). 
 
