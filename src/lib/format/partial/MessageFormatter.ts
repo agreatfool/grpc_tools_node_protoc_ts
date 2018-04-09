@@ -131,7 +131,7 @@ export namespace MessageFormatter {
             // handle reserved keywords in field names like Javascript generator
             // see: https://github.com/google/protobuf/blob/ed4321d1cb33199984118d801956822842771e7e/src/google/protobuf/compiler/js/js_generator.cc#L508-L510
             if (Utility.isReserved(fieldData.camelCaseName)) {
-                fieldData.camelCaseName = `pb_${fieldData.camelCaseName}`
+                fieldData.camelCaseName = `pb_${fieldData.camelCaseName}`;
             }
             fieldData.type = field.getType();
             fieldData.isMapField = false;
