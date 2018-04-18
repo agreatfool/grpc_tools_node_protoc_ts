@@ -26,6 +26,25 @@ interface I{{{serviceName}}}Service_I{{{methodName}}} extends grpc.MethodDefinit
 }
     {{/each}}
 
+export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
+
+export interface I{{{serviceName}}}Server {
+    {{#each methods}}
+        {{#eq type "ClientUnaryCall"}}
+    {{lcFirst methodName}}: grpc.handleUnaryCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+        {{/eq}}
+        {{#eq type "ClientWritableStream"}}
+    {{lcFirst methodName}}: grpc.handleClientStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+        {{/eq}}
+        {{#eq type "ClientReadableStream"}}
+    {{lcFirst methodName}}: grpc.handleServerStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+        {{/eq}}
+        {{#eq type "ClientDuplexStream"}}
+    {{lcFirst methodName}}: grpc.handleBidiStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+        {{/eq}}
+    {{/each}}
+}
+
 export interface I{{{serviceName}}}Client {
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
@@ -51,7 +70,6 @@ export interface I{{{serviceName}}}Client {
     {{/each}}
 }
 
-export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
 export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceName}}}Client {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     {{#each methods}}
