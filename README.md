@@ -307,6 +307,15 @@ interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.Ge
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 
+export const BookServiceService: IBookServiceService;
+
+export interface IBookServiceServer {
+    getBook: grpc.handleUnaryCall<book_pb.GetBookRequest, book_pb.Book>;
+    getBooksViaAuthor: grpc.handleServerStreamingCall<book_pb.GetBookViaAuthor, book_pb.Book>;
+    getGreatestBook: grpc.handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
+    getBooks: grpc.handleBidiStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
+}
+
 export interface IBookServiceClient {
     getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
@@ -322,7 +331,6 @@ export interface IBookServiceClient {
     getBooks(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
 }
 
-export const BookServiceService: IBookServiceService;
 export class BookServiceClient extends grpc.Client implements IBookServiceClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     public getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
@@ -340,6 +348,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 2.3.0
+Add a new server implementation interface signature, with this the server implementation could be verified. See: [Issue#22](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/22). And please also check the new example using this new feature: [link](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/33946064e6d5134a32edffa0d1c0bce80055fe56/examples/src/server.ts#L11-L71).
+
 ### 2.2.5
 Fix issue of reversed JavaScript keyword code generation. See: [Issue#20](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/20) & [PR#21](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/21).
 
