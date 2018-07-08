@@ -8,7 +8,7 @@ export namespace EnumFormatter {
         let enumName = enumDescriptor.getName();
         let values: { [key: string]: number } = {};
         enumDescriptor.getValueList().forEach(value => {
-            values[value.getName()] = value.getNumber();
+            values[value.getName().toUpperCase()] = value.getNumber();
         });
 
         return TplEngine.render('partial/enum', {
