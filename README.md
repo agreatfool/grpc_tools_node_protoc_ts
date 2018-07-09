@@ -93,6 +93,9 @@ enum EnumSample {
     UNKNOWN = 0;
     STARTED = 1;
     RUNNING = 1;
+    caseTest = 2;
+    How_about_This = 3;
+    alllowercase = 4;
 }
 
 // Message with reserved keywords
@@ -250,6 +253,9 @@ export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,
     RUNNING = 1,
+    CASETEST = 2,
+    HOW_ABOUT_THIS = 3,
+    ALLLOWERCASE = 4,
 }
 ```
 
@@ -348,6 +354,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 2.3.1
+Fix an Enum case bug. See: [Issue#25](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/25) & [PR#26](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/26).
+
 ### 2.3.0
 Add a new server implementation interface signature, with this the server implementation could be verified. See: [Issue#22](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/22). And please also check the new example using this new feature: [link](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/33946064e6d5134a32edffa0d1c0bce80055fe56/examples/src/server.ts#L11-L71).
 
