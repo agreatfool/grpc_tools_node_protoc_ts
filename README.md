@@ -27,6 +27,8 @@ TSLint has been disabled in generated files. Please see the conversation: [#13](
 
 ## How to use
 ```bash
+npm config set unsafe-perm true
+
 npm install grpc_tools_node_protoc_ts --save-dev
 
 # generate js codes via grpc-tools
