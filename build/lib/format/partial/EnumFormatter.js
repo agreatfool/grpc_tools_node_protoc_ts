@@ -8,7 +8,7 @@ var EnumFormatter;
         let enumName = enumDescriptor.getName();
         let values = {};
         enumDescriptor.getValueList().forEach(value => {
-            values[value.getName()] = value.getNumber();
+            values[value.getName().toUpperCase()] = value.getNumber();
         });
         return TplEngine_1.TplEngine.render('partial/enum', {
             indent: Utility_1.Utility.generateIndent(indentLevel),

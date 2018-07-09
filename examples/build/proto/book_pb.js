@@ -897,7 +897,10 @@ proto.com.book.SpecialCases.prototype.setVar = function(value) {
 proto.com.book.EnumSample = {
   UNKNOWN: 0,
   STARTED: 1,
-  RUNNING: 1
+  RUNNING: 1,
+  CASETEST: 2,
+  HOW_ABOUT_THIS: 3,
+  ALLLOWERCASE: 4
 };
 
 goog.object.extend(exports, proto.com.book);

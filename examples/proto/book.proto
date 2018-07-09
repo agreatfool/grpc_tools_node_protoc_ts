@@ -33,6 +33,9 @@ enum EnumSample {
     UNKNOWN = 0;
     STARTED = 1;
     RUNNING = 1;
+    caseTest = 2;
+    How_about_This = 3;
+    alllowercase = 4;
 }
 
 // Message with reserved keywords

@@ -140,4 +140,7 @@ export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,
     RUNNING = 1,
+    CASETEST = 2,
+    HOW_ABOUT_THIS = 3,
+    ALLLOWERCASE = 4,
 }
