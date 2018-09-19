@@ -43,11 +43,11 @@ export class ExportMap {
         this.messageMap[entryName] = messageEntry;
 
         message.getNestedTypeList().forEach(nested => {
-            this.exportNested(scope + "." + message.getName(), fileDescriptor, nested);
+            this.exportNested(entryName, fileDescriptor, nested);
         });
 
         message.getEnumTypeList().forEach(enumType => {
-            const identifier = scope + "." + message.getName() + "." + enumType.getName();
+            const identifier = entryName + "." + enumType.getName();
             this.enumMap[identifier] = {
                 pkg: fileDescriptor.getPackage(),
                 fileName: fileDescriptor.getName(),
@@ -63,7 +63,8 @@ export class ExportMap {
         });
 
         fileDescriptor.getEnumTypeList().forEach(enumType => {
-            this.enumMap[scope + "." + enumType.getName()] = {
+            const entryName = `${scope ? scope + "." : ""}${enumType.getName()}`;
+            this.enumMap[entryName] = {
                 pkg: fileDescriptor.getPackage(),
                 fileName: fileDescriptor.getName(),
                 enumOptions: enumType.getOptions(),
