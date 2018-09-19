@@ -354,6 +354,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 2.3.2
+Fix code generation error when there is no package defined in proto file. See: [PR#28](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/28).
+
 ### 2.3.1
 Fix an Enum case bug. See: [Issue#25](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/25) & [PR#26](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/26).
 
