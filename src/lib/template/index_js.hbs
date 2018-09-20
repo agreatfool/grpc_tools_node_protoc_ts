@@ -1,0 +1,8 @@
+"use strict";
+function __export(m) {
+  for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+exports.__esModule = true;
+{{#each exports}}
+__export(require("./{{{this}}}"));
+{{/each}}

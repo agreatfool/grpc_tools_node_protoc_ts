@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * specified in [plugin.proto](https://github.com/google/protobuf/blob/master/src/google/protobuf/compiler/plugin.proto).
  */
 const ExportMap_1 = require("./lib/ExportMap");
+const ProtoIndexFormatter_1 = require("./lib/format/ProtoIndexFormatter");
 const Utility_1 = require("./lib/Utility");
 const plugin_pb_1 = require("google-protobuf/google/protobuf/compiler/plugin_pb");
 const ProtoMsgTsdFormatter_1 = require("./lib/format/ProtoMsgTsdFormatter");
@@ -24,9 +25,10 @@ Utility_1.Utility.withAllStdIn((inputBuff) => {
             fileNameToDescriptor[protoFileDescriptor.getName()] = protoFileDescriptor;
             exportMap.addFileDescriptor(protoFileDescriptor);
         });
-        codeGenRequest.getFileToGenerateList().forEach(fileName => {
+        const files = codeGenRequest.getFileToGenerateList().reduce((fileList, fileName) => {
             // message part
             let msgFileName = Utility_1.Utility.filePathFromProtoWithoutExt(fileName);
+            fileList.push(msgFileName);
             let msgTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
             msgTsdFile.setContent(ProtoMsgTsdFormatter_1.ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap));
@@ -39,8 +41,20 @@ Utility_1.Utility.withAllStdIn((inputBuff) => {
                 svtTsdFile.setName(svcFileName + ".d.ts");
                 svtTsdFile.setContent(fileDescriptorOutput);
                 codeGenResponse.addFile(svtTsdFile);
+                fileList.push(svcFileName);
             }
-        });
+            return fileList;
+        }, []);
+        const indexJsOutput = ProtoIndexFormatter_1.ProtoIndexFormatter.format(files, 'index_js');
+        const indexJsFile = new plugin_pb_1.CodeGeneratorResponse.File();
+        indexJsFile.setName("index.js");
+        indexJsFile.setContent(indexJsOutput);
+        codeGenResponse.addFile(indexJsFile);
+        const indexTsOutput = ProtoIndexFormatter_1.ProtoIndexFormatter.format(files, 'index_tsd');
+        const indexTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
+        indexTsdFile.setName("index.d.ts");
+        indexTsdFile.setContent(indexTsOutput);
+        codeGenResponse.addFile(indexTsdFile);
         process.stdout.write(new Buffer(codeGenResponse.serializeBinary()));
     }
     catch (err) {
