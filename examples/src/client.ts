@@ -57,7 +57,7 @@ const getBooksViaAuthor = (author: string) => {
 
     log(`[getBooksViaAuthor] Request: ${JSON.stringify(request.toObject())}`);
 
-    const stream: grpc.ClientReadableStream<GetBookViaAuthor> = client.getBooksViaAuthor(request);
+    const stream: grpc.ClientReadableStream<Book> = client.getBooksViaAuthor(request);
     stream.on("data", (data: Book) => {
       log(`[getBooksViaAuthor] Book: ${JSON.stringify(data.toObject())}`);
     });

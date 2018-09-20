@@ -4,7 +4,7 @@
   "description": "Generate d.ts definitions for generated js files from grpc_tools_node_protoc",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p . && cp -r src/lib/template build/lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
