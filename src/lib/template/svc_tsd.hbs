@@ -59,8 +59,8 @@ export interface I{{{serviceName}}}Client {
     {{lcFirst methodName}}(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{requestTypeName}}}>;
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
     {{lcFirst methodName}}(): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
@@ -85,8 +85,8 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
     public {{lcFirst methodName}}(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{requestTypeName}}}>;
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
     public {{lcFirst methodName}}(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<{{{requestTypeName}}}, {{{responseTypeName}}}>;
