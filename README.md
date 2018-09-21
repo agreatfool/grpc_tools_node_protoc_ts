@@ -11,6 +11,10 @@ More information about grpc_tools_node_protoc:
 * [doc how to use](https://github.com/grpc/grpc/blob/master/examples/node/static_codegen/README.md)
 
 ## Breaking changes
+### v2.4.0
+The return value of type `ClientReadableStream` was wrong previously. And has been fixed in this version. Please be careful to update your code.
+See detail: [PR#30](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/30).
+
 ### v2.2.0
 Fix definition changes according to the version change of grpc official TypeScript definition, see: [index.d.ts@1.9.0](https://github.com/grpc/grpc-node/blob/v1.9.0/packages/grpc-native-core/index.d.ts).    
 Detailed changes could be found here: [PR#14](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/14/files). 
@@ -326,8 +330,8 @@ export interface IBookServiceClient {
     getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
-    getBooksViaAuthor(request: book_pb.GetBookViaAuthor, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.GetBookViaAuthor>;
-    getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.GetBookViaAuthor>;
+    getBooksViaAuthor(request: book_pb.GetBookViaAuthor, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.Book>;
+    getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.Book>;
     getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
     getGreatestBook(metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
     getGreatestBook(options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
@@ -342,8 +346,8 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
     public getBook(request: book_pb.GetBookRequest, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
-    public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.GetBookViaAuthor>;
-    public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.GetBookViaAuthor>;
+    public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.Book>;
+    public getBooksViaAuthor(request: book_pb.GetBookViaAuthor, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<book_pb.Book>;
     public getGreatestBook(callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
     public getGreatestBook(metadata: grpc.Metadata, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
     public getGreatestBook(options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
@@ -354,6 +358,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 2.4.0
+Fix(ClientReadableStream): Fixes return type generic argument of. See: [PR#30](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/30).
+
 ### 2.3.2
 Fix code generation error when there is no package defined in proto file. See: [PR#28](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/28).
 
