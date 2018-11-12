@@ -48,15 +48,15 @@ export interface I{{{serviceName}}}Server {
 export interface I{{{serviceName}}}Client {
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
-    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
-    {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    {{lcFirst methodName}}(metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    {{lcFirst methodName}}(options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    {{lcFirst methodName}}(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    {{lcFirst methodName}}(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
@@ -74,15 +74,15 @@ export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceN
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
-    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
+    public {{lcFirst methodName}}(request: {{{requestTypeName}}}, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
-    public {{lcFirst methodName}}(callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    public {{lcFirst methodName}}(metadata: grpc.Metadata, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    public {{lcFirst methodName}}(options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
-    public {{lcFirst methodName}}(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
+    public {{lcFirst methodName}}(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientWritableStream<{{{requestTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<{{{responseTypeName}}}>;
