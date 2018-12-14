@@ -358,6 +358,10 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 2.4.2
+Update grpc version in package.json of examples, to keep consistent.
+Update handlebars-helpers version to 0.10.0 to fix vulnerability version of randomatic.
+
 ### 2.4.1
 Use gRPC-native ServiceError objects for errbacks in client methods. See: [PR#33](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/33).
 
