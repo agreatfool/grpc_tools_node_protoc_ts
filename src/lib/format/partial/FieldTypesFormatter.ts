@@ -5,8 +5,15 @@ import {Utility} from "../../Utility";
 export const MESSAGE_TYPE = 11;
 export const BYTES_TYPE = 12;
 export const ENUM_TYPE = 14;
+export const JS_NORMAL = 0;
+export const JS_STRING = 1;
+export const JS_NUMBER = 2;
 
-const TypeNumToTypeString: { [key: number]: string } = {};
+interface TypeMap {
+  [key: number]: string
+}
+
+const TypeNumToTypeString = <TypeMap>{};
 TypeNumToTypeString[1] = "number"; // TYPE_DOUBLE
 TypeNumToTypeString[2] = "number"; // TYPE_FLOAT
 TypeNumToTypeString[3] = "number"; // TYPE_INT64
@@ -26,10 +33,19 @@ TypeNumToTypeString[16] = "number"; // TYPE_SFIXED64
 TypeNumToTypeString[17] = "number"; // TYPE_SINT32 - Uses ZigZag encoding.
 TypeNumToTypeString[18] = "number"; // TYPE_SINT64 - Uses ZigZag encoding.
 
+const JsTypeNumToTypeString = <TypeMap>{};
+JsTypeNumToTypeString[JS_NORMAL] = null; // [jstype = JS_NORMAL]
+JsTypeNumToTypeString[JS_STRING] = "string"; // [jstype = JS_STRING]
+JsTypeNumToTypeString[JS_NUMBER] = "number"; // [jstype = JS_NUMBER]
+
 export namespace FieldTypesFormatter {
 
     export function getTypeName(fieldTypeNum: number): string {
         return TypeNumToTypeString[fieldTypeNum];
+    }
+
+    export function getJsTypeName(fieldTypeNum: number): string {
+        return fieldTypeNum === JS_NORMAL ? null : JsTypeNumToTypeString[fieldTypeNum];
     }
 
     export function getFieldType(type: FieldDescriptorProto.Type,
