@@ -357,7 +357,39 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 }
 ```
 
+## Gotchas
+
+JavaScript can safely handle numbers below `Number.MAX_SAFE_INTEGER`. Beyond the
+limit, it begins to overflow:
+
+```
+> 90071992547409912131 + 1
+90071992547409920000
+```
+
+If you are expecting large, 64bit fields consider using a `jstype` option to
+override the field type.
+
+```proto
+# example.proto
+message Example {
+  fixed64 id = 1 [jstype = JS_STRING];
+}
+```
+
+```typescript
+// example_pb.d.ts
+export namespace Example {
+    export type AsObject = {
+        id: string
+    }
+}
+```
+
 ## Changes
+### 2.4.3
+Add support for `[jstype = JS_STRING]` overrides
+
 ### 2.4.2
 Update grpc version in package.json of examples, to keep consistent.
 Update handlebars-helpers version to 0.10.0 to fix vulnerability version of randomatic.
