@@ -131,7 +131,16 @@ var MessageFormatter;
                 fieldData.exportType = exportType;
             }
             else {
-                exportType = fieldData.exportType = FieldTypesFormatter_1.FieldTypesFormatter.getTypeName(fieldData.type);
+                let type = FieldTypesFormatter_1.FieldTypesFormatter.getTypeName(fieldData.type);
+                // Check for [jstype = JS_STRING] overrides
+                const options = field.getOptions();
+                if (options && options.hasJstype()) {
+                    const jstype = FieldTypesFormatter_1.FieldTypesFormatter.getJsTypeName(options.getJstype());
+                    if (jstype) {
+                        type = jstype;
+                    }
+                }
+                exportType = fieldData.exportType = type;
             }
             fieldData.isOptionalValue = field.getType() === FieldTypesFormatter_1.MESSAGE_TYPE;
             fieldData.isRepeatField = field.getLabel() === descriptor_pb_1.FieldDescriptorProto.Label.LABEL_REPEATED;

@@ -4,6 +4,9 @@ const Utility_1 = require("../../Utility");
 exports.MESSAGE_TYPE = 11;
 exports.BYTES_TYPE = 12;
 exports.ENUM_TYPE = 14;
+exports.JS_NORMAL = 0;
+exports.JS_STRING = 1;
+exports.JS_NUMBER = 2;
 const TypeNumToTypeString = {};
 TypeNumToTypeString[1] = "number"; // TYPE_DOUBLE
 TypeNumToTypeString[2] = "number"; // TYPE_FLOAT
@@ -23,12 +26,20 @@ TypeNumToTypeString[15] = "number"; // TYPE_SFIXED32
 TypeNumToTypeString[16] = "number"; // TYPE_SFIXED64
 TypeNumToTypeString[17] = "number"; // TYPE_SINT32 - Uses ZigZag encoding.
 TypeNumToTypeString[18] = "number"; // TYPE_SINT64 - Uses ZigZag encoding.
+const JsTypeNumToTypeString = {};
+JsTypeNumToTypeString[exports.JS_NORMAL] = null; // [jstype = JS_NORMAL]
+JsTypeNumToTypeString[exports.JS_STRING] = "string"; // [jstype = JS_STRING]
+JsTypeNumToTypeString[exports.JS_NUMBER] = "number"; // [jstype = JS_NUMBER]
 var FieldTypesFormatter;
 (function (FieldTypesFormatter) {
     function getTypeName(fieldTypeNum) {
         return TypeNumToTypeString[fieldTypeNum];
     }
     FieldTypesFormatter.getTypeName = getTypeName;
+    function getJsTypeName(fieldTypeNum) {
+        return fieldTypeNum === exports.JS_NORMAL ? null : JsTypeNumToTypeString[fieldTypeNum];
+    }
+    FieldTypesFormatter.getJsTypeName = getJsTypeName;
     function getFieldType(type, typeName, currentFileName, exportMap) {
         let fieldType;
         let fromExport;
