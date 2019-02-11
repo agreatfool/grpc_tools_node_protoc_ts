@@ -192,18 +192,19 @@ export namespace MessageFormatter {
                 fieldData.exportType = exportType;
 
             } else {
+
                 let type = FieldTypesFormatter.getTypeName(fieldData.type);
 
                 // Check for [jstype = JS_STRING] overrides
-                const options = field.getOptions()
+                const options = field.getOptions();
                 if (options && options.hasJstype()) {
                     const jstype = FieldTypesFormatter.getJsTypeName(options.getJstype());
                     if (jstype) {
-                        type = jstype
+                        type = jstype;
                     }
                 }
 
-                exportType = fieldData.exportType = type
+                exportType = fieldData.exportType = type;
 
             }
 

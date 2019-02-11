@@ -5,6 +5,8 @@ import {Utility} from "../../Utility";
 export const MESSAGE_TYPE = 11;
 export const BYTES_TYPE = 12;
 export const ENUM_TYPE = 14;
+
+// @see https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto#L539
 export const JS_NORMAL = 0;
 export const JS_STRING = 1;
 export const JS_NUMBER = 2;
@@ -34,7 +36,7 @@ TypeNumToTypeString[17] = "number"; // TYPE_SINT32 - Uses ZigZag encoding.
 TypeNumToTypeString[18] = "number"; // TYPE_SINT64 - Uses ZigZag encoding.
 
 const JsTypeNumToTypeString = <TypeMap>{};
-JsTypeNumToTypeString[JS_NORMAL] = null; // [jstype = JS_NORMAL]
+JsTypeNumToTypeString[JS_NORMAL] = null; // [jstype = JS_NORMAL], value "null" means just using the original type
 JsTypeNumToTypeString[JS_STRING] = "string"; // [jstype = JS_STRING]
 JsTypeNumToTypeString[JS_NUMBER] = "number"; // [jstype = JS_NUMBER]
 

@@ -4,6 +4,7 @@ const Utility_1 = require("../../Utility");
 exports.MESSAGE_TYPE = 11;
 exports.BYTES_TYPE = 12;
 exports.ENUM_TYPE = 14;
+// @see https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto#L539
 exports.JS_NORMAL = 0;
 exports.JS_STRING = 1;
 exports.JS_NUMBER = 2;
@@ -27,7 +28,7 @@ TypeNumToTypeString[16] = "number"; // TYPE_SFIXED64
 TypeNumToTypeString[17] = "number"; // TYPE_SINT32 - Uses ZigZag encoding.
 TypeNumToTypeString[18] = "number"; // TYPE_SINT64 - Uses ZigZag encoding.
 const JsTypeNumToTypeString = {};
-JsTypeNumToTypeString[exports.JS_NORMAL] = null; // [jstype = JS_NORMAL]
+JsTypeNumToTypeString[exports.JS_NORMAL] = null; // [jstype = JS_NORMAL], value "null" means just using the original type
 JsTypeNumToTypeString[exports.JS_STRING] = "string"; // [jstype = JS_STRING]
 JsTypeNumToTypeString[exports.JS_NUMBER] = "number"; // [jstype = JS_NUMBER]
 var FieldTypesFormatter;

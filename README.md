@@ -357,18 +357,16 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 }
 ```
 
-## Gotchas
+## About jstype options of protobuf
 
-JavaScript can safely handle numbers below `Number.MAX_SAFE_INTEGER`. Beyond the
-limit, it begins to overflow:
+JavaScript can safely handle numbers below `Number.MAX_SAFE_INTEGER`. Beyond the limit, it begins to overflow:
 
 ```
 > 90071992547409912131 + 1
 90071992547409920000
 ```
 
-If you are expecting large, 64bit fields consider using a `jstype` option to
-override the field type.
+If you are expecting large, 64bit fields consider using a `jstype` option to override the field type.
 
 ```proto
 # example.proto
@@ -387,8 +385,8 @@ export namespace Example {
 ```
 
 ## Changes
-### 2.4.3
-Add support for `[jstype = JS_STRING]` overrides
+### 2.5.0
+Add support for `[jstype = JS_STRING]` overrides. See: [PR#37](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/37).
 
 ### 2.4.2
 Update grpc version in package.json of examples, to keep consistent.
