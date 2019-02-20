@@ -416,6 +416,34 @@ Fix issue of conflicted I{$MethodName} name, see: [Issue#19](https://github.com/
 ### 2.2.3
 Fix definitions. [fix: add missing argument grpc.Client~CallOptions for requests](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/15/commits/ea3bff861201446346a2e6dfe511edc8f0cb6fdf)
 
+## About Docker
+Sample below, just the idea, not perfect. Also some more info: [Issue#38](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/38#issuecomment-465475399). 
+
+```Dockerfile
+FROM node:8.4.0
+
+RUN apt-get update && \
+    apt-get -y install git unzip build-essential autoconf libtool
+
+RUN git clone https://github.com/google/protobuf.git && \
+    cd protobuf && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    make install && \
+    ldconfig && \
+    make clean && \
+    cd .. && \
+    rm -r protobuf
+
+RUN git clone https://github.com/agreatfool/grpc_tools_node_protoc_ts.git grpc_protoc && \
+    cd grpc_protoc && \
+    npm i -g grpc-tools@1.6.6 --unsafe-perm && \
+    npm i -g typescript --unsafe-perm && \
+    npm i --unsafe-perm && \
+    ./bash/build.sh
+```
+
 ## Environment
 ```bash
 # npm install grpc@1.9.0 --save
