@@ -440,8 +440,12 @@ RUN git clone https://github.com/agreatfool/grpc_tools_node_protoc_ts.git grpc_p
     cd grpc_protoc && \
     npm i -g grpc-tools@1.6.6 --unsafe-perm && \
     npm i -g typescript --unsafe-perm && \
-    npm i --unsafe-perm && \
-    ./bash/build.sh
+    npm i --unsafe-perm
+```
+```bash
+$ docker build -t node_protoc_plugin:0.1 .
+$ docker run --rm -i -t node_protoc_plugin:0.1 /bin/bash
+$ root@63249303596f:/# cd /grpc_protoc && ./bash/build.sh
 ```
 
 ## Environment
