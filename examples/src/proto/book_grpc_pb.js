@@ -8,7 +8,7 @@ function serialize_com_book_Book(arg) {
   if (!(arg instanceof book_pb.Book)) {
     throw new Error('Expected argument of type com.book.Book');
   }
-  return new Buffer(arg.serializeBinary());
+  return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_com_book_Book(buffer_arg) {
@@ -19,7 +19,7 @@ function serialize_com_book_GetBookRequest(arg) {
   if (!(arg instanceof book_pb.GetBookRequest)) {
     throw new Error('Expected argument of type com.book.GetBookRequest');
   }
-  return new Buffer(arg.serializeBinary());
+  return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_com_book_GetBookRequest(buffer_arg) {
@@ -30,7 +30,7 @@ function serialize_com_book_GetBookViaAuthor(arg) {
   if (!(arg instanceof book_pb.GetBookViaAuthor)) {
     throw new Error('Expected argument of type com.book.GetBookViaAuthor');
   }
-  return new Buffer(arg.serializeBinary());
+  return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_com_book_GetBookViaAuthor(buffer_arg) {

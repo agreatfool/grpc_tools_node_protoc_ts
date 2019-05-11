@@ -179,7 +179,7 @@ proto.com.book.Book.prototype.getIsbn = function() {
 
 /** @param {number} value */
 proto.com.book.Book.prototype.setIsbn = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -194,7 +194,7 @@ proto.com.book.Book.prototype.getTitle = function() {
 
 /** @param {string} value */
 proto.com.book.Book.prototype.setTitle = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -209,7 +209,7 @@ proto.com.book.Book.prototype.getAuthor = function() {
 
 /** @param {string} value */
 proto.com.book.Book.prototype.setAuthor = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -351,7 +351,7 @@ proto.com.book.GetBookRequest.prototype.getIsbn = function() {
 
 /** @param {number} value */
 proto.com.book.GetBookRequest.prototype.setIsbn = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -493,7 +493,7 @@ proto.com.book.GetBookViaAuthor.prototype.getAuthor = function() {
 
 /** @param {string} value */
 proto.com.book.GetBookViaAuthor.prototype.setAuthor = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -589,7 +589,7 @@ proto.com.book.BookStore.deserializeBinaryFromReader = function(msg, reader) {
     case 2:
       var value = msg.getBooksMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readInt64, jspb.BinaryReader.prototype.readString);
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readInt64, jspb.BinaryReader.prototype.readString, null, 0);
          });
       break;
     default:
@@ -646,7 +646,7 @@ proto.com.book.BookStore.prototype.getName = function() {
 
 /** @param {string} value */
 proto.com.book.BookStore.prototype.setName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -842,7 +842,7 @@ proto.com.book.SpecialCases.prototype.getNormal = function() {
 
 /** @param {string} value */
 proto.com.book.SpecialCases.prototype.setNormal = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -857,7 +857,7 @@ proto.com.book.SpecialCases.prototype.getDefault = function() {
 
 /** @param {string} value */
 proto.com.book.SpecialCases.prototype.setDefault = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -872,7 +872,7 @@ proto.com.book.SpecialCases.prototype.getFunction = function() {
 
 /** @param {string} value */
 proto.com.book.SpecialCases.prototype.setFunction = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -887,7 +887,7 @@ proto.com.book.SpecialCases.prototype.getVar = function() {
 
 /** @param {string} value */
 proto.com.book.SpecialCases.prototype.setVar = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
