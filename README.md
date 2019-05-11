@@ -49,15 +49,15 @@ protoc \
 ./your_proto_dir/*.proto
 ```
 
-## Sample
-There is a complete & runnable sample in folder `examples`.
+## Example
+There is a complete & runnable example in folder `examples`.
 
 Dirs:
 
 * proto: sample proto definition
 * bash: useful commands
     * build.sh: build js & d.ts codes from proto file, and tsc to build/*.js
-    * server.sh: start the sample server
+    * server.sh: start the server
     * client.sh: start the client & send requests
 
 ### book.proto
@@ -385,6 +385,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.1
+Remove unnecessary dependency `grpc` from package.json. See: [Issue#40](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/40).
+
 ### 2.5.0
 Add support for `[jstype = JS_STRING]` overrides. See: [PR#37](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/37).
 
