@@ -385,6 +385,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.2
+Fix vulnerability. See: [PR#41](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/41).
+
 ### 2.5.1
 Remove unnecessary dependency `grpc` from package.json. See: [Issue#40](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/40).
 
