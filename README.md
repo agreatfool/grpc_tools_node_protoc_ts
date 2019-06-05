@@ -423,9 +423,9 @@ Fix issue of conflicted I{$MethodName} name, see: [Issue#19](https://github.com/
 Fix definitions. [fix: add missing argument grpc.Client~CallOptions for requests](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/15/commits/ea3bff861201446346a2e6dfe511edc8f0cb6fdf)
 
 ## About vulnerability
-Since this tool is used to generate `typescript signature` for the codes generated from `grpc_tools_node_protoc`, the codes actually run with your application are from `grpc_tools_node_protoc` not this tool. So it's still safe to use even there are some vulnerabilities in this tool.
+Since this tool is used to generate `typescript signature` for the codes generated from `grpc_tools_node_protoc`, the codes actually run with your application are from `grpc_tools_node_protoc`, not this tool. So it's still safe to be used even there are some vulnerabilities in it.
 
-If you want your project to have no vulnerabilities detected, you could simply install this tool into global (out of your application project). And use it only when you want to generate the typescript signature in development.
+If you want your project to have no vulnerabilities detected, you could simply install this tool into global (out of your application project). And use it when you want to generate the typescript signature in development as usual.
 
 ## About Docker
 Sample below, just the idea, not perfect. Also some more info: [Issue#38](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/38#issuecomment-465475399). 
