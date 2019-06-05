@@ -386,7 +386,7 @@ export namespace Example {
 
 ## Changes
 ### 2.5.3
-Update doc add `About vulnerability` part.
+Update doc, add `About vulnerability` part.
 
 ### 2.5.2
 Fix vulnerability. See: [PR#41](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/41).
