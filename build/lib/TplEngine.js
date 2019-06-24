@@ -14,8 +14,8 @@ handlebars.registerHelper('curlyRight', function () {
 const TPL_BASE_PATH = LibPath.join(__dirname, 'template');
 var TplEngine;
 (function (TplEngine) {
-    function registerHelper(name, fn, inverse) {
-        handlebars.registerHelper(name, fn, inverse);
+    function registerHelper(name, fn) {
+        handlebars.registerHelper(name, fn);
     }
     TplEngine.registerHelper = registerHelper;
     function render(templateName, params) {
