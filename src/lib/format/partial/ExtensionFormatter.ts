@@ -6,21 +6,27 @@ import {FieldTypesFormatter} from "./FieldTypesFormatter";
 
 export namespace ExtensionFormatter {
 
+    export interface ExtensionModel {
+        indent: string,
+        extensionName: string,
+        fieldType: string,
+    }
+
     export function format(fileName: string,
                            exportMap: ExportMap,
                            extension: FieldDescriptorProto,
-                           indentLevel: number): string {
+                           indent: string): ExtensionModel {
 
         let extensionName = Utility.snakeToCamel(extension.getName());
         let fieldType = FieldTypesFormatter.getFieldType(
             extension.getType(), extension.getTypeName().slice(1), fileName, exportMap
         );
 
-        return TplEngine.render('partial/extension', {
-            indent: Utility.generateIndent(indentLevel),
+        return {
+            indent,
             extensionName: extensionName,
             fieldType: fieldType,
-        });
+        };
     }
 
 }

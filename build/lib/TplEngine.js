@@ -11,7 +11,11 @@ handlebars.registerHelper('curlyLeft', function () {
 handlebars.registerHelper('curlyRight', function () {
     return '}';
 });
+handlebars.registerHelper('render', function (templateName, params) {
+    return TplEngine.render(templateName, params);
+});
 const TPL_BASE_PATH = LibPath.join(__dirname, 'template');
+const templateCache = {};
 var TplEngine;
 (function (TplEngine) {
     function registerHelper(name, fn) {
@@ -19,7 +23,9 @@ var TplEngine;
     }
     TplEngine.registerHelper = registerHelper;
     function render(templateName, params) {
-        return compile(templateName)(params);
+        const template = templateCache[templateName] ||
+            (templateCache[templateName] = compile(templateName));
+        return template(params);
     }
     TplEngine.render = render;
     function compile(templateName) {

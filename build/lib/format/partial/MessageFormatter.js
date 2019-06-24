@@ -47,14 +47,15 @@ var MessageFormatter;
         }
         return Utility_1.Utility.isProto2(descriptor);
     }
-    function format(fileName, exportMap, descriptor, indentLevel, fileDescriptor) {
+    function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
+        const nextIndent = `${indent}    `;
         let messageData = JSON.parse(MessageFormatter.defaultMessageType);
         messageData.messageName = descriptor.getName();
         messageData.oneofDeclList = descriptor.getOneofDeclList();
         let messageOptions = descriptor.getOptions();
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
-            return "";
+            return null;
         }
         let oneofGroups = [];
         descriptor.getFieldList().forEach((field) => {
@@ -165,20 +166,20 @@ var MessageFormatter;
             messageData.fields.push(fieldData);
         });
         descriptor.getNestedTypeList().forEach(nested => {
-            const msgOutput = format(fileName, exportMap, nested, indentLevel + 1, fileDescriptor);
-            if (msgOutput !== "") {
+            const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor);
+            if (msgOutput !== null) {
                 // If the message class is a Map entry then it isn't output, so don't print the namespace block
                 messageData.nestedTypes.push(msgOutput);
             }
         });
         descriptor.getEnumTypeList().forEach(enumType => {
-            messageData.formattedEnumListStr.push(EnumFormatter_1.EnumFormatter.format(enumType, indentLevel + 1));
+            messageData.formattedEnumListStr.push(EnumFormatter_1.EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
-            messageData.formattedOneofListStr.push(OneofFormatter_1.OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], indentLevel + 1));
+            messageData.formattedOneofListStr.push(OneofFormatter_1.OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));
         });
         descriptor.getExtensionList().forEach(extension => {
-            messageData.formattedExtListStr.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, indentLevel + 1));
+            messageData.formattedExtListStr.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, nextIndent));
         });
         TplEngine_1.TplEngine.registerHelper('printClearIfNotPresent', function (fieldData) {
             if (!fieldData.hasClearMethodCreated) {
@@ -192,13 +193,13 @@ var MessageFormatter;
         TplEngine_1.TplEngine.registerHelper('oneOfName', function (oneOfDecl) {
             return Utility_1.Utility.oneOfName(oneOfDecl.getName());
         });
-        return TplEngine_1.TplEngine.render('partial/message', {
-            indent: Utility_1.Utility.generateIndent(indentLevel),
+        return {
+            indent,
             objectTypeName: exports.OBJECT_TYPE_NAME,
             BYTES_TYPE: FieldTypesFormatter_1.BYTES_TYPE,
             MESSAGE_TYPE: FieldTypesFormatter_1.MESSAGE_TYPE,
             message: messageData,
-        });
+        };
     }
     MessageFormatter.format = format;
 })(MessageFormatter = exports.MessageFormatter || (exports.MessageFormatter = {}));

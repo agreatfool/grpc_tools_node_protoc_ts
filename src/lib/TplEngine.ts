@@ -10,6 +10,9 @@ handlebars.registerHelper('curlyLeft', function () {
 handlebars.registerHelper('curlyRight', function () {
     return '}';
 });
+handlebars.registerHelper('render', function (templateName: string, params: { [key: string]: any }) {
+    return TplEngine.render(templateName, params);
+});
 
 const TPL_BASE_PATH = LibPath.join(__dirname, 'template');
 

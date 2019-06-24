@@ -23,7 +23,7 @@ var ProtoSvcTsdFormatter;
     });
     function format(descriptor, exportMap) {
         if (descriptor.getServiceList().length === 0) {
-            return '';
+            return null;
         }
         let fileName = descriptor.getName();
         let packageName = descriptor.getPackage();
@@ -78,12 +78,12 @@ var ProtoSvcTsdFormatter;
         TplEngine_1.TplEngine.registerHelper('lcFirst', function (str) {
             return str.charAt(0).toLowerCase() + str.slice(1);
         });
-        return TplEngine_1.TplEngine.render('svc_tsd', {
+        return {
             packageName: packageName,
             fileName: fileName,
             imports: imports,
             services: services,
-        });
+        };
     }
     ProtoSvcTsdFormatter.format = format;
 })(ProtoSvcTsdFormatter = exports.ProtoSvcTsdFormatter || (exports.ProtoSvcTsdFormatter = {}));

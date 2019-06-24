@@ -11,6 +11,7 @@ import {FileDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb
 
 import {ProtoMsgTsdFormatter} from "./lib/format/ProtoMsgTsdFormatter";
 import {ProtoSvcTsdFormatter} from "./lib/format/ProtoSvcTsdFormatter";
+import { TplEngine } from "./lib/TplEngine";
 
 Utility.withAllStdIn((inputBuff: Buffer) => {
 
@@ -34,16 +35,17 @@ Utility.withAllStdIn((inputBuff: Buffer) => {
             let msgFileName = Utility.filePathFromProtoWithoutExt(fileName);
             let msgTsdFile = new CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
-            msgTsdFile.setContent(ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap));
+            const msgModel = ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            msgTsdFile.setContent(TplEngine.render('msg_tsd', msgModel));
             codeGenResponse.addFile(msgTsdFile);
 
             // service part
-            let fileDescriptorOutput = ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
-            if (fileDescriptorOutput != '') {
+            let fileDescriptorModel = ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            if (fileDescriptorModel != null) {
                 let svcFileName = Utility.svcFilePathFromProtoWithoutExt(fileName);
                 let svtTsdFile = new CodeGeneratorResponse.File();
                 svtTsdFile.setName(svcFileName + ".d.ts");
-                svtTsdFile.setContent(fileDescriptorOutput);
+                svtTsdFile.setContent(TplEngine.render('svc_tsd', fileDescriptorModel));
                 codeGenResponse.addFile(svtTsdFile);
             }
         });
