@@ -385,6 +385,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.4
+Codes enhancement, use explicit model in coding. See: [PR#43](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/43). There is no functionality changes in this version update.
+
 ### 2.5.3
 Update doc, add `About vulnerability` part.
 
