@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Utility_1 = require("../Utility");
 const WellKnown_1 = require("../WellKnown");
-const TplEngine_1 = require("../TplEngine");
 const MessageFormatter_1 = require("./partial/MessageFormatter");
 const ExtensionFormatter_1 = require("./partial/ExtensionFormatter");
 const EnumFormatter_1 = require("./partial/EnumFormatter");
@@ -32,22 +31,22 @@ var ProtoMsgTsdFormatter;
             }
         });
         descriptor.getMessageTypeList().forEach(enumType => {
-            messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, 0, descriptor));
+            messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
         });
         descriptor.getExtensionList().forEach(extension => {
-            extensions.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, 0));
+            extensions.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, ""));
         });
         descriptor.getEnumTypeList().forEach(enumType => {
-            enums.push(EnumFormatter_1.EnumFormatter.format(enumType, 0));
+            enums.push(EnumFormatter_1.EnumFormatter.format(enumType, ""));
         });
-        return TplEngine_1.TplEngine.render('msg_tsd', {
+        return {
             packageName: packageName,
             fileName: fileName,
             imports: imports,
             messages: messages,
             extensions: extensions,
             enums: enums,
-        });
+        };
     }
     ProtoMsgTsdFormatter.format = format;
 })(ProtoMsgTsdFormatter = exports.ProtoMsgTsdFormatter || (exports.ProtoMsgTsdFormatter = {}));

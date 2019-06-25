@@ -4,18 +4,24 @@ import {Utility} from "../../Utility";
 
 export namespace EnumFormatter {
 
-    export function format(enumDescriptor: EnumDescriptorProto, indentLevel: number): string {
+    export interface EnumModel {
+        indent: string;
+        enumName: string;
+        values: { [key: string]: number };
+    }
+
+    export function format(enumDescriptor: EnumDescriptorProto, indent: string): EnumModel {
         let enumName = enumDescriptor.getName();
         let values: { [key: string]: number } = {};
         enumDescriptor.getValueList().forEach(value => {
             values[value.getName().toUpperCase()] = value.getNumber();
         });
 
-        return TplEngine.render('partial/enum', {
-            indent: Utility.generateIndent(indentLevel),
+        return {
+            indent,
             enumName: enumName,
             values: values,
-        });
+        };
     }
 
 }

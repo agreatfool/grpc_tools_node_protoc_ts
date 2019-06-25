@@ -40,9 +40,16 @@ export namespace ProtoSvcTsdFormatter {
         type: "",
     } as ServiceMethodType);
 
-    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): string {
+    export interface ProtoSvcTsdModel {
+        packageName: string;
+        fileName: string;
+        imports: string[];
+        services: Array<ServiceType>;
+    }
+
+    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): ProtoSvcTsdModel {
         if (descriptor.getServiceList().length === 0) {
-            return '';
+            return null;
         }
 
         let fileName = descriptor.getName();
@@ -106,12 +113,12 @@ export namespace ProtoSvcTsdFormatter {
             return str.charAt(0).toLowerCase() + str.slice(1);
         });
 
-        return TplEngine.render('svc_tsd', {
+        return {
             packageName: packageName,
             fileName: fileName,
             imports: imports,
             services: services,
-        });
+        };
     }
 
 }

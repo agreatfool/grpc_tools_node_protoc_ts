@@ -11,6 +11,7 @@ const Utility_1 = require("./lib/Utility");
 const plugin_pb_1 = require("google-protobuf/google/protobuf/compiler/plugin_pb");
 const ProtoMsgTsdFormatter_1 = require("./lib/format/ProtoMsgTsdFormatter");
 const ProtoSvcTsdFormatter_1 = require("./lib/format/ProtoSvcTsdFormatter");
+const TplEngine_1 = require("./lib/TplEngine");
 Utility_1.Utility.withAllStdIn((inputBuff) => {
     try {
         let typedInputBuff = new Uint8Array(inputBuff.length);
@@ -29,15 +30,16 @@ Utility_1.Utility.withAllStdIn((inputBuff) => {
             let msgFileName = Utility_1.Utility.filePathFromProtoWithoutExt(fileName);
             let msgTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
-            msgTsdFile.setContent(ProtoMsgTsdFormatter_1.ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap));
+            const msgModel = ProtoMsgTsdFormatter_1.ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            msgTsdFile.setContent(TplEngine_1.TplEngine.render('msg_tsd', msgModel));
             codeGenResponse.addFile(msgTsdFile);
             // service part
-            let fileDescriptorOutput = ProtoSvcTsdFormatter_1.ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
-            if (fileDescriptorOutput != '') {
+            let fileDescriptorModel = ProtoSvcTsdFormatter_1.ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            if (fileDescriptorModel != null) {
                 let svcFileName = Utility_1.Utility.svcFilePathFromProtoWithoutExt(fileName);
                 let svtTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
                 svtTsdFile.setName(svcFileName + ".d.ts");
-                svtTsdFile.setContent(fileDescriptorOutput);
+                svtTsdFile.setContent(TplEngine_1.TplEngine.render('svc_tsd', fileDescriptorModel));
                 codeGenResponse.addFile(svtTsdFile);
             }
         });

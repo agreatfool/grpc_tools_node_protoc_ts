@@ -4,9 +4,16 @@ import {Utility} from "../../Utility";
 
 export namespace OneofFormatter {
 
+    export interface OneofModel {
+        indent: string;
+        oneofName: string;
+        oneofNameUpper: string;
+        fields: { [key: string]: number };
+    }
+
     export function format(oneofDecl: OneofDescriptorProto,
                            oneofFields: Array<FieldDescriptorProto>,
-                           indentLevel: number): string {
+                           indent: string): OneofModel {
 
         let oneofName = Utility.oneOfName(oneofDecl.getName());
         let oneofNameUpper = oneofName.toUpperCase();
@@ -16,12 +23,12 @@ export namespace OneofFormatter {
             fields[field.getName().toUpperCase()] = field.getNumber();
         });
 
-        return TplEngine.render('partial/oneof', {
-            indent: Utility.generateIndent(indentLevel),
+        return {
+            indent,
             oneofName: oneofName,
             oneofNameUpper: oneofNameUpper,
             fields: fields,
-        });
+        };
 
     }
 

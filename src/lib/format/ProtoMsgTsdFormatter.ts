@@ -10,14 +10,23 @@ import {DependencyFilter} from "../DependencyFilter";
 
 export namespace ProtoMsgTsdFormatter {
 
-    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): string {
+    export interface ProtoMsgTsdModel {
+        packageName: string;
+        fileName: string;
+        imports: string[];
+        messages: MessageFormatter.MessageModel[];
+        extensions: ExtensionFormatter.ExtensionModel[];
+        enums: EnumFormatter.EnumModel[];
+    }
+
+    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): ProtoMsgTsdModel {
         let fileName = descriptor.getName();
         let packageName = descriptor.getPackage();
 
         let imports: Array<string> = [];
-        let messages: Array<string> = [];
-        let extensions: Array<string> = [];
-        let enums: Array<string> = [];
+        let messages: Array<MessageFormatter.MessageModel> = [];
+        let extensions: Array<ExtensionFormatter.ExtensionModel> = [];
+        let enums: Array<EnumFormatter.EnumModel> = [];
 
         let upToRoot = Utility.getPathToRoot(fileName);
 
@@ -36,23 +45,23 @@ export namespace ProtoMsgTsdFormatter {
         });
 
         descriptor.getMessageTypeList().forEach(enumType => {
-            messages.push(MessageFormatter.format(fileName, exportMap, enumType, 0, descriptor));
+            messages.push(MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
         });
         descriptor.getExtensionList().forEach(extension => {
-            extensions.push(ExtensionFormatter.format(fileName, exportMap, extension, 0));
+            extensions.push(ExtensionFormatter.format(fileName, exportMap, extension, ""));
         });
         descriptor.getEnumTypeList().forEach(enumType => {
-            enums.push(EnumFormatter.format(enumType, 0));
+            enums.push(EnumFormatter.format(enumType, ""));
         });
 
-        return TplEngine.render('msg_tsd', {
+        return {
             packageName: packageName,
             fileName: fileName,
             imports: imports,
             messages: messages,
             extensions: extensions,
             enums: enums,
-        });
+        };
     }
 
 }

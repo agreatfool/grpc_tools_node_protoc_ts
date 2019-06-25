@@ -21,10 +21,10 @@ export namespace MessageFormatter {
         oneofGroups: Array<Array<FieldDescriptorProto>>;
         oneofDeclList: Array<OneofDescriptorProto>;
         fields: Array<MessageFieldType>;
-        nestedTypes: Array<string>;
-        formattedEnumListStr: Array<string>;
-        formattedOneofListStr: Array<string>;
-        formattedExtListStr: Array<string>;
+        nestedTypes: Array<MessageFormatter.MessageModel>;
+        formattedEnumListStr: Array<EnumFormatter.EnumModel>;
+        formattedOneofListStr: Array<OneofFormatter.OneofModel>;
+        formattedExtListStr: Array<ExtensionFormatter.ExtensionModel>;
     }
 
     export const defaultMessageType = JSON.stringify({
@@ -76,6 +76,14 @@ export namespace MessageFormatter {
         valueType: FieldDescriptorProto.Type;
         valueTypeName: string;
     }
+    
+    export interface MessageModel {
+        indent: string;
+        objectTypeName: string;
+        BYTES_TYPE: number;
+        MESSAGE_TYPE: number;
+        message: MessageType;
+    }
 
     function hasFieldPresence(field: FieldDescriptorProto, descriptor: FileDescriptorProto): boolean {
         if (field.getLabel() === FieldDescriptorProto.Label.LABEL_REPEATED) {
@@ -96,9 +104,10 @@ export namespace MessageFormatter {
     export function format(fileName: string,
                            exportMap: ExportMap,
                            descriptor: DescriptorProto,
-                           indentLevel: number,
-                           fileDescriptor: FileDescriptorProto): string {
+                           indent: string,
+                           fileDescriptor: FileDescriptorProto): MessageModel {
 
+        const nextIndent = `${indent}    `;
         let messageData = JSON.parse(defaultMessageType) as MessageType;
 
         messageData.messageName = descriptor.getName();
@@ -106,7 +115,7 @@ export namespace MessageFormatter {
         let messageOptions = descriptor.getOptions();
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
-            return "";
+            return null;
         }
 
         let oneofGroups: Array<Array<FieldDescriptorProto>> = [];
@@ -233,20 +242,20 @@ export namespace MessageFormatter {
         });
 
         descriptor.getNestedTypeList().forEach(nested => {
-            const msgOutput = format(fileName, exportMap, nested, indentLevel + 1, fileDescriptor);
-            if (msgOutput !== "") {
+            const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor);
+            if (msgOutput !== null) {
                 // If the message class is a Map entry then it isn't output, so don't print the namespace block
                 messageData.nestedTypes.push(msgOutput);
             }
         });
         descriptor.getEnumTypeList().forEach(enumType => {
-            messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, indentLevel + 1));
+            messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
-            messageData.formattedOneofListStr.push(OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], indentLevel + 1));
+            messageData.formattedOneofListStr.push(OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));
         });
         descriptor.getExtensionList().forEach(extension => {
-            messageData.formattedExtListStr.push(ExtensionFormatter.format(fileName, exportMap, extension, indentLevel + 1));
+            messageData.formattedExtListStr.push(ExtensionFormatter.format(fileName, exportMap, extension, nextIndent));
         });
 
         TplEngine.registerHelper('printClearIfNotPresent', function (fieldData: MessageFieldType) {
@@ -262,13 +271,13 @@ export namespace MessageFormatter {
             return Utility.oneOfName(oneOfDecl.getName());
         });
 
-        return TplEngine.render('partial/message', {
-            indent: Utility.generateIndent(indentLevel),
+        return {
+            indent,
             objectTypeName: OBJECT_TYPE_NAME,
             BYTES_TYPE: BYTES_TYPE,
             MESSAGE_TYPE: MESSAGE_TYPE,
             message: messageData,
-        });
+        };
     }
 
 }
