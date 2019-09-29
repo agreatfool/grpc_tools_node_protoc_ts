@@ -18,6 +18,10 @@ export namespace ExtensionFormatter {
                            indent: string): ExtensionModel {
 
         let extensionName = Utility.snakeToCamel(extension.getName());
+        if (Utility.isReserved(extensionName)) {
+            extensionName = `pb_${extensionName}`;
+        }
+
         let fieldType = FieldTypesFormatter.getFieldType(
             extension.getType(), extension.getTypeName().slice(1), fileName, exportMap
         );

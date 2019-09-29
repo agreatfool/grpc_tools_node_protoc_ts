@@ -6,6 +6,9 @@ var ExtensionFormatter;
 (function (ExtensionFormatter) {
     function format(fileName, exportMap, extension, indent) {
         let extensionName = Utility_1.Utility.snakeToCamel(extension.getName());
+        if (Utility_1.Utility.isReserved(extensionName)) {
+            extensionName = `pb_${extensionName}`;
+        }
         let fieldType = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(extension.getType(), extension.getTypeName().slice(1), fileName, exportMap);
         return {
             indent,
