@@ -385,6 +385,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.5
+Fix extensions with reserved keywords. See: [PR#46](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/46).
+
 ### 2.5.4
 Codes enhancement, use explicit model in coding. See: [PR#43](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/43). There is no functionality changes in this version update.
 
