@@ -2,6 +2,7 @@
 // file: book.proto
 
 /* tslint:disable */
+/* eslint-disable */
 
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
