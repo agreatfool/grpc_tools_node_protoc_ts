@@ -119,6 +119,7 @@ message SpecialCases {
 // file: book.proto
 
 /* tslint:disable */
+/* eslint-disable */
 
 import * as jspb from "google-protobuf";
 
@@ -269,6 +270,7 @@ export enum EnumSample {
 // file: book.proto
 
 /* tslint:disable */
+/* eslint-disable */
 
 import * as grpc from "grpc";
 import * as book_pb from "./book_pb";
@@ -385,6 +387,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.6 - 2.5.7
+Add "/* eslint-disable */" in generated codes. See: [Issue#48](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/48). Also update package.json, to fix vulnerabilities.
+
 ### 2.5.5
 Fix extensions with reserved keywords. See: [PR#46](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/46).
 
