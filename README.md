@@ -470,16 +470,16 @@ $ root@63249303596f:/# cd /grpc_protoc && ./bash/build.sh
 
 ## Environment
 ```bash
-# npm install grpc@1.9.0 --save
-
 node --version
-# v8.4.0
+# v10.15.2
 npm --version
-# 5.2.0
+# 6.11.3
 protoc --version
-# libprotoc 3.3.0
+# libprotoc 3.10.0
 grpc_tools_node_protoc --version
-# libprotoc 3.4.0
+# libprotoc 3.6.1
 npm list -g --depth=0 | grep grpc-tools
-# grpc-tools@1.6.6
+# grpc-tools@1.7.1
+tsc --version
+# Version 3.6.4
 ```
