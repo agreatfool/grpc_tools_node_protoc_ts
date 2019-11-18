@@ -387,6 +387,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.8
+Fix vulnerabilities. See: [Issue#49](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/49).
+
 ### 2.5.6 - 2.5.7
 Add "/* eslint-disable */" in generated codes. See: [Issue#48](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/48). Also update package.json, to fix vulnerabilities.
 
