@@ -16,7 +16,7 @@ export namespace OneofFormatter {
                            indent: string): OneofModel {
 
         let oneofName = Utility.oneOfName(oneofDecl.getName());
-        let oneofNameUpper = oneofName.toUpperCase();
+        let oneofNameUpper = oneofDecl.getName().toUpperCase();
         let fields: { [key: string]: number } = {};
 
         oneofFields.forEach(field => {

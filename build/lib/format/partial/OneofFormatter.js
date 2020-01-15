@@ -5,7 +5,7 @@ var OneofFormatter;
 (function (OneofFormatter) {
     function format(oneofDecl, oneofFields, indent) {
         let oneofName = Utility_1.Utility.oneOfName(oneofDecl.getName());
-        let oneofNameUpper = oneofName.toUpperCase();
+        let oneofNameUpper = oneofDecl.getName().toUpperCase();
         let fields = {};
         oneofFields.forEach(field => {
             fields[field.getName().toUpperCase()] = field.getNumber();

@@ -47,3 +47,15 @@ message SpecialCases {
     string function = 3;
     string var = 4;
 }
+
+message OneOfSample {
+    oneof singleword {
+        bool a1 = 1;
+        bool b1 = 2;
+    }
+
+    oneof two_words {
+        bool a_2 = 3;
+        bool b_2 = 4;
+    }
+}
