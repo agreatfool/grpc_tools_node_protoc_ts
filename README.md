@@ -111,6 +111,18 @@ message SpecialCases {
     string function = 3;
     string var = 4;
 }
+
+message OneOfSample {
+    oneof singleword {
+        bool a1 = 1;
+        bool b1 = 2;
+    }
+
+    oneof two_words {
+        bool a_2 = 3;
+        bool b_2 = 4;
+    }
+}
 ```
 
 ### book_pb.d.ts
@@ -254,6 +266,73 @@ export namespace SpecialCases {
     }
 }
 
+export class OneOfSample extends jspb.Message { 
+
+    hasA1(): boolean;
+    clearA1(): void;
+    getA1(): boolean;
+    setA1(value: boolean): void;
+
+
+    hasB1(): boolean;
+    clearB1(): void;
+    getB1(): boolean;
+    setB1(value: boolean): void;
+
+
+    hasA2(): boolean;
+    clearA2(): void;
+    getA2(): boolean;
+    setA2(value: boolean): void;
+
+
+    hasB2(): boolean;
+    clearB2(): void;
+    getB2(): boolean;
+    setB2(value: boolean): void;
+
+
+    getSinglewordCase(): OneOfSample.SinglewordCase;
+    getTwoWordsCase(): OneOfSample.TwoWordsCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OneOfSample.AsObject;
+    static toObject(includeInstance: boolean, msg: OneOfSample): OneOfSample.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OneOfSample, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OneOfSample;
+    static deserializeBinaryFromReader(message: OneOfSample, reader: jspb.BinaryReader): OneOfSample;
+}
+
+export namespace OneOfSample {
+    export type AsObject = {
+        a1: boolean,
+        b1: boolean,
+        a2: boolean,
+        b2: boolean,
+    }
+
+    export enum SinglewordCase {
+        SINGLEWORD_NOT_SET = 0,
+    
+    A1 = 1,
+
+    B1 = 2,
+
+    }
+
+    export enum TwoWordsCase {
+        TWO_WORDS_NOT_SET = 0,
+    
+    A_2 = 3,
+
+    B_2 = 4,
+
+    }
+
+}
+
 export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,
@@ -387,6 +466,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.10
+Fix issue of oneof functionality. See: [PR#53](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/53).
+
 ### 2.5.9
 Fix vulnerabilities. See: [Issue#52](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/52).
 
