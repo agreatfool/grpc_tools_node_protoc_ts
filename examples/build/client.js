@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -16,7 +15,7 @@ const book_grpc_pb_1 = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleClient");
 const client = new book_grpc_pb_1.BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
-const getBook = (isbn) => __awaiter(void 0, void 0, void 0, function* () {
+const getBook = (isbn) => __awaiter(this, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         const request = new book_pb_1.GetBookRequest();
         request.setIsbn(isbn);
