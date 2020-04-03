@@ -466,6 +466,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 2.5.11
+Fix vulnerabilities. See: [PR#54](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/54).
+
 ### 2.5.10
 Fix issue of oneof functionality. See: [PR#53](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/53).
 
