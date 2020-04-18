@@ -265,7 +265,7 @@ export namespace MessageFormatter {
             }
         });
         TplEngine.registerHelper('printRepeatedAddMethod', function (fieldData: MessageFieldType, valueType: string) {
-            return `add${fieldData.camelUpperName}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
+            return `add${fieldData.camelUpperName}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number)`;
         });
         TplEngine.registerHelper('oneOfName', function (oneOfDecl: OneofDescriptorProto) {
             return Utility.oneOfName(oneOfDecl.getName());
