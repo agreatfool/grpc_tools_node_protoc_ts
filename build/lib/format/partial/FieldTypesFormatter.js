@@ -4,7 +4,7 @@ const Utility_1 = require("../../Utility");
 exports.MESSAGE_TYPE = 11;
 exports.BYTES_TYPE = 12;
 exports.ENUM_TYPE = 14;
-// @see https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto#L539
+// @see https://github.com/protocolbuffers/protobuf/blob/v3.11.4/src/google/protobuf/descriptor.proto#L542
 exports.JS_NORMAL = 0;
 exports.JS_STRING = 1;
 exports.JS_NUMBER = 2;

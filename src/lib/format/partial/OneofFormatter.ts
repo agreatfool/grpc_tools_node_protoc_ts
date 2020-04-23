@@ -1,10 +1,9 @@
 import {FieldDescriptorProto, OneofDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb";
-import {TplEngine} from "../../TplEngine";
 import {Utility} from "../../Utility";
 
 export namespace OneofFormatter {
 
-    export interface OneofModel {
+    export interface IOneofModel {
         indent: string;
         oneofName: string;
         oneofNameUpper: string;
@@ -12,22 +11,22 @@ export namespace OneofFormatter {
     }
 
     export function format(oneofDecl: OneofDescriptorProto,
-                           oneofFields: Array<FieldDescriptorProto>,
-                           indent: string): OneofModel {
+                           oneofFields: FieldDescriptorProto[],
+                           indent: string): IOneofModel {
 
-        let oneofName = Utility.oneOfName(oneofDecl.getName());
-        let oneofNameUpper = oneofDecl.getName().toUpperCase();
-        let fields: { [key: string]: number } = {};
+        const oneofName = Utility.oneOfName(oneofDecl.getName());
+        const oneofNameUpper = oneofDecl.getName().toUpperCase();
+        const fields: { [key: string]: number } = {};
 
-        oneofFields.forEach(field => {
+        oneofFields.forEach((field) => {
             fields[field.getName().toUpperCase()] = field.getNumber();
         });
 
         return {
             indent,
-            oneofName: oneofName,
-            oneofNameUpper: oneofNameUpper,
-            fields: fields,
+            oneofName,
+            oneofNameUpper,
+            fields,
         };
 
     }

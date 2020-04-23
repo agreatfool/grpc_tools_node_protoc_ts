@@ -1,5 +1,5 @@
 import {FileDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb";
-import {ExportEnumEntry, ExportMessageEntry} from "./ExportMap";
+import {IExportEnumEntry, IExportMessageEntry} from "./ExportMap";
 
 const PROTO2_SYNTAX = "proto2";
 
@@ -41,7 +41,7 @@ export namespace Utility {
         return depth === 1 ? "./" : new Array(depth).join("../");
     }
 
-    export function withinNamespaceFromExportEntry(name: string, exportEntry: ExportMessageEntry | ExportEnumEntry) {
+    export function withinNamespaceFromExportEntry(name: string, exportEntry: IExportMessageEntry | IExportEnumEntry) {
         return exportEntry.pkg ? name.substring(exportEntry.pkg.length + 1) : name;
     }
 

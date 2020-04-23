@@ -9,11 +9,11 @@ var ExtensionFormatter;
         if (Utility_1.Utility.isReserved(extensionName)) {
             extensionName = `pb_${extensionName}`;
         }
-        let fieldType = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(extension.getType(), extension.getTypeName().slice(1), fileName, exportMap);
+        const fieldType = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(extension.getType(), extension.getTypeName().slice(1), fileName, exportMap);
         return {
             indent,
-            extensionName: extensionName,
-            fieldType: fieldType,
+            extensionName,
+            fieldType,
         };
     }
     ExtensionFormatter.format = format;

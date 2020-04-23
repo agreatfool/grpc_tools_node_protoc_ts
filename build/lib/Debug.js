@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const LibUtil = require("util");
 const LibFs = require("fs");
-const LOG_PATH = '/tmp/protoc-gen-ts.debug.log';
+const LOG_PATH = "/tmp/protoc-gen-ts.debug.log";
 var Debug;
 (function (Debug) {
     function log(info) {

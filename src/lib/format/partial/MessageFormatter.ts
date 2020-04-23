@@ -2,7 +2,7 @@ import {
     DescriptorProto,
     FieldDescriptorProto,
     FileDescriptorProto,
-    OneofDescriptorProto
+    OneofDescriptorProto,
 } from "google-protobuf/google/protobuf/descriptor_pb";
 import {ExportMap} from "../../ExportMap";
 import {Utility} from "../../Utility";
@@ -12,19 +12,19 @@ import {ExtensionFormatter} from "./ExtensionFormatter";
 import {OneofFormatter} from "./OneofFormatter";
 import {TplEngine} from "../../TplEngine";
 
-export const OBJECT_TYPE_NAME = 'AsObject';
+export const OBJECT_TYPE_NAME = "AsObject";
 
 export namespace MessageFormatter {
 
-    export interface MessageType {
+    export interface IMessageType {
         messageName: string;
-        oneofGroups: Array<Array<FieldDescriptorProto>>;
-        oneofDeclList: Array<OneofDescriptorProto>;
-        fields: Array<MessageFieldType>;
-        nestedTypes: Array<MessageFormatter.MessageModel>;
-        formattedEnumListStr: Array<EnumFormatter.EnumModel>;
-        formattedOneofListStr: Array<OneofFormatter.OneofModel>;
-        formattedExtListStr: Array<ExtensionFormatter.ExtensionModel>;
+        oneofGroups: FieldDescriptorProto[][];
+        oneofDeclList: OneofDescriptorProto[];
+        fields: IMessageFieldType[];
+        nestedTypes: MessageFormatter.IMessageModel[];
+        formattedEnumListStr: EnumFormatter.IEnumModel[];
+        formattedOneofListStr: OneofFormatter.IOneofModel[];
+        formattedExtListStr: ExtensionFormatter.IExtensionModel[];
     }
 
     export const defaultMessageType = JSON.stringify({
@@ -36,9 +36,9 @@ export namespace MessageFormatter {
         formattedEnumListStr: [],
         formattedOneofListStr: [],
         formattedExtListStr: [],
-    } as MessageType);
+    } as IMessageType);
 
-    export interface MessageFieldType {
+    export interface IMessageFieldType {
         snakeCaseName: string;
         camelCaseName: string;
         camelUpperName: string;
@@ -46,7 +46,7 @@ export namespace MessageFormatter {
         type: FieldDescriptorProto.Type;
         exportType: string;
         isMapField: boolean;
-        mapFieldInfo?: MessageMapField;
+        mapFieldInfo?: IMessageMapField;
         isRepeatField: boolean;
         isOptionalValue: boolean;
         canBeUndefined: boolean;
@@ -68,21 +68,21 @@ export namespace MessageFormatter {
         canBeUndefined: false,
         hasClearMethodCreated: false,
         hasFieldPresence: false,
-    } as MessageFieldType);
+    } as IMessageFieldType);
 
-    export interface MessageMapField {
+    export interface IMessageMapField {
         keyType: FieldDescriptorProto.Type;
         keyTypeName: string;
         valueType: FieldDescriptorProto.Type;
         valueTypeName: string;
     }
-    
-    export interface MessageModel {
+
+    export interface IMessageModel {
         indent: string;
         objectTypeName: string;
         BYTES_TYPE: number;
         MESSAGE_TYPE: number;
-        message: MessageType;
+        message: IMessageType;
     }
 
     function hasFieldPresence(field: FieldDescriptorProto, descriptor: FileDescriptorProto): boolean {
@@ -105,27 +105,27 @@ export namespace MessageFormatter {
                            exportMap: ExportMap,
                            descriptor: DescriptorProto,
                            indent: string,
-                           fileDescriptor: FileDescriptorProto): MessageModel {
+                           fileDescriptor: FileDescriptorProto): IMessageModel {
 
         const nextIndent = `${indent}    `;
-        let messageData = JSON.parse(defaultMessageType) as MessageType;
+        const messageData = JSON.parse(defaultMessageType) as IMessageType;
 
         messageData.messageName = descriptor.getName();
         messageData.oneofDeclList = descriptor.getOneofDeclList();
-        let messageOptions = descriptor.getOptions();
+        const messageOptions = descriptor.getOptions();
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
             return null;
         }
 
-        let oneofGroups: Array<Array<FieldDescriptorProto>> = [];
+        const oneofGroups: FieldDescriptorProto[][] = [];
 
         descriptor.getFieldList().forEach((field: FieldDescriptorProto) => {
 
-            let fieldData = JSON.parse(defaultMessageFieldType) as MessageFieldType;
+            const fieldData = JSON.parse(defaultMessageFieldType) as IMessageFieldType;
 
             if (field.hasOneofIndex()) {
-                let oneOfIndex = field.getOneofIndex();
+                const oneOfIndex = field.getOneofIndex();
                 let existing = oneofGroups[oneOfIndex];
                 if (existing === undefined) {
                     existing = [];
@@ -148,7 +148,7 @@ export namespace MessageFormatter {
 
             let exportType;
 
-            let fullTypeName = field.getTypeName().slice(1);
+            const fullTypeName = field.getTypeName().slice(1);
             if (fieldData.type === MESSAGE_TYPE) {
 
                 const fieldMessageType = exportMap.getMessage(fullTypeName);
@@ -159,12 +159,12 @@ export namespace MessageFormatter {
                 fieldData.isMapField = fieldMessageType.messageOptions !== undefined
                     && fieldMessageType.messageOptions.getMapEntry();
                 if (fieldData.isMapField) {
-                    let mapData = {} as MessageMapField;
-                    let keyTuple = fieldMessageType.mapFieldOptions!.key;
-                    let keyType = keyTuple[0];
-                    let keyTypeName = FieldTypesFormatter.getFieldType(keyType, keyTuple[1] as string, fileName, exportMap);
-                    let valueTuple = fieldMessageType.mapFieldOptions!.value;
-                    let valueType = valueTuple[0];
+                    const mapData = {} as IMessageMapField;
+                    const keyTuple = fieldMessageType.mapFieldOptions!.key;
+                    const keyType = keyTuple[0];
+                    const keyTypeName = FieldTypesFormatter.getFieldType(keyType, keyTuple[1] as string, fileName, exportMap);
+                    const valueTuple = fieldMessageType.mapFieldOptions!.value;
+                    const valueType = valueTuple[0];
                     let valueTypeName = FieldTypesFormatter.getFieldType(valueType, valueTuple[1] as string, fileName, exportMap);
                     if (valueType === BYTES_TYPE) {
                         valueTypeName = "Uint8Array | string";
@@ -178,7 +178,7 @@ export namespace MessageFormatter {
                     return;
                 }
 
-                let withinNamespace = Utility.withinNamespaceFromExportEntry(fullTypeName, fieldMessageType);
+                const withinNamespace = Utility.withinNamespaceFromExportEntry(fullTypeName, fieldMessageType);
                 if (fieldMessageType.fileName === fileName) {
                     exportType = withinNamespace;
                 } else {
@@ -188,11 +188,11 @@ export namespace MessageFormatter {
 
             } else if (fieldData.type === ENUM_TYPE) {
 
-                let fieldEnumType = exportMap.getEnum(fullTypeName);
+                const fieldEnumType = exportMap.getEnum(fullTypeName);
                 if (fieldEnumType === undefined) {
                     throw new Error("No enum export for: " + fullTypeName);
                 }
-                let withinNamespace = Utility.withinNamespaceFromExportEntry(fullTypeName, fieldEnumType);
+                const withinNamespace = Utility.withinNamespaceFromExportEntry(fullTypeName, fieldEnumType);
                 if (fieldEnumType.fileName === fileName) {
                     exportType = withinNamespace;
                 } else {
@@ -241,41 +241,41 @@ export namespace MessageFormatter {
 
         });
 
-        descriptor.getNestedTypeList().forEach(nested => {
+        descriptor.getNestedTypeList().forEach((nested) => {
             const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor);
             if (msgOutput !== null) {
                 // If the message class is a Map entry then it isn't output, so don't print the namespace block
                 messageData.nestedTypes.push(msgOutput);
             }
         });
-        descriptor.getEnumTypeList().forEach(enumType => {
+        descriptor.getEnumTypeList().forEach((enumType) => {
             messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
             messageData.formattedOneofListStr.push(OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));
         });
-        descriptor.getExtensionList().forEach(extension => {
+        descriptor.getExtensionList().forEach((extension) => {
             messageData.formattedExtListStr.push(ExtensionFormatter.format(fileName, exportMap, extension, nextIndent));
         });
 
-        TplEngine.registerHelper('printClearIfNotPresent', function (fieldData: MessageFieldType) {
+        TplEngine.registerHelper("printClearIfNotPresent", (fieldData: IMessageFieldType) => {
             if (!fieldData.hasClearMethodCreated) {
                 fieldData.hasClearMethodCreated = true;
                 return `clear${fieldData.camelUpperName}${fieldData.isRepeatField ? "List" : ""}(): void;`;
             }
         });
-        TplEngine.registerHelper('printRepeatedAddMethod', function (fieldData: MessageFieldType, valueType: string) {
+        TplEngine.registerHelper("printRepeatedAddMethod", (fieldData: IMessageFieldType, valueType: string) => {
             return `add${fieldData.camelUpperName}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
         });
-        TplEngine.registerHelper('oneOfName', function (oneOfDecl: OneofDescriptorProto) {
+        TplEngine.registerHelper("oneOfName", (oneOfDecl: OneofDescriptorProto) => {
             return Utility.oneOfName(oneOfDecl.getName());
         });
 
         return {
             indent,
             objectTypeName: OBJECT_TYPE_NAME,
-            BYTES_TYPE: BYTES_TYPE,
-            MESSAGE_TYPE: MESSAGE_TYPE,
+            BYTES_TYPE,
+            MESSAGE_TYPE,
             message: messageData,
         };
     }

@@ -4,17 +4,17 @@ const Utility_1 = require("../../Utility");
 var OneofFormatter;
 (function (OneofFormatter) {
     function format(oneofDecl, oneofFields, indent) {
-        let oneofName = Utility_1.Utility.oneOfName(oneofDecl.getName());
-        let oneofNameUpper = oneofDecl.getName().toUpperCase();
-        let fields = {};
-        oneofFields.forEach(field => {
+        const oneofName = Utility_1.Utility.oneOfName(oneofDecl.getName());
+        const oneofNameUpper = oneofDecl.getName().toUpperCase();
+        const fields = {};
+        oneofFields.forEach((field) => {
             fields[field.getName().toUpperCase()] = field.getNumber();
         });
         return {
             indent,
-            oneofName: oneofName,
-            oneofNameUpper: oneofNameUpper,
-            fields: fields,
+            oneofName,
+            oneofNameUpper,
+            fields,
         };
     }
     OneofFormatter.format = format;
