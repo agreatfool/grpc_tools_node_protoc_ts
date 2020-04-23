@@ -466,6 +466,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 3.0.0
+[@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js) now is supported. See: [Issue#56](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/56). Users who still using [grpc](https://www.npmjs.com/package/grpc) would **NOT** be affected. More detailed information, please go to [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
+
 ### 2.5.11
 Fix vulnerabilities. See: [PR#54](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/54).
 
