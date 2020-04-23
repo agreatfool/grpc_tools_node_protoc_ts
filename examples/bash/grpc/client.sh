@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 BASEDIR=$(dirname "$0")
-cd ${BASEDIR}/../
+cd ${BASEDIR}/../../
 
-DEBUG=* node ./build/client.js
+DEBUG=* node ./build/grpc/client.js
