@@ -4,7 +4,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import * as grpc from "grpc";
+import * as grpc from "@grpc/grpc-js";
+import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as book_pb from "./book_pb";
 
 interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
@@ -56,7 +57,7 @@ export const BookServiceService: IBookServiceService;
 export interface IBookServiceServer {
     getBook: grpc.handleUnaryCall<book_pb.GetBookRequest, book_pb.Book>;
     getBooksViaAuthor: grpc.handleServerStreamingCall<book_pb.GetBookViaAuthor, book_pb.Book>;
-    getGreatestBook: grpc.handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
+    getGreatestBook: handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
     getBooks: grpc.handleBidiStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
 }
 
