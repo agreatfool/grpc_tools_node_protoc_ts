@@ -14,7 +14,6 @@ class ServerImpl {
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);
     }
-    ;
     getBooks(call) {
         call.on("data", (request) => {
             const reply = new book_pb_1.Book();
@@ -29,7 +28,6 @@ class ServerImpl {
             call.end();
         });
     }
-    ;
     getBooksViaAuthor(call) {
         log(`[getBooksViaAuthor] Request: ${JSON.stringify(call.request.toObject())}`);
         for (let i = 1; i <= 10; i++) {
@@ -43,7 +41,6 @@ class ServerImpl {
         log("[getBooksViaAuthor] Done.");
         call.end();
     }
-    ;
     getGreatestBook(call, callback) {
         let lastOne;
         call.on("data", (request) => {
@@ -59,7 +56,6 @@ class ServerImpl {
             callback(null, reply);
         });
     }
-    ;
 }
 function startServer() {
     const server = new grpc.Server();
