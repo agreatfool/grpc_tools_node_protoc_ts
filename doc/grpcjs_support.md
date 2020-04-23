@@ -3,7 +3,7 @@
 ## Why
 [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js) is a great project. it's pure js implementation, this makes it's easy to build docker images & cooperation with electron, etc.
 
-Recently grpc-js has published it's `1.0.1` version, means it's **NO LONGER** `beta`. So it's a good time to support it.
+Recently grpc-js has published it's `1.0.1` version, means it's no longer `beta`. So it's a good time to support it.
 
 ## Some information
 
