@@ -32,7 +32,7 @@ export namespace TplEngine {
 
     export function compile(templateName: string): HandlebarsTemplateDelegate {
         return handlebars.compile(
-            LibFs.readFileSync(`${LibPath.join(TPL_BASE_PATH, templateName)}.hbs`).toString()
+            LibFs.readFileSync(`${LibPath.join(TPL_BASE_PATH, templateName)}.hbs`).toString(),
         );
     }
 
