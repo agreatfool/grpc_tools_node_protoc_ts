@@ -3,4 +3,4 @@
 BASEDIR=$(dirname "$0")
 cd ${BASEDIR}/../
 
-DEBUG=* node ./build/server.js
+DEBUG=* node ./build/grpc/server.js

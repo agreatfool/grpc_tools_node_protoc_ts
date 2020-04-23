@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import * as debug from "debug";
-import * as grpc from "grpc";
+import * as grpc from "@grpc/grpc-js";
 
-import { BookServiceClient } from "./proto/book_grpc_pb";
+import * as bookGrpcPb from "./proto/book_grpc_pb";
 import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
 
 const log = debug("SampleClient");
 
+const BookServiceClient = grpc.makeClientConstructor(bookGrpcPb["com.book.BookService"], "BookService");
 const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
 
 const getBook = async (isbn: number) => {
