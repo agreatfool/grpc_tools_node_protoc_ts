@@ -10,5 +10,5 @@ export const WellKnownTypesMap: { [key: string]: string } = {
     "google/protobuf/struct.proto": "google-protobuf/google/protobuf/struct_pb",
     "google/protobuf/timestamp.proto": "google-protobuf/google/protobuf/timestamp_pb",
     "google/protobuf/type.proto": "google-protobuf/google/protobuf/type_pb",
-    "google/protobuf/wrappers.proto": "google-protobuf/google/protobuf/wrappers_pb"
+    "google/protobuf/wrappers.proto": "google-protobuf/google/protobuf/wrappers_pb",
 };

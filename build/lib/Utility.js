@@ -8,7 +8,7 @@ var Utility;
     }
     Utility.filePathToPseudoNamespace = filePathToPseudoNamespace;
     function snakeToCamel(str) {
-        return str.replace(/(_\w)/g, function (m) {
+        return str.replace(/(_\w)/g, (m) => {
             return m[1].toUpperCase();
         });
     }
@@ -55,16 +55,17 @@ var Utility;
         const ret = [];
         let len = 0;
         const stdin = process.stdin;
-        stdin.on("readable", function () {
+        stdin.on("readable", () => {
             let chunk;
             while ((chunk = stdin.read())) {
-                if (!(chunk instanceof Buffer))
+                if (!(chunk instanceof Buffer)) {
                     throw new Error("Did not receive buffer");
+                }
                 ret.push(chunk);
                 len += chunk.length;
             }
         });
-        stdin.on("end", function () {
+        stdin.on("end", () => {
             callback(Buffer.concat(ret, len));
         });
     }

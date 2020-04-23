@@ -10,7 +10,7 @@ export namespace Utility {
     }
 
     export function snakeToCamel(str: string): string {
-        return str.replace(/(_\w)/g, function (m) {
+        return str.replace(/(_\w)/g, (m) => {
             return m[1].toUpperCase();
         });
     }
@@ -31,7 +31,7 @@ export namespace Utility {
     export function generateIndent(indentLevel: number): string {
         let indent = "";
         for (let i = 0; i < indentLevel; i++) {
-            indent += "    "
+            indent += "    ";
         }
         return indent;
     }
@@ -58,17 +58,19 @@ export namespace Utility {
         let len = 0;
 
         const stdin = process.stdin;
-        stdin.on("readable", function () {
+        stdin.on("readable", () => {
             let chunk;
 
             while ((chunk = stdin.read())) {
-                if (!(chunk instanceof Buffer)) throw new Error("Did not receive buffer");
+                if (!(chunk instanceof Buffer)) {
+                    throw new Error("Did not receive buffer");
+                }
                 ret.push(chunk);
                 len += chunk.length;
             }
         });
 
-        stdin.on("end", function () {
+        stdin.on("end", () => {
             callback(Buffer.concat(ret, len));
         });
     }
