@@ -21,7 +21,7 @@ var ProtoSvcTsdFormatter;
         responseTypeName: "",
         type: "",
     });
-    function format(descriptor, exportMap) {
+    function format(descriptor, exportMap, isGrpcJs) {
         if (descriptor.getServiceList().length === 0) {
             return null;
         }
@@ -31,7 +31,13 @@ var ProtoSvcTsdFormatter;
         const imports = [];
         const services = [];
         // Need to import the non-service file that was generated for this .proto file
-        imports.push(`import * as grpc from "grpc";`);
+        if (isGrpcJs) {
+            imports.push(`import * as grpc from "@grpc/grpc-js";`);
+            imports.push(`import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";`);
+        }
+        else {
+            imports.push(`import * as grpc from "grpc";`);
+        }
         const asPseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(fileName);
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility_1.Utility.filePathFromProtoWithoutExt(fileName)}";`);
         descriptor.getDependencyList().forEach((dependency) => {
@@ -77,6 +83,9 @@ var ProtoSvcTsdFormatter;
         });
         TplEngine_1.TplEngine.registerHelper("lcFirst", (str) => {
             return str.charAt(0).toLowerCase() + str.slice(1);
+        });
+        TplEngine_1.TplEngine.registerHelper("fetchIsGrpcJs", () => {
+            return isGrpcJs;
         });
         return {
             packageName,

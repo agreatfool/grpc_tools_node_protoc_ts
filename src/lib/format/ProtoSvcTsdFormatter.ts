@@ -47,7 +47,7 @@ export namespace ProtoSvcTsdFormatter {
         services: IServiceType[];
     }
 
-    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): IProtoSvcTsdModel {
+    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap, isGrpcJs: boolean): IProtoSvcTsdModel {
         if (descriptor.getServiceList().length === 0) {
             return null;
         }
@@ -60,7 +60,12 @@ export namespace ProtoSvcTsdFormatter {
         const services: IServiceType[] = [];
 
         // Need to import the non-service file that was generated for this .proto file
-        imports.push(`import * as grpc from "grpc";`);
+        if (isGrpcJs) {
+            imports.push(`import * as grpc from "@grpc/grpc-js";`);
+            imports.push(`import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";`);
+        } else {
+            imports.push(`import * as grpc from "grpc";`);
+        }
         const asPseudoNamespace = Utility.filePathToPseudoNamespace(fileName);
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility.filePathFromProtoWithoutExt(fileName)}";`);
 
@@ -111,6 +116,10 @@ export namespace ProtoSvcTsdFormatter {
 
         TplEngine.registerHelper("lcFirst", (str) => {
             return str.charAt(0).toLowerCase() + str.slice(1);
+        });
+
+        TplEngine.registerHelper("fetchIsGrpcJs", () => {
+            return isGrpcJs;
         });
 
         return {

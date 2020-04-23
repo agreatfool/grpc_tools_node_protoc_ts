@@ -35,7 +35,11 @@ export interface I{{{serviceName}}}Server {
     {{lcFirst methodName}}: grpc.handleUnaryCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
+            {{#if (fetchIsGrpcJs)}}
+    {{lcFirst methodName}}: handleClientStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+            {{else}}
     {{lcFirst methodName}}: grpc.handleClientStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+            {{/if}}
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
     {{lcFirst methodName}}: grpc.handleServerStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
