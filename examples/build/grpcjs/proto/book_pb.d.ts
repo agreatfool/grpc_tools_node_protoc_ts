@@ -8,13 +8,13 @@ import * as jspb from "google-protobuf";
 
 export class Book extends jspb.Message { 
     getIsbn(): number;
-    setIsbn(value: number): void;
+    setIsbn(value: number): Book;
 
     getTitle(): string;
-    setTitle(value: string): void;
+    setTitle(value: string): Book;
 
     getAuthor(): string;
-    setAuthor(value: string): void;
+    setAuthor(value: string): Book;
 
 
     serializeBinary(): Uint8Array;
@@ -37,7 +37,7 @@ export namespace Book {
 
 export class GetBookRequest extends jspb.Message { 
     getIsbn(): number;
-    setIsbn(value: number): void;
+    setIsbn(value: number): GetBookRequest;
 
 
     serializeBinary(): Uint8Array;
@@ -58,7 +58,7 @@ export namespace GetBookRequest {
 
 export class GetBookViaAuthor extends jspb.Message { 
     getAuthor(): string;
-    setAuthor(value: string): void;
+    setAuthor(value: string): GetBookViaAuthor;
 
 
     serializeBinary(): Uint8Array;
@@ -79,7 +79,7 @@ export namespace GetBookViaAuthor {
 
 export class BookStore extends jspb.Message { 
     getName(): string;
-    setName(value: string): void;
+    setName(value: string): BookStore;
 
 
     getBooksMap(): jspb.Map<number, string>;
@@ -106,16 +106,16 @@ export namespace BookStore {
 
 export class SpecialCases extends jspb.Message { 
     getNormal(): string;
-    setNormal(value: string): void;
+    setNormal(value: string): SpecialCases;
 
     getDefault(): string;
-    setDefault(value: string): void;
+    setDefault(value: string): SpecialCases;
 
     getFunction(): string;
-    setFunction(value: string): void;
+    setFunction(value: string): SpecialCases;
 
     getVar(): string;
-    setVar(value: string): void;
+    setVar(value: string): SpecialCases;
 
 
     serializeBinary(): Uint8Array;
@@ -142,25 +142,25 @@ export class OneOfSample extends jspb.Message {
     hasA1(): boolean;
     clearA1(): void;
     getA1(): boolean;
-    setA1(value: boolean): void;
+    setA1(value: boolean): OneOfSample;
 
 
     hasB1(): boolean;
     clearB1(): void;
     getB1(): boolean;
-    setB1(value: boolean): void;
+    setB1(value: boolean): OneOfSample;
 
 
     hasA2(): boolean;
     clearA2(): void;
     getA2(): boolean;
-    setA2(value: boolean): void;
+    setA2(value: boolean): OneOfSample;
 
 
     hasB2(): boolean;
     clearB2(): void;
     getB2(): boolean;
-    setB2(value: boolean): void;
+    setB2(value: boolean): OneOfSample;
 
 
     getSinglewordCase(): OneOfSample.SinglewordCase;

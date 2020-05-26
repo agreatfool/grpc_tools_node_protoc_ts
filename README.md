@@ -11,6 +11,9 @@ More information about grpc_tools_node_protoc:
 * [doc how to use](https://github.com/grpc/grpc/blob/master/examples/node/static_codegen/README.md)
 
 ## Breaking changes
+### v4.0.0
+Fix the issues along with [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0), see: [PR#55](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/55). If you are using grpc-tools with version under `1.9.0`, you should `NOT` upgrade.
+
 ### v2.4.0
 The return value of type `ClientReadableStream` was wrong previously. And has been fixed in this version. Please be careful to update your code.
 See detail: [PR#30](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/30).
@@ -137,13 +140,13 @@ import * as jspb from "google-protobuf";
 
 export class Book extends jspb.Message { 
     getIsbn(): number;
-    setIsbn(value: number): void;
+    setIsbn(value: number): Book;
 
     getTitle(): string;
-    setTitle(value: string): void;
+    setTitle(value: string): Book;
 
     getAuthor(): string;
-    setAuthor(value: string): void;
+    setAuthor(value: string): Book;
 
 
     serializeBinary(): Uint8Array;
@@ -166,7 +169,7 @@ export namespace Book {
 
 export class GetBookRequest extends jspb.Message { 
     getIsbn(): number;
-    setIsbn(value: number): void;
+    setIsbn(value: number): GetBookRequest;
 
 
     serializeBinary(): Uint8Array;
@@ -187,7 +190,7 @@ export namespace GetBookRequest {
 
 export class GetBookViaAuthor extends jspb.Message { 
     getAuthor(): string;
-    setAuthor(value: string): void;
+    setAuthor(value: string): GetBookViaAuthor;
 
 
     serializeBinary(): Uint8Array;
@@ -208,7 +211,7 @@ export namespace GetBookViaAuthor {
 
 export class BookStore extends jspb.Message { 
     getName(): string;
-    setName(value: string): void;
+    setName(value: string): BookStore;
 
 
     getBooksMap(): jspb.Map<number, string>;
@@ -235,16 +238,16 @@ export namespace BookStore {
 
 export class SpecialCases extends jspb.Message { 
     getNormal(): string;
-    setNormal(value: string): void;
+    setNormal(value: string): SpecialCases;
 
     getDefault(): string;
-    setDefault(value: string): void;
+    setDefault(value: string): SpecialCases;
 
     getFunction(): string;
-    setFunction(value: string): void;
+    setFunction(value: string): SpecialCases;
 
     getVar(): string;
-    setVar(value: string): void;
+    setVar(value: string): SpecialCases;
 
 
     serializeBinary(): Uint8Array;
@@ -271,25 +274,25 @@ export class OneOfSample extends jspb.Message {
     hasA1(): boolean;
     clearA1(): void;
     getA1(): boolean;
-    setA1(value: boolean): void;
+    setA1(value: boolean): OneOfSample;
 
 
     hasB1(): boolean;
     clearB1(): void;
     getB1(): boolean;
-    setB1(value: boolean): void;
+    setB1(value: boolean): OneOfSample;
 
 
     hasA2(): boolean;
     clearA2(): void;
     getA2(): boolean;
-    setA2(value: boolean): void;
+    setA2(value: boolean): OneOfSample;
 
 
     hasB2(): boolean;
     clearB2(): void;
     getB2(): boolean;
-    setB2(value: boolean): void;
+    setB2(value: boolean): OneOfSample;
 
 
     getSinglewordCase(): OneOfSample.SinglewordCase;
@@ -466,8 +469,11 @@ export namespace Example {
 ```
 
 ## Changes
+### 4.0.0
+[grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0) changes the generated js codes a lot. Current version is released to fix the setters issue, see: [PR#55](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/55). Note: This is a breaking change, if you are still using grpc-tools with version under `1.9.0`, you `DO NOT` need to upgrade, version `4.0.0` would break your codes.
+
 ### 3.0.0
-[@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js) now is supported. See: [Issue#56](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/56). Users who still using [grpc](https://www.npmjs.com/package/grpc) would **NOT** be affected. More detailed information, please go to [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
+[@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js) now is supported. See: [Issue#56](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/56). Users who still using [grpc](https://www.npmjs.com/package/grpc) would **NOT** be affected. More detailed information, please go to [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md). Note: This upgrade requires grpc-tools version 1.8.1.
 
 ### 2.5.11
 Fix vulnerabilities. See: [PR#54](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/54).
