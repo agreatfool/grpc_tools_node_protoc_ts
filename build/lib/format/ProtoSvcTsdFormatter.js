@@ -21,37 +21,43 @@ var ProtoSvcTsdFormatter;
         responseTypeName: "",
         type: "",
     });
-    function format(descriptor, exportMap) {
+    function format(descriptor, exportMap, isGrpcJs) {
         if (descriptor.getServiceList().length === 0) {
             return null;
         }
-        let fileName = descriptor.getName();
-        let packageName = descriptor.getPackage();
-        let upToRoot = Utility_1.Utility.getPathToRoot(fileName);
-        let imports = [];
-        let services = [];
+        const fileName = descriptor.getName();
+        const packageName = descriptor.getPackage();
+        const upToRoot = Utility_1.Utility.getPathToRoot(fileName);
+        const imports = [];
+        const services = [];
         // Need to import the non-service file that was generated for this .proto file
-        imports.push(`import * as grpc from "grpc";`);
-        let asPseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(fileName);
+        if (isGrpcJs) {
+            imports.push(`import * as grpc from "@grpc/grpc-js";`);
+            imports.push(`import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";`);
+        }
+        else {
+            imports.push(`import * as grpc from "grpc";`);
+        }
+        const asPseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(fileName);
         imports.push(`import * as ${asPseudoNamespace} from "${upToRoot}${Utility_1.Utility.filePathFromProtoWithoutExt(fileName)}";`);
         descriptor.getDependencyList().forEach((dependency) => {
             if (DependencyFilter_1.DependencyFilter.indexOf(dependency) !== -1) {
                 return; // filtered
             }
-            let pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);
+            const pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);
             if (dependency in WellKnown_1.WellKnownTypesMap) {
                 imports.push(`import * as ${pseudoNamespace} from "${WellKnown_1.WellKnownTypesMap[dependency]}";`);
             }
             else {
-                let filePath = Utility_1.Utility.filePathFromProtoWithoutExt(dependency);
+                const filePath = Utility_1.Utility.filePathFromProtoWithoutExt(dependency);
                 imports.push(`import * as ${pseudoNamespace} from "${upToRoot + filePath}";`);
             }
         });
-        descriptor.getServiceList().forEach(service => {
-            let serviceData = JSON.parse(ProtoSvcTsdFormatter.defaultServiceType);
+        descriptor.getServiceList().forEach((service) => {
+            const serviceData = JSON.parse(ProtoSvcTsdFormatter.defaultServiceType);
             serviceData.serviceName = service.getName();
-            service.getMethodList().forEach(method => {
-                let methodData = JSON.parse(ProtoSvcTsdFormatter.defaultServiceMethodType);
+            service.getMethodList().forEach((method) => {
+                const methodData = JSON.parse(ProtoSvcTsdFormatter.defaultServiceMethodType);
                 methodData.packageName = packageName;
                 methodData.serviceName = serviceData.serviceName;
                 methodData.methodName = method.getName();
@@ -60,29 +66,32 @@ var ProtoSvcTsdFormatter;
                 methodData.requestTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(FieldTypesFormatter_1.MESSAGE_TYPE, method.getInputType().slice(1), "", exportMap);
                 methodData.responseTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(FieldTypesFormatter_1.MESSAGE_TYPE, method.getOutputType().slice(1), "", exportMap);
                 if (!methodData.requestStream && !methodData.responseStream) {
-                    methodData.type = 'ClientUnaryCall';
+                    methodData.type = "ClientUnaryCall";
                 }
                 else if (methodData.requestStream && !methodData.responseStream) {
-                    methodData.type = 'ClientWritableStream';
+                    methodData.type = "ClientWritableStream";
                 }
                 else if (!methodData.requestStream && methodData.responseStream) {
-                    methodData.type = 'ClientReadableStream';
+                    methodData.type = "ClientReadableStream";
                 }
                 else if (methodData.requestStream && methodData.responseStream) {
-                    methodData.type = 'ClientDuplexStream';
+                    methodData.type = "ClientDuplexStream";
                 }
                 serviceData.methods.push(methodData);
             });
             services.push(serviceData);
         });
-        TplEngine_1.TplEngine.registerHelper('lcFirst', function (str) {
+        TplEngine_1.TplEngine.registerHelper("lcFirst", (str) => {
             return str.charAt(0).toLowerCase() + str.slice(1);
         });
+        TplEngine_1.TplEngine.registerHelper("fetchIsGrpcJs", () => {
+            return isGrpcJs;
+        });
         return {
-            packageName: packageName,
-            fileName: fileName,
-            imports: imports,
-            services: services,
+            packageName,
+            fileName,
+            imports,
+            services,
         };
     }
     ProtoSvcTsdFormatter.format = format;

@@ -3,33 +3,32 @@ import {
     EnumOptions,
     FieldDescriptorProto,
     FileDescriptorProto,
-    MessageOptions
+    MessageOptions,
 } from "google-protobuf/google/protobuf/descriptor_pb";
-
 import Type = FieldDescriptorProto.Type;
 
-export type ExportMessageEntry = {
-    pkg: string,
-    fileName: string,
-    messageOptions: MessageOptions,
+export interface IExportMessageEntry {
+    pkg: string;
+    fileName: string;
+    messageOptions: MessageOptions;
     mapFieldOptions?: {
         key: [Type, string],    // Type, StringTypeName
         value: [Type, string],  // Type, StringTypeName
-    }
+    };
 }
 
-export type ExportEnumEntry = {
-    pkg: string,
-    fileName: string,
-    enumOptions: EnumOptions,
+export interface IExportEnumEntry {
+    pkg: string;
+    fileName: string;
+    enumOptions: EnumOptions;
 }
 
 export class ExportMap {
-    messageMap: { [key: string]: ExportMessageEntry } = {};
-    enumMap: { [key: string]: ExportEnumEntry } = {};
+    protected messageMap: { [key: string]: IExportMessageEntry } = {};
+    protected enumMap: { [key: string]: IExportEnumEntry } = {};
 
-    exportNested(scope: string, fileDescriptor: FileDescriptorProto, message: DescriptorProto) {
-        const messageEntry: ExportMessageEntry = {
+    public exportNested(scope: string, fileDescriptor: FileDescriptorProto, message: DescriptorProto) {
+        const messageEntry: IExportMessageEntry = {
             pkg: fileDescriptor.getPackage(),
             fileName: fileDescriptor.getName(),
             messageOptions: message.getOptions(),
@@ -42,11 +41,11 @@ export class ExportMap {
         const entryName = `${scope ? scope + "." : ""}${message.getName()}`;
         this.messageMap[entryName] = messageEntry;
 
-        message.getNestedTypeList().forEach(nested => {
+        message.getNestedTypeList().forEach((nested) => {
             this.exportNested(entryName, fileDescriptor, nested);
         });
 
-        message.getEnumTypeList().forEach(enumType => {
+        message.getEnumTypeList().forEach((enumType) => {
             const identifier = entryName + "." + enumType.getName();
             this.enumMap[identifier] = {
                 pkg: fileDescriptor.getPackage(),
@@ -56,13 +55,13 @@ export class ExportMap {
         });
     }
 
-    addFileDescriptor(fileDescriptor: FileDescriptorProto) {
+    public addFileDescriptor(fileDescriptor: FileDescriptorProto) {
         const scope = fileDescriptor.getPackage();
-        fileDescriptor.getMessageTypeList().forEach(messageType => {
+        fileDescriptor.getMessageTypeList().forEach((messageType) => {
             this.exportNested(scope, fileDescriptor, messageType);
         });
 
-        fileDescriptor.getEnumTypeList().forEach(enumType => {
+        fileDescriptor.getEnumTypeList().forEach((enumType) => {
             const entryName = `${scope ? scope + "." : ""}${enumType.getName()}`;
             this.enumMap[entryName] = {
                 pkg: fileDescriptor.getPackage(),
@@ -72,11 +71,11 @@ export class ExportMap {
         });
     }
 
-    getMessage(str: string): ExportMessageEntry | undefined {
+    public getMessage(str: string): IExportMessageEntry | undefined {
         return this.messageMap[str];
     }
 
-    getEnum(str: string): ExportEnumEntry | undefined {
+    public getEnum(str: string): IExportEnumEntry | undefined {
         return this.enumMap[str];
     }
 }

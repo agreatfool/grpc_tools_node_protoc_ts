@@ -1,21 +1,21 @@
 import {FieldDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb";
-import {ExportEnumEntry, ExportMap, ExportMessageEntry} from "../../ExportMap";
+import {ExportMap, IExportEnumEntry, IExportMessageEntry} from "../../ExportMap";
 import {Utility} from "../../Utility";
 
 export const MESSAGE_TYPE = 11;
 export const BYTES_TYPE = 12;
 export const ENUM_TYPE = 14;
 
-// @see https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/descriptor.proto#L539
+// @see https://github.com/protocolbuffers/protobuf/blob/v3.11.4/src/google/protobuf/descriptor.proto#L542
 export const JS_NORMAL = 0;
 export const JS_STRING = 1;
 export const JS_NUMBER = 2;
 
-interface TypeMap {
-  [key: number]: string
+interface ITypeMap {
+    [key: number]: string;
 }
 
-const TypeNumToTypeString = <TypeMap>{};
+const TypeNumToTypeString = {} as ITypeMap;
 TypeNumToTypeString[1] = "number"; // TYPE_DOUBLE
 TypeNumToTypeString[2] = "number"; // TYPE_FLOAT
 TypeNumToTypeString[3] = "number"; // TYPE_INT64
@@ -35,7 +35,7 @@ TypeNumToTypeString[16] = "number"; // TYPE_SFIXED64
 TypeNumToTypeString[17] = "number"; // TYPE_SINT32 - Uses ZigZag encoding.
 TypeNumToTypeString[18] = "number"; // TYPE_SINT64 - Uses ZigZag encoding.
 
-const JsTypeNumToTypeString = <TypeMap>{};
+const JsTypeNumToTypeString = {} as ITypeMap;
 JsTypeNumToTypeString[JS_NORMAL] = null; // [jstype = JS_NORMAL], value "null" means just using the original type
 JsTypeNumToTypeString[JS_STRING] = "string"; // [jstype = JS_STRING]
 JsTypeNumToTypeString[JS_NUMBER] = "number"; // [jstype = JS_NUMBER]
@@ -56,7 +56,7 @@ export namespace FieldTypesFormatter {
                                  exportMap: ExportMap): string {
 
         let fieldType: string;
-        let fromExport: ExportMessageEntry | ExportEnumEntry;
+        let fromExport: IExportMessageEntry | IExportEnumEntry;
         let withinNamespace: string;
 
         switch (type) {

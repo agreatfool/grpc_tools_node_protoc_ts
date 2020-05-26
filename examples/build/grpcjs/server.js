@@ -2,8 +2,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const debug = require("debug");
-const grpc = require("grpc");
-const book_grpc_pb_1 = require("./proto/book_grpc_pb");
+const grpc = require("@grpc/grpc-js");
+const bookGrpcPb = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleServer");
 class ServerImpl {
@@ -14,7 +14,6 @@ class ServerImpl {
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);
     }
-    ;
     getBooks(call) {
         call.on("data", (request) => {
             const reply = new book_pb_1.Book();
@@ -29,7 +28,6 @@ class ServerImpl {
             call.end();
         });
     }
-    ;
     getBooksViaAuthor(call) {
         log(`[getBooksViaAuthor] Request: ${JSON.stringify(call.request.toObject())}`);
         for (let i = 1; i <= 10; i++) {
@@ -43,7 +41,6 @@ class ServerImpl {
         log("[getBooksViaAuthor] Done.");
         call.end();
     }
-    ;
     getGreatestBook(call, callback) {
         let lastOne;
         call.on("data", (request) => {
@@ -59,14 +56,18 @@ class ServerImpl {
             callback(null, reply);
         });
     }
-    ;
 }
 function startServer() {
     const server = new grpc.Server();
-    server.addService(book_grpc_pb_1.BookServiceService, new ServerImpl());
-    server.bind("127.0.0.1:50051", grpc.ServerCredentials.createInsecure());
-    server.start();
-    log("Server started, listening: 127.0.0.1:50051");
+    // @ts-ignore
+    server.addService(bookGrpcPb["com.book.BookService"], new ServerImpl());
+    server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
+        if (err) {
+            throw err;
+        }
+        log(`Server started, listening: 127.0.0.1:${port}`);
+        server.start();
+    });
 }
 startServer();
 process.on("uncaughtException", (err) => {

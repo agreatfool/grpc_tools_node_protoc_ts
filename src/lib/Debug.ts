@@ -1,7 +1,7 @@
 import * as LibUtil from "util";
 import * as LibFs from "fs";
 
-const LOG_PATH = '/tmp/protoc-gen-ts.debug.log';
+const LOG_PATH = "/tmp/protoc-gen-ts.debug.log";
 
 export namespace Debug {
 

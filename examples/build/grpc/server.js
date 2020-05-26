@@ -1,27 +1,22 @@
 #!/usr/bin/env node
-
-import * as debug from "debug";
-import * as grpc from "grpc";
-
-import { BookServiceService, IBookServiceServer } from "./proto/book_grpc_pb";
-import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const debug = require("debug");
+const grpc = require("grpc");
+const book_grpc_pb_1 = require("./proto/book_grpc_pb");
+const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleServer");
-
-class ServerImpl implements IBookServiceServer {
-    getBook(call: grpc.ServerUnaryCall<GetBookRequest>, callback: grpc.sendUnaryData<Book>) {
-        const book = new Book();
-
+class ServerImpl {
+    getBook(call, callback) {
+        const book = new book_pb_1.Book();
         book.setTitle("DefaultBook");
         book.setAuthor("DefaultAuthor");
-
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);
-    };
-
-    getBooks(call: grpc.ServerDuplexStream<GetBookRequest, Book>) {
-        call.on("data", (request: GetBookRequest) => {
-            const reply = new Book();
+    }
+    getBooks(call) {
+        call.on("data", (request) => {
+            const reply = new book_pb_1.Book();
             reply.setTitle(`Book${request.getIsbn()}`);
             reply.setAuthor(`Author${request.getIsbn()}`);
             reply.setIsbn(request.getIsbn());
@@ -32,12 +27,11 @@ class ServerImpl implements IBookServiceServer {
             log("[getBooks] Done.");
             call.end();
         });
-    };
-
-    getBooksViaAuthor(call: grpc.ServerWriteableStream<GetBookViaAuthor>) {
+    }
+    getBooksViaAuthor(call) {
         log(`[getBooksViaAuthor] Request: ${JSON.stringify(call.request.toObject())}`);
         for (let i = 1; i <= 10; i++) {
-            const reply = new Book();
+            const reply = new book_pb_1.Book();
             reply.setTitle(`Book${i}`);
             reply.setAuthor(call.request.getAuthor());
             reply.setIsbn(i);
@@ -46,41 +40,35 @@ class ServerImpl implements IBookServiceServer {
         }
         log("[getBooksViaAuthor] Done.");
         call.end();
-    };
-
-    getGreatestBook(call: grpc.ServerReadableStream<GetBookRequest>, callback: grpc.sendUnaryData<Book>) {
-        let lastOne: GetBookRequest;
-        call.on("data", (request: GetBookRequest) => {
+    }
+    getGreatestBook(call, callback) {
+        let lastOne;
+        call.on("data", (request) => {
             log(`[getGreatestBook] Request: ${JSON.stringify(request.toObject())}`);
             lastOne = request;
         });
         call.on("end", () => {
-            const reply = new Book();
+            const reply = new book_pb_1.Book();
             reply.setIsbn(lastOne.getIsbn());
             reply.setTitle("LastOne");
             reply.setAuthor("LastOne");
             log(`[getGreatestBook] Done: ${JSON.stringify(reply.toObject())}`);
             callback(null, reply);
         });
-    };
+    }
 }
-
 function startServer() {
-  const server = new grpc.Server();
-
-  server.addService(BookServiceService, new ServerImpl());
-  server.bind("127.0.0.1:50051", grpc.ServerCredentials.createInsecure());
-  server.start();
-
-  log("Server started, listening: 127.0.0.1:50051");
+    const server = new grpc.Server();
+    server.addService(book_grpc_pb_1.BookServiceService, new ServerImpl());
+    server.bind("127.0.0.1:50051", grpc.ServerCredentials.createInsecure());
+    server.start();
+    log("Server started, listening: 127.0.0.1:50051");
 }
-
 startServer();
-
 process.on("uncaughtException", (err) => {
-  log(`process on uncaughtException error: ${err}`);
+    log(`process on uncaughtException error: ${err}`);
 });
-
 process.on("unhandledRejection", (err) => {
-  log(`process on unhandledRejection error: ${err}`);
+    log(`process on unhandledRejection error: ${err}`);
 });
+//# sourceMappingURL=server.js.map

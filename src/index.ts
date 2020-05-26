@@ -11,46 +11,47 @@ import {FileDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb
 
 import {ProtoMsgTsdFormatter} from "./lib/format/ProtoMsgTsdFormatter";
 import {ProtoSvcTsdFormatter} from "./lib/format/ProtoSvcTsdFormatter";
-import { TplEngine } from "./lib/TplEngine";
+import {TplEngine} from "./lib/TplEngine";
 
 Utility.withAllStdIn((inputBuff: Buffer) => {
 
     try {
-        let typedInputBuff = new Uint8Array((inputBuff as any).length);
-        //noinspection TypeScriptValidateTypes
+        const typedInputBuff = new Uint8Array((inputBuff as any).length);
         typedInputBuff.set(inputBuff);
 
-        let codeGenRequest = CodeGeneratorRequest.deserializeBinary(typedInputBuff);
-        let codeGenResponse = new CodeGeneratorResponse();
-        let exportMap = new ExportMap();
-        let fileNameToDescriptor: { [key: string]: FileDescriptorProto } = {};
+        const codeGenRequest = CodeGeneratorRequest.deserializeBinary(typedInputBuff);
+        const codeGenResponse = new CodeGeneratorResponse();
+        const exportMap = new ExportMap();
+        const fileNameToDescriptor: { [key: string]: FileDescriptorProto } = {};
 
-        codeGenRequest.getProtoFileList().forEach(protoFileDescriptor => {
+        const isGrpcJs = "generate_package_definition" === codeGenRequest.getParameter();
+
+        codeGenRequest.getProtoFileList().forEach((protoFileDescriptor) => {
             fileNameToDescriptor[protoFileDescriptor.getName()] = protoFileDescriptor;
             exportMap.addFileDescriptor(protoFileDescriptor);
         });
 
-        codeGenRequest.getFileToGenerateList().forEach(fileName => {
+        codeGenRequest.getFileToGenerateList().forEach((fileName) => {
             // message part
-            let msgFileName = Utility.filePathFromProtoWithoutExt(fileName);
-            let msgTsdFile = new CodeGeneratorResponse.File();
+            const msgFileName = Utility.filePathFromProtoWithoutExt(fileName);
+            const msgTsdFile = new CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
             const msgModel = ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
-            msgTsdFile.setContent(TplEngine.render('msg_tsd', msgModel));
+            msgTsdFile.setContent(TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
 
             // service part
-            let fileDescriptorModel = ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            const fileDescriptorModel = ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap, isGrpcJs);
             if (fileDescriptorModel != null) {
-                let svcFileName = Utility.svcFilePathFromProtoWithoutExt(fileName);
-                let svtTsdFile = new CodeGeneratorResponse.File();
+                const svcFileName = Utility.svcFilePathFromProtoWithoutExt(fileName);
+                const svtTsdFile = new CodeGeneratorResponse.File();
                 svtTsdFile.setName(svcFileName + ".d.ts");
-                svtTsdFile.setContent(TplEngine.render('svc_tsd', fileDescriptorModel));
+                svtTsdFile.setContent(TplEngine.render("svc_tsd", fileDescriptorModel));
                 codeGenResponse.addFile(svtTsdFile);
             }
         });
 
-        process.stdout.write(new Buffer(codeGenResponse.serializeBinary()));
+        process.stdout.write(Buffer.from(codeGenResponse.serializeBinary()));
     } catch (err) {
         console.error("protoc-gen-ts error: " + err.stack + "\n");
         process.exit(1);

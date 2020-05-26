@@ -7,7 +7,7 @@ const EnumFormatter_1 = require("./EnumFormatter");
 const ExtensionFormatter_1 = require("./ExtensionFormatter");
 const OneofFormatter_1 = require("./OneofFormatter");
 const TplEngine_1 = require("../../TplEngine");
-exports.OBJECT_TYPE_NAME = 'AsObject';
+exports.OBJECT_TYPE_NAME = "AsObject";
 var MessageFormatter;
 (function (MessageFormatter) {
     MessageFormatter.defaultMessageType = JSON.stringify({
@@ -49,19 +49,19 @@ var MessageFormatter;
     }
     function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
         const nextIndent = `${indent}    `;
-        let messageData = JSON.parse(MessageFormatter.defaultMessageType);
+        const messageData = JSON.parse(MessageFormatter.defaultMessageType);
         messageData.messageName = descriptor.getName();
         messageData.oneofDeclList = descriptor.getOneofDeclList();
-        let messageOptions = descriptor.getOptions();
+        const messageOptions = descriptor.getOptions();
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
             return null;
         }
-        let oneofGroups = [];
+        const oneofGroups = [];
         descriptor.getFieldList().forEach((field) => {
-            let fieldData = JSON.parse(MessageFormatter.defaultMessageFieldType);
+            const fieldData = JSON.parse(MessageFormatter.defaultMessageFieldType);
             if (field.hasOneofIndex()) {
-                let oneOfIndex = field.getOneofIndex();
+                const oneOfIndex = field.getOneofIndex();
                 let existing = oneofGroups[oneOfIndex];
                 if (existing === undefined) {
                     existing = [];
@@ -81,7 +81,7 @@ var MessageFormatter;
             fieldData.isMapField = false;
             fieldData.canBeUndefined = false;
             let exportType;
-            let fullTypeName = field.getTypeName().slice(1);
+            const fullTypeName = field.getTypeName().slice(1);
             if (fieldData.type === FieldTypesFormatter_1.MESSAGE_TYPE) {
                 const fieldMessageType = exportMap.getMessage(fullTypeName);
                 if (fieldMessageType === undefined) {
@@ -90,12 +90,12 @@ var MessageFormatter;
                 fieldData.isMapField = fieldMessageType.messageOptions !== undefined
                     && fieldMessageType.messageOptions.getMapEntry();
                 if (fieldData.isMapField) {
-                    let mapData = {};
-                    let keyTuple = fieldMessageType.mapFieldOptions.key;
-                    let keyType = keyTuple[0];
-                    let keyTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(keyType, keyTuple[1], fileName, exportMap);
-                    let valueTuple = fieldMessageType.mapFieldOptions.value;
-                    let valueType = valueTuple[0];
+                    const mapData = {};
+                    const keyTuple = fieldMessageType.mapFieldOptions.key;
+                    const keyType = keyTuple[0];
+                    const keyTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(keyType, keyTuple[1], fileName, exportMap);
+                    const valueTuple = fieldMessageType.mapFieldOptions.value;
+                    const valueType = valueTuple[0];
                     let valueTypeName = FieldTypesFormatter_1.FieldTypesFormatter.getFieldType(valueType, valueTuple[1], fileName, exportMap);
                     if (valueType === FieldTypesFormatter_1.BYTES_TYPE) {
                         valueTypeName = "Uint8Array | string";
@@ -108,7 +108,7 @@ var MessageFormatter;
                     messageData.fields.push(fieldData);
                     return;
                 }
-                let withinNamespace = Utility_1.Utility.withinNamespaceFromExportEntry(fullTypeName, fieldMessageType);
+                const withinNamespace = Utility_1.Utility.withinNamespaceFromExportEntry(fullTypeName, fieldMessageType);
                 if (fieldMessageType.fileName === fileName) {
                     exportType = withinNamespace;
                 }
@@ -118,11 +118,11 @@ var MessageFormatter;
                 fieldData.exportType = exportType;
             }
             else if (fieldData.type === FieldTypesFormatter_1.ENUM_TYPE) {
-                let fieldEnumType = exportMap.getEnum(fullTypeName);
+                const fieldEnumType = exportMap.getEnum(fullTypeName);
                 if (fieldEnumType === undefined) {
                     throw new Error("No enum export for: " + fullTypeName);
                 }
-                let withinNamespace = Utility_1.Utility.withinNamespaceFromExportEntry(fullTypeName, fieldEnumType);
+                const withinNamespace = Utility_1.Utility.withinNamespaceFromExportEntry(fullTypeName, fieldEnumType);
                 if (fieldEnumType.fileName === fileName) {
                     exportType = withinNamespace;
                 }
@@ -165,32 +165,32 @@ var MessageFormatter;
             fieldData.hasFieldPresence = hasFieldPresence(field, fileDescriptor);
             messageData.fields.push(fieldData);
         });
-        descriptor.getNestedTypeList().forEach(nested => {
+        descriptor.getNestedTypeList().forEach((nested) => {
             const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor);
             if (msgOutput !== null) {
                 // If the message class is a Map entry then it isn't output, so don't print the namespace block
                 messageData.nestedTypes.push(msgOutput);
             }
         });
-        descriptor.getEnumTypeList().forEach(enumType => {
+        descriptor.getEnumTypeList().forEach((enumType) => {
             messageData.formattedEnumListStr.push(EnumFormatter_1.EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
             messageData.formattedOneofListStr.push(OneofFormatter_1.OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));
         });
-        descriptor.getExtensionList().forEach(extension => {
+        descriptor.getExtensionList().forEach((extension) => {
             messageData.formattedExtListStr.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, nextIndent));
         });
-        TplEngine_1.TplEngine.registerHelper('printClearIfNotPresent', function (fieldData) {
+        TplEngine_1.TplEngine.registerHelper("printClearIfNotPresent", (fieldData) => {
             if (!fieldData.hasClearMethodCreated) {
                 fieldData.hasClearMethodCreated = true;
                 return `clear${fieldData.camelUpperName}${fieldData.isRepeatField ? "List" : ""}(): void;`;
             }
         });
-        TplEngine_1.TplEngine.registerHelper('printRepeatedAddMethod', function (fieldData, valueType) {
+        TplEngine_1.TplEngine.registerHelper("printRepeatedAddMethod", (fieldData, valueType) => {
             return `add${fieldData.camelUpperName}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
         });
-        TplEngine_1.TplEngine.registerHelper('oneOfName', function (oneOfDecl) {
+        TplEngine_1.TplEngine.registerHelper("oneOfName", (oneOfDecl) => {
             return Utility_1.Utility.oneOfName(oneOfDecl.getName());
         });
         return {

@@ -17,10 +17,10 @@ class ExportMap {
         };
         const entryName = `${scope ? scope + "." : ""}${message.getName()}`;
         this.messageMap[entryName] = messageEntry;
-        message.getNestedTypeList().forEach(nested => {
+        message.getNestedTypeList().forEach((nested) => {
             this.exportNested(entryName, fileDescriptor, nested);
         });
-        message.getEnumTypeList().forEach(enumType => {
+        message.getEnumTypeList().forEach((enumType) => {
             const identifier = entryName + "." + enumType.getName();
             this.enumMap[identifier] = {
                 pkg: fileDescriptor.getPackage(),
@@ -31,10 +31,10 @@ class ExportMap {
     }
     addFileDescriptor(fileDescriptor) {
         const scope = fileDescriptor.getPackage();
-        fileDescriptor.getMessageTypeList().forEach(messageType => {
+        fileDescriptor.getMessageTypeList().forEach((messageType) => {
             this.exportNested(scope, fileDescriptor, messageType);
         });
-        fileDescriptor.getEnumTypeList().forEach(enumType => {
+        fileDescriptor.getEnumTypeList().forEach((enumType) => {
             const entryName = `${scope ? scope + "." : ""}${enumType.getName()}`;
             this.enumMap[entryName] = {
                 pkg: fileDescriptor.getPackage(),

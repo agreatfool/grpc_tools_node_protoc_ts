@@ -9,43 +9,43 @@ const DependencyFilter_1 = require("../DependencyFilter");
 var ProtoMsgTsdFormatter;
 (function (ProtoMsgTsdFormatter) {
     function format(descriptor, exportMap) {
-        let fileName = descriptor.getName();
-        let packageName = descriptor.getPackage();
-        let imports = [];
-        let messages = [];
-        let extensions = [];
-        let enums = [];
-        let upToRoot = Utility_1.Utility.getPathToRoot(fileName);
+        const fileName = descriptor.getName();
+        const packageName = descriptor.getPackage();
+        const imports = [];
+        const messages = [];
+        const extensions = [];
+        const enums = [];
+        const upToRoot = Utility_1.Utility.getPathToRoot(fileName);
         imports.push(`import * as jspb from "google-protobuf";`);
         descriptor.getDependencyList().forEach((dependency) => {
             if (DependencyFilter_1.DependencyFilter.indexOf(dependency) !== -1) {
                 return; // filtered
             }
-            let pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);
+            const pseudoNamespace = Utility_1.Utility.filePathToPseudoNamespace(dependency);
             if (dependency in WellKnown_1.WellKnownTypesMap) {
                 imports.push(`import * as ${pseudoNamespace} from "${WellKnown_1.WellKnownTypesMap[dependency]}";`);
             }
             else {
-                let filePath = Utility_1.Utility.filePathFromProtoWithoutExt(dependency);
+                const filePath = Utility_1.Utility.filePathFromProtoWithoutExt(dependency);
                 imports.push(`import * as ${pseudoNamespace} from "${upToRoot}${filePath}";`);
             }
         });
-        descriptor.getMessageTypeList().forEach(enumType => {
+        descriptor.getMessageTypeList().forEach((enumType) => {
             messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
         });
-        descriptor.getExtensionList().forEach(extension => {
+        descriptor.getExtensionList().forEach((extension) => {
             extensions.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, ""));
         });
-        descriptor.getEnumTypeList().forEach(enumType => {
+        descriptor.getEnumTypeList().forEach((enumType) => {
             enums.push(EnumFormatter_1.EnumFormatter.format(enumType, ""));
         });
         return {
-            packageName: packageName,
-            fileName: fileName,
-            imports: imports,
-            messages: messages,
-            extensions: extensions,
-            enums: enums,
+            packageName,
+            fileName,
+            imports,
+            messages,
+            extensions,
+            enums,
         };
     }
     ProtoMsgTsdFormatter.format = format;

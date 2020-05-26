@@ -3,18 +3,18 @@ import * as LibPath from "path";
 import * as handlebars from "handlebars";
 import * as helpers from "handlebars-helpers";
 
-helpers({handlebars: handlebars});
-handlebars.registerHelper('curlyLeft', function () {
-    return '{';
+helpers({handlebars});
+handlebars.registerHelper("curlyLeft", () => {
+    return "{";
 });
-handlebars.registerHelper('curlyRight', function () {
-    return '}';
+handlebars.registerHelper("curlyRight", () => {
+    return "}";
 });
-handlebars.registerHelper('render', function (templateName: string, params: { [key: string]: any }) {
+handlebars.registerHelper("render", (templateName: string, params: { [key: string]: any }) => {
     return TplEngine.render(templateName, params);
 });
 
-const TPL_BASE_PATH = LibPath.join(__dirname, 'template');
+const TPL_BASE_PATH = LibPath.join(__dirname, "template");
 
 const templateCache = {};
 
@@ -32,7 +32,7 @@ export namespace TplEngine {
 
     export function compile(templateName: string): HandlebarsTemplateDelegate {
         return handlebars.compile(
-            LibFs.readFileSync(`${LibPath.join(TPL_BASE_PATH, templateName)}.hbs`).toString()
+            LibFs.readFileSync(`${LibPath.join(TPL_BASE_PATH, templateName)}.hbs`).toString(),
         );
     }
 

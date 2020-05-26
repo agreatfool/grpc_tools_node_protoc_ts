@@ -4,17 +4,17 @@ const LibFs = require("fs");
 const LibPath = require("path");
 const handlebars = require("handlebars");
 const helpers = require("handlebars-helpers");
-helpers({ handlebars: handlebars });
-handlebars.registerHelper('curlyLeft', function () {
-    return '{';
+helpers({ handlebars });
+handlebars.registerHelper("curlyLeft", () => {
+    return "{";
 });
-handlebars.registerHelper('curlyRight', function () {
-    return '}';
+handlebars.registerHelper("curlyRight", () => {
+    return "}";
 });
-handlebars.registerHelper('render', function (templateName, params) {
+handlebars.registerHelper("render", (templateName, params) => {
     return TplEngine.render(templateName, params);
 });
-const TPL_BASE_PATH = LibPath.join(__dirname, 'template');
+const TPL_BASE_PATH = LibPath.join(__dirname, "template");
 const templateCache = {};
 var TplEngine;
 (function (TplEngine) {

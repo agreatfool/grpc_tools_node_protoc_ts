@@ -14,36 +14,36 @@ const ProtoSvcTsdFormatter_1 = require("./lib/format/ProtoSvcTsdFormatter");
 const TplEngine_1 = require("./lib/TplEngine");
 Utility_1.Utility.withAllStdIn((inputBuff) => {
     try {
-        let typedInputBuff = new Uint8Array(inputBuff.length);
-        //noinspection TypeScriptValidateTypes
+        const typedInputBuff = new Uint8Array(inputBuff.length);
         typedInputBuff.set(inputBuff);
-        let codeGenRequest = plugin_pb_1.CodeGeneratorRequest.deserializeBinary(typedInputBuff);
-        let codeGenResponse = new plugin_pb_1.CodeGeneratorResponse();
-        let exportMap = new ExportMap_1.ExportMap();
-        let fileNameToDescriptor = {};
-        codeGenRequest.getProtoFileList().forEach(protoFileDescriptor => {
+        const codeGenRequest = plugin_pb_1.CodeGeneratorRequest.deserializeBinary(typedInputBuff);
+        const codeGenResponse = new plugin_pb_1.CodeGeneratorResponse();
+        const exportMap = new ExportMap_1.ExportMap();
+        const fileNameToDescriptor = {};
+        const isGrpcJs = "generate_package_definition" === codeGenRequest.getParameter();
+        codeGenRequest.getProtoFileList().forEach((protoFileDescriptor) => {
             fileNameToDescriptor[protoFileDescriptor.getName()] = protoFileDescriptor;
             exportMap.addFileDescriptor(protoFileDescriptor);
         });
-        codeGenRequest.getFileToGenerateList().forEach(fileName => {
+        codeGenRequest.getFileToGenerateList().forEach((fileName) => {
             // message part
-            let msgFileName = Utility_1.Utility.filePathFromProtoWithoutExt(fileName);
-            let msgTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
+            const msgFileName = Utility_1.Utility.filePathFromProtoWithoutExt(fileName);
+            const msgTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
             const msgModel = ProtoMsgTsdFormatter_1.ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
-            msgTsdFile.setContent(TplEngine_1.TplEngine.render('msg_tsd', msgModel));
+            msgTsdFile.setContent(TplEngine_1.TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
             // service part
-            let fileDescriptorModel = ProtoSvcTsdFormatter_1.ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            const fileDescriptorModel = ProtoSvcTsdFormatter_1.ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap, isGrpcJs);
             if (fileDescriptorModel != null) {
-                let svcFileName = Utility_1.Utility.svcFilePathFromProtoWithoutExt(fileName);
-                let svtTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
+                const svcFileName = Utility_1.Utility.svcFilePathFromProtoWithoutExt(fileName);
+                const svtTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
                 svtTsdFile.setName(svcFileName + ".d.ts");
-                svtTsdFile.setContent(TplEngine_1.TplEngine.render('svc_tsd', fileDescriptorModel));
+                svtTsdFile.setContent(TplEngine_1.TplEngine.render("svc_tsd", fileDescriptorModel));
                 codeGenResponse.addFile(svtTsdFile);
             }
         });
-        process.stdout.write(new Buffer(codeGenResponse.serializeBinary()));
+        process.stdout.write(Buffer.from(codeGenResponse.serializeBinary()));
     }
     catch (err) {
         console.error("protoc-gen-ts error: " + err.stack + "\n");
