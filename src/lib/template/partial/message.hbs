@@ -20,11 +20,11 @@
 {{{../indent}}}    get{{{this.camelUpperName}}}List(): Array<Uint8Array | string>;
 {{{../indent}}}    get{{{this.camelUpperName}}}List_asU8(): Array<Uint8Array>;
 {{{../indent}}}    get{{{this.camelUpperName}}}List_asB64(): Array<string>;
-{{{../indent}}}    set{{{this.camelUpperName}}}List(value: Array<Uint8Array | string>): void;
+{{{../indent}}}    set{{{this.camelUpperName}}}List(value: Array<Uint8Array | string>): {{{../message.messageName}}};
 {{{../indent}}}    {{printRepeatedAddMethod this "Uint8Array | string"}}
             {{~else~}}
 {{{../indent}}}    get{{{this.camelUpperName}}}List(): Array<{{{this.exportType}}}>;
-{{{../indent}}}    set{{{this.camelUpperName}}}List(value: Array<{{{this.exportType}}}>): void;
+{{{../indent}}}    set{{{this.camelUpperName}}}List(value: Array<{{{this.exportType}}}>): {{{../message.messageName}}};
 {{{../indent}}}    {{printRepeatedAddMethod this this.exportType}}
             {{~/is~}}
         {{~else~}}{{!-- repeat else --}}
@@ -32,10 +32,10 @@
 {{{../indent}}}    get{{{this.camelUpperName}}}(): Uint8Array | string;
 {{{../indent}}}    get{{{this.camelUpperName}}}_asU8(): Uint8Array;
 {{{../indent}}}    get{{{this.camelUpperName}}}_asB64(): string;
-{{{../indent}}}    set{{{this.camelUpperName}}}(value: Uint8Array | string): void;
+{{{../indent}}}    set{{{this.camelUpperName}}}(value: Uint8Array | string): {{{../message.messageName}}};
             {{~else~}}
 {{{../indent}}}    get{{{this.camelUpperName}}}(): {{{this.exportType}}}{{#if this.canBeUndefined}} | undefined{{/if}};
-{{{../indent}}}    set{{{this.camelUpperName}}}(value{{#is this.type ../MESSAGE_TYPE}}?{{/is}}: {{{this.exportType}}}): void;
+{{{../indent}}}    set{{{this.camelUpperName}}}(value{{#is this.type ../MESSAGE_TYPE}}?{{/is}}: {{{this.exportType}}}): {{{../message.messageName}}};
             {{~/is~}}
         {{~/if~}}{{!-- repeat end --}}
     {{~/if~}}{{!-- map spec end --}}
