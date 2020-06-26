@@ -366,8 +366,8 @@ interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedService
 
 interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBook"
-    requestStream: boolean; // false
-    responseStream: boolean; // false
+    requestStream: false;
+    responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -375,8 +375,8 @@ interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.Get
 }
 interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<book_pb.GetBookViaAuthor, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBooksViaAuthor"
-    requestStream: boolean; // false
-    responseStream: boolean; // true
+    requestStream: false;
+    responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookViaAuthor>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookViaAuthor>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -384,8 +384,8 @@ interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<b
 }
 interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetGreatestBook"
-    requestStream: boolean; // true
-    responseStream: boolean; // false
+    requestStream: true;
+    responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -393,8 +393,8 @@ interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<boo
 }
 interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBooks"
-    requestStream: boolean; // true
-    responseStream: boolean; // true
+    requestStream: true;
+    responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -469,6 +469,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 4.1.0
+Switch the type of `requestStream` & `responseStream` in file `*_grpc_pb.d.ts` from `boolean` to `true | false`. See: [PR#58](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/58).
+
 ### 4.0.0
 [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0) changes the generated js codes a lot. Current version is released to fix the setters issue, see: [PR#55](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/55). Note: This is a breaking change, if you are still using grpc-tools with version under `1.9.0`, you `DO NOT` need to upgrade, version `4.0.0` would break your codes.
 

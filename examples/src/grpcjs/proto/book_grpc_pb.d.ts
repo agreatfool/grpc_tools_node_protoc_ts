@@ -17,8 +17,8 @@ interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedService
 
 interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBook"
-    requestStream: boolean; // false
-    responseStream: boolean; // false
+    requestStream: false;
+    responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -26,8 +26,8 @@ interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.Get
 }
 interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<book_pb.GetBookViaAuthor, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBooksViaAuthor"
-    requestStream: boolean; // false
-    responseStream: boolean; // true
+    requestStream: false;
+    responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookViaAuthor>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookViaAuthor>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -35,8 +35,8 @@ interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<b
 }
 interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetGreatestBook"
-    requestStream: boolean; // true
-    responseStream: boolean; // false
+    requestStream: true;
+    responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
     responseSerialize: grpc.serialize<book_pb.Book>;
@@ -44,8 +44,8 @@ interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<boo
 }
 interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
     path: string; // "/com.book.BookService/GetBooks"
-    requestStream: boolean; // true
-    responseStream: boolean; // true
+    requestStream: true;
+    responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
     requestDeserialize: grpc.deserialize<book_pb.GetBookRequest>;
     responseSerialize: grpc.serialize<book_pb.Book>;

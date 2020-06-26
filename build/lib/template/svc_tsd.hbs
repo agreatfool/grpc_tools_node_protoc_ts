@@ -18,8 +18,8 @@ interface I{{{serviceName}}}Service extends grpc.ServiceDefinition<grpc.UntypedS
     {{#each methods}}
 interface I{{{serviceName}}}Service_I{{{methodName}}} extends grpc.MethodDefinition<{{{requestTypeName}}}, {{{responseTypeName}}}> {
     path: string; // "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}"
-    requestStream: boolean; // {{{requestStream}}}
-    responseStream: boolean; // {{{responseStream}}}
+    requestStream: {{{requestStream}}};
+    responseStream: {{{responseStream}}};
     requestSerialize: grpc.serialize<{{{requestTypeName}}}>;
     requestDeserialize: grpc.deserialize<{{{requestTypeName}}}>;
     responseSerialize: grpc.serialize<{{{responseTypeName}}}>;
