@@ -9,7 +9,7 @@ import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
 const log = debug("SampleClient");
 
 const BookServiceClient = grpc.makeClientConstructor(bookGrpcPb["com.book.BookService"], "BookService");
-const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
+const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure()) as any as bookGrpcPb.BookServiceClient;
 
 const getBook = async (isbn: number) => {
     return new Promise((resolve, reject) => {
