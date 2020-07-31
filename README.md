@@ -14,6 +14,8 @@ More information about grpc_tools_node_protoc:
 ### v4.0.0
 Fix the issues along with [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0), see: [PR#55](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/55). If you are using grpc-tools with version under `1.9.0`, you should `NOT` upgrade.
 
+Also, if you want to use chain setters, you have to upgrade the version of package `google-protobuf` to at least `3.10.0`. See the difference: [v3.9.0](https://github.com/protocolbuffers/protobuf/blob/v3.9.0/js/message.js#L1088) vs [v3.10.0](https://github.com/protocolbuffers/protobuf/blob/v3.10.0/js/message.js#L1109).
+
 ### v2.4.0
 The return value of type `ClientReadableStream` was wrong previously. And has been fixed in this version. Please be careful to update your code.
 See detail: [PR#30](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/30).
@@ -474,6 +476,8 @@ Switch the type of `requestStream` & `responseStream` in file `*_grpc_pb.d.ts` f
 
 ### 4.0.0
 [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0) changes the generated js codes a lot. Current version is released to fix the setters issue, see: [PR#55](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/55). Note: This is a breaking change, if you are still using grpc-tools with version under `1.9.0`, you `DO NOT` need to upgrade, version `4.0.0` would break your codes.
+
+Also, if you want to use chain setters, you have to upgrade the version of package `google-protobuf` to at least `3.10.0`. See the difference: [v3.9.0](https://github.com/protocolbuffers/protobuf/blob/v3.9.0/js/message.js#L1088) vs [v3.10.0](https://github.com/protocolbuffers/protobuf/blob/v3.10.0/js/message.js#L1109).
 
 ### 3.0.0
 [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js) now is supported. See: [Issue#56](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/56). Users who still using [grpc](https://www.npmjs.com/package/grpc) would **NOT** be affected. More detailed information, please go to [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md). Note: This upgrade requires grpc-tools version 1.8.1.
