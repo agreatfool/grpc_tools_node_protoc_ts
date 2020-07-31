@@ -76,7 +76,11 @@ export interface I{{{serviceName}}}Client {
 }
 
 export class {{{serviceName}}}Client extends grpc.Client implements I{{{serviceName}}}Client {
+    {{#if (fetchIsGrpcJs)}}
+    constructor(address: string, credentials: grpc.ChannelCredentials, options?: Partial<grpc.ClientOptions>);
+    {{else}}
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
+    {{/if}}
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
     public {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: grpc.ServiceError | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
