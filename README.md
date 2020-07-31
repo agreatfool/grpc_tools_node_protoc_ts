@@ -471,6 +471,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 4.1.1
+Update grpc-js example codes. Fix vulnerabilities of example packages. Fix type of third param of Client class, see: [PR#62](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/62).
+
 ### 4.1.0
 Switch the type of `requestStream` & `responseStream` in file `*_grpc_pb.d.ts` from `boolean` to `true | false`. See: [PR#58](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/58).
 
