@@ -15,12 +15,12 @@
   "dependencies": {
     "@grpc/grpc-js": "1.0.1",
     "debug": "3.1.0",
-    "google-protobuf": "3.5.0",
+    "google-protobuf": "3.12.4",
     "grpc": "1.24.3"
   },
   "devDependencies": {
     "@types/debug": "0.0.30",
-    "@types/google-protobuf": "3.2.7",
+    "@types/google-protobuf": "3.7.2",
     "@types/node": "12.12.6",
     "grpc-tools": "1.8.1",
     "typescript": "2.7.2"

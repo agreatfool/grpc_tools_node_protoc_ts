@@ -13,8 +13,7 @@ class ServerImpl implements IBookServiceServer {
     public getBook(call: grpc.ServerUnaryCall<GetBookRequest>, callback: grpc.sendUnaryData<Book>) {
         const book = new Book();
 
-        book.setTitle("DefaultBook");
-        book.setAuthor("DefaultAuthor");
+        book.setTitle("DefaultBook").setAuthor("DefaultAuthor");
 
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);

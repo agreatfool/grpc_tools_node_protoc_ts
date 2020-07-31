@@ -28,12 +28,12 @@
   },
   "homepage": "https://github.com/agreatfool/grpc_tools_node_protoc_ts#readme",
   "dependencies": {
-    "google-protobuf": "3.5.0",
+    "google-protobuf": "3.12.4",
     "handlebars": "4.7.4",
     "handlebars-helpers": "0.10.0"
   },
   "devDependencies": {
-    "@types/google-protobuf": "3.2.7",
+    "@types/google-protobuf": "3.7.2",
     "@types/node": "12.12.6",
     "tslint": "5.9.1",
     "typescript": "2.7.2"

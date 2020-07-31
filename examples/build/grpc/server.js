@@ -9,8 +9,7 @@ const log = debug("SampleServer");
 class ServerImpl {
     getBook(call, callback) {
         const book = new book_pb_1.Book();
-        book.setTitle("DefaultBook");
-        book.setAuthor("DefaultAuthor");
+        book.setTitle("DefaultBook").setAuthor("DefaultAuthor");
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);
     }
