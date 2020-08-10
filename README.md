@@ -10,7 +10,7 @@ More information about grpc_tools_node_protoc:
 * [source code](https://github.com/grpc/grpc-node/tree/master/packages/grpc-tools)
 * [doc how to use](https://github.com/grpc/grpc/blob/master/examples/node/static_codegen/README.md)
 
-And the versions bigger than 3.0.0 supports [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
+And the versions bigger than 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
 
 ## Breaking changes
 ### v4.0.0
