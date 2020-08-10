@@ -473,6 +473,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 4.1.3
+Update doc to solve the issues like: [Issue#63](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/63).
+
 ### 4.1.1 - 4.1.2
 Update grpc-js example codes. Fix vulnerabilities of example packages. Fix type of third param of Client class, see: [PR#62](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/62).
 
