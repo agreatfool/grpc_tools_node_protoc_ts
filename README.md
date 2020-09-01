@@ -473,6 +473,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 4.1.4
+Add `.npmignore` to shrink the size of npm package. See: [PR#65](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/65).
+
 ### 4.1.3
 Update doc to solve the issues like: [Issue#63](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/63).
 
