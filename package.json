@@ -1,6 +1,6 @@
 {
   "name": "grpc_tools_node_protoc_ts",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "description": "Generate d.ts definitions for generated js files from grpc_tools_node_protoc",
   "main": "build/index.js",
   "scripts": {
