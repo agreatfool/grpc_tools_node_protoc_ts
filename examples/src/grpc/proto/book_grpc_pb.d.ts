@@ -15,7 +15,7 @@ interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedService
 }
 
 interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetBook"
+    path: "/com.book.BookService/GetBook";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
@@ -24,7 +24,7 @@ interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.Get
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<book_pb.GetBookViaAuthor, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetBooksViaAuthor"
+    path: "/com.book.BookService/GetBooksViaAuthor";
     requestStream: false;
     responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookViaAuthor>;
@@ -33,7 +33,7 @@ interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<b
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetGreatestBook"
+    path: "/com.book.BookService/GetGreatestBook";
     requestStream: true;
     responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
@@ -42,7 +42,7 @@ interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<boo
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetBooks"
+    path: "/com.book.BookService/GetBooks";
     requestStream: true;
     responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
