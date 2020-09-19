@@ -17,7 +17,7 @@ interface I{{{serviceName}}}Service extends grpc.ServiceDefinition<grpc.UntypedS
 
     {{#each methods}}
 interface I{{{serviceName}}}Service_I{{{methodName}}} extends grpc.MethodDefinition<{{{requestTypeName}}}, {{{responseTypeName}}}> {
-    path: string; // "/{{{packageName}}}.{{{serviceName}}}/{{{methodName}}}"
+    path: "/{{{packageName}}}{{#if packageName}}.{{/if}}{{{serviceName}}}/{{{methodName}}}";
     requestStream: {{{requestStream}}};
     responseStream: {{{responseStream}}};
     requestSerialize: grpc.serialize<{{{requestTypeName}}}>;
