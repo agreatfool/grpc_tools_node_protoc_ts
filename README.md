@@ -473,6 +473,9 @@ export namespace Example {
 ```
 
 ## Changes
+### 4.1.5
+Use string literal type for path. See: [PR#69](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/69).
+
 ### 4.1.4
 Add `.npmignore` to shrink the size of npm package. See: [PR#65](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/65).
 
