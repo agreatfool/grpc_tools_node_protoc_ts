@@ -479,7 +479,7 @@ Migrating to option `grpc_js` from [grpc-tools@1.9.0](https://github.com/grpc/gr
 Two points:
 
 * Using option `grpc_js` in `grpc_tools_node_protoc ... --grpc_out=grpc_js:...`
-* Style of generated js codes looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=\`which grpc_tools_node_protoc_plugin\``
+* Style of generated js codes looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=which grpc_tools_node_protoc_plugin`
 
 Difference between grpc-tools version `1.8.1` and `1.9.0`, and also between `generate_package_definition` and `grpc_js` could be found here: [@grpc/grpc-js support @5.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
 

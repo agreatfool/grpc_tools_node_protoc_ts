@@ -45,7 +45,7 @@ As you can see:
 * `exports['com.book.BookService']` changed to `exports.BookServiceService`
 * `exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);` added
 
-This looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=\`which grpc_tools_node_protoc_plugin\``.
+This looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=which grpc_tools_node_protoc_plugin`.
 
 ---
 
