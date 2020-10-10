@@ -120,8 +120,8 @@ I guess it shall be a bug, maybe would be fixed later.
 ### Usage
 See full examples here:
 
-* [server.ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/examples/src/grpcjs/server.ts)
-* [client.ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/examples/src/grpcjs/client.ts)
+* [server.ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/examples/src/grpcjs/server.ts)
+* [client.ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/examples/src/grpcjs/client.ts)
 
 Most changes:
 

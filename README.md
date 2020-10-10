@@ -10,7 +10,7 @@ More information about grpc_tools_node_protoc:
 * [source code](https://github.com/grpc/grpc-node/tree/master/packages/grpc-tools)
 * [doc how to use](https://github.com/grpc/grpc/blob/master/examples/node/static_codegen/README.md)
 
-And the versions over 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)(grpc-tools@1.8.1 required). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md). **New version 5.0.0 is recommended for users who using grpc-tools over v1.9.0.**
+And the versions over 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)(grpc-tools@1.8.1 required). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/doc/grpcjs_support.md). **New version 5.0.0 is recommended for users who using grpc-tools over v1.9.0.**
 
 ## Breaking changes
 ### v4.0.0
@@ -481,11 +481,11 @@ Two points:
 * Using option `grpc_js` in `grpc_tools_node_protoc ... --grpc_out=grpc_js:...`
 * Style of generated js codes looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=which grpc_tools_node_protoc_plugin`
 
-Difference between grpc-tools version `1.8.1` and `1.9.0`, and also between `generate_package_definition` and `grpc_js` could be found here: [@grpc/grpc-js support @5.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
+Difference between grpc-tools version `1.8.1` and `1.9.0`, and also between `generate_package_definition` and `grpc_js` could be found here: [@grpc/grpc-js support @5.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/doc/grpcjs_support.md).
 
 Users who are still using version 3.0.0 - 4.1.5 would not be affected. In version 5.0.0 options `generate_package_definition` and `grpc_js` are all available. 
 
-Though, 5.0.0 is recommended for users who using grpc-tools@1.9.0 or over, don't forget to switch your option to `grpc_js`. And remember, if you switch the cli command option to `grpc_js`, you have to adjust your typescript implementation, see: [examples/src/grpcjs](https://github.com/agreatfool/grpc_tools_node_protoc_ts/tree/master/examples/src/grpcjs).
+Though, 5.0.0 is recommended for users who using grpc-tools@1.9.0 or over, don't forget to switch your option to `grpc_js`. And remember, if you switch the cli command option to `grpc_js`, you have to adjust your typescript implementation, see: [examples/src/grpcjs](https://github.com/agreatfool/grpc_tools_node_protoc_ts/tree/v5.0.0/examples/src/grpcjs).
 
 See more details:
 
@@ -619,13 +619,13 @@ $ root@63249303596f:/# cd /grpc_protoc && ./bash/build.sh
 node --version
 # v10.15.2
 npm --version
-# 6.11.3
+# 6.14.4
 protoc --version
-# libprotoc 3.10.0
+# libprotoc 3.11.1
 grpc_tools_node_protoc --version
-# libprotoc 3.6.1
+# libprotoc 3.11.4
 npm list -g --depth=0 | grep grpc-tools
-# grpc-tools@1.7.1
+# grpc-tools@1.9.1
 tsc --version
-# Version 3.6.4
+# Version 3.7.3
 ```
