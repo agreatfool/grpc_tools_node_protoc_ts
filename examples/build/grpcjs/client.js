@@ -12,11 +12,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const debug = require("debug");
 const grpc = require("@grpc/grpc-js");
-const bookGrpcPb = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
+const book_grpc_pb_1 = require("./proto/book_grpc_pb");
 const log = debug("SampleClient");
-const BookServiceClient = grpc.makeClientConstructor(bookGrpcPb["com.book.BookService"], "BookService");
-const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
+const client = new book_grpc_pb_1.BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
 const getBook = (isbn) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         const request = new book_pb_1.GetBookRequest();

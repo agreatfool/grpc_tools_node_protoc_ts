@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const debug = require("debug");
 const grpc = require("@grpc/grpc-js");
-const bookGrpcPb = require("./proto/book_grpc_pb");
+const book_grpc_pb_1 = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleServer");
 class ServerImpl {
@@ -60,7 +60,7 @@ class ServerImpl {
 function startServer() {
     const server = new grpc.Server();
     // @ts-ignore
-    server.addService(bookGrpcPb["com.book.BookService"], new ServerImpl());
+    server.addService(book_grpc_pb_1.BookServiceService, new ServerImpl());
     server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {
             throw err;

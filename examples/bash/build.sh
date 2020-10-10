@@ -25,7 +25,7 @@ proto/*.proto
 # JavaScript code generating
 grpc_tools_node_protoc \
 --js_out=import_style=commonjs,binary:./src/grpcjs/proto \
---grpc_out=generate_package_definition:./src/grpcjs/proto \
+--grpc_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
 proto/*.proto
 

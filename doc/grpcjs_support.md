@@ -1,5 +1,52 @@
 # @grpc/grpc-js support
 
+## Breaking changes warning
+Current document is published along with grpc_tools_node_protoc_ts@5.0.0 and binds to [grpc-tools](https://www.npmjs.com/package/grpc-tools) version equal to or greater than `1.9.0`.
+
+If you are still using grpc-tools version `1.8.1`, please read the doc of previous version: [doc/grpcjs_support.md@3.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v3.0.0/doc/grpcjs_support.md).
+
+## Difference between grpc-tools v1.8.1 and v1.9.0
+Difference of codes generated from `grpc-tools` between v1.8.1 and v1.9.0:
+
+Commands changed:
+```bash
+# v1.8.1
+grpc_tools_node_protoc \
+... \
+--grpc_out=generate_package_definition:... \
+...
+
+# v1.9.0, new added option grpc_js
+grpc_tools_node_protoc \
+... \
+--grpc_out=grpc_js:... \
+...
+```
+
+Generated codes changed:
+```javascript
+'use strict';
++ var grpc = require('@grpc/grpc-js');
+var book_pb = require('./book_pb.js');
+
+- var BookServiceService = exports['com.book.BookService'] = {
++ var BookServiceService = exports.BookServiceService = {
+  getBook: {
+    // ...
+  }
+};
+
++ exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);
+```
+
+As you can see:
+
+* `@grpc/grpc-js` imported at beginning
+* `exports['com.book.BookService']` changed to `exports.BookServiceService`
+* `exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);` added
+
+---
+
 ## Why
 [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js) is a great project. it's pure js implementation, this makes it's easy to build docker images & cooperation with electron, etc.
 
@@ -11,10 +58,11 @@ Recently grpc-js has published it's `1.0.1` version, means it's no longer `beta`
 * grpc-js: [github](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js) | [npm](https://www.npmjs.com/package/@grpc/grpc-js)
 * [[question] How to generate `require('@grpc/grpc-js')` instead of `require('grpc')` #931](https://github.com/grpc/grpc-node/issues/931)
 * [Add support for generate_package_definition #56](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/56)
+* [Broken typescript exports after moving to @grpc/grpc-js #1600](https://github.com/grpc/grpc-node/issues/1600)
 
 ## Migrating from [grpc](https://www.npmjs.com/package/grpc) to [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)
 ### Code generation
-Want to use grpc-js, [grpc-tools](https://www.npmjs.com/package/grpc-tools) version `1.8.1` is **REQUIRED**.
+Want to use grpc-js, [grpc-tools](https://www.npmjs.com/package/grpc-tools) version `1.9.0` is **REQUIRED**.
 
 Change your bash script from:
 
@@ -32,12 +80,12 @@ to:
 ```bash
 grpc_tools_node_protoc \
 --js_out=import_style=commonjs,binary:./src/grpcjs/proto \
---grpc_out=generate_package_definition:./src/grpcjs/proto \
+--grpc_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
 proto/*.proto
 ```
 
-`--plugin` is no longer necessary and add `generate_package_definition` in `--grpc-out`.
+`--plugin` is no longer necessary and add `grpc_js` in `--grpc-out`.
 
 There are two generated files: 
 
@@ -46,23 +94,17 @@ There are two generated files:
 
 ```js
 - var grpc = require('grpc');
-
-- var BookServiceService = exports.BookServiceService = {
-+ var BookServiceService = exports['com.book.BookService'] = {
-
-- exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);
++ var grpc = require('@grpc/grpc-js');
 ```
 
-* `grpc` is no longer necessary 
-* exported service object has new name, a package name like: `com.book.BookService`
-* client object is no longer generated, users have to make it by self
+* `grpc` is switched to `@grpc/grpc-js`
 
 ### Typings
 grpc has it's official typings: [index.d.ts](https://github.com/grpc/grpc-node/blob/master/packages/grpc-native-core/index.d.ts). Also grpc-js has an official typings itself (it's not included in github's online source codes), it's in the dir `node_modules/@grpc/grpc-js/build/src/index.d.ts`, and online source codes may give some hint: [index.ts](https://github.com/grpc/grpc-node/blob/master/packages/grpc-js/src/index.ts).  
 
 There are several differences between them:
 
-All the `call`s in grpc-js has both request & response definition: `grpc.ServerUnaryCall<GetBookRequest, Book>` while grpc only needs the request part: `grpc.ServerUnaryCall<GetBookRequest>`. This is the most big change.
+All the `call`s in grpc-js has both request & response definition: `grpc.ServerUnaryCall<GetBookRequest, Book>` while grpc only needs the request part: `grpc.ServerUnaryCall<GetBookRequest>`. This is the biggest change.
 
 And in version `1.0.1` grpc-js has two useful typings not exported in typings index, you need to manually import them:
 
@@ -82,25 +124,6 @@ See full examples here:
 Most changes:
 
 **server.ts**
-
-add services part:
-
-```typescript
-// grpc
-import { BookServiceService, ... } from "./proto/book_grpc_pb";
-server.addService(BookServiceService, new ServerImpl());
-
-// =>
-
-// grpc-js
-import * as bookGrpcPb from "./proto/book_grpc_pb";
-// @ts-ignore
-server.addService(bookGrpcPb["com.book.BookService"], new ServerImpl());
-```
-
-Since service object in js file is now exported with name like: "com.book.BookService", it's no longer possible to be imported with sentence: `import { YourService } from "your_grpc_pb"`.
-
-And `// @ts-ignore` is required, without this there would be compiling error: `Index signature is missing in type 'ServerImpl'.`. Some information could be found here: [Index signature is missing in type (only on interfaces, not on type alias) #15300](https://github.com/microsoft/TypeScript/issues/15300). Though it may be possible to be fixed by [some hack](https://github.com/microsoft/TypeScript/issues/15300#issuecomment-576211076), I just use comments to ignore it, since the implementation is correct.
 
 start server part, changed to async:
 
@@ -122,22 +145,7 @@ server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (er
 
 **client.ts**
 
-client object changes:
-
-```typescript
-// grpc
-import { BookServiceClient } from "./proto/book_grpc_pb";
-const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
-
-// =>
-
-// grpc-js
-import * as bookGrpcPb from "./proto/book_grpc_pb";
-const BookServiceClient = grpc.makeClientConstructor(bookGrpcPb["com.book.BookService"], "BookService");
-const client = new BookServiceClient("127.0.0.1:50051", grpc.credentials.createInsecure());
-```
-
-Since client object is no longer created by grpc-tools code generation, it have to be generated by user codes.
+client has no change.
 
 ## What [grpc_tools_node_protoc_ts](https://www.npmjs.com/package/grpc_tools_node_protoc_ts) changed 
 `d.ts` generating bash script change, from:
@@ -155,12 +163,12 @@ to:
 ```bash
 grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
---ts_out=generate_package_definition:./src/grpcjs/proto \
+--ts_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
 proto/*.proto
 ```
 
-Add `generate_package_definition` in `--ts-out`, be consistent with grpc-js.
+Add `grpc_js` in `--ts-out`, be consistent with grpc-js.
 
 There is no changes in `*_pb.d.ts`, and some changes in `*_grpc_pb.d.ts`:
 
@@ -181,4 +189,4 @@ export interface IBookServiceServer {
 
 That's all.
 
-If you are still using grpc, just do nothing, new version would not affect existing users.
+If you are still using grpc, just do nothing, new version would not affect existing grpc users.

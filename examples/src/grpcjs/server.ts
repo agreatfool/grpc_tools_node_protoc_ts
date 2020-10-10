@@ -4,8 +4,7 @@ import * as debug from "debug";
 import * as grpc from "@grpc/grpc-js";
 import {sendUnaryData} from "@grpc/grpc-js/build/src/server-call";
 
-import * as bookGrpcPb from "./proto/book_grpc_pb";
-import { IBookServiceServer } from "./proto/book_grpc_pb";
+import {BookServiceService, IBookServiceServer} from "./proto/book_grpc_pb";
 import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
 
 const log = debug("SampleServer");
@@ -73,7 +72,7 @@ function startServer() {
     const server = new grpc.Server();
 
     // @ts-ignore
-    server.addService(bookGrpcPb["com.book.BookService"], new ServerImpl());
+    server.addService(BookServiceService, new ServerImpl());
     server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {
             throw err;

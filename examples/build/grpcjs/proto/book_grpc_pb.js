@@ -1,6 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
+var grpc = require('@grpc/grpc-js');
 var book_pb = require('./book_pb.js');
 
 function serialize_com_book_Book(arg) {
@@ -37,7 +38,7 @@ function deserialize_com_book_GetBookViaAuthor(buffer_arg) {
 }
 
 
-var BookServiceService = exports['com.book.BookService'] = {
+var BookServiceService = exports.BookServiceService = {
   getBook: {
     path: '/com.book.BookService/GetBook',
     requestStream: false,
@@ -84,3 +85,4 @@ var BookServiceService = exports['com.book.BookService'] = {
   },
 };
 
+exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);
