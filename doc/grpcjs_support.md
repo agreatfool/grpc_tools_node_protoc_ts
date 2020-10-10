@@ -1,6 +1,6 @@
 # @grpc/grpc-js support
 
-## Breaking changes warning
+## Changes
 Current document is published along with grpc_tools_node_protoc_ts@5.0.0 and binds to [grpc-tools](https://www.npmjs.com/package/grpc-tools) version equal to or greater than `1.9.0`.
 
 If you are still using grpc-tools version `1.8.1`, please read the doc of previous version: [doc/grpcjs_support.md@3.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v3.0.0/doc/grpcjs_support.md).
@@ -44,6 +44,8 @@ As you can see:
 * `@grpc/grpc-js` imported at beginning
 * `exports['com.book.BookService']` changed to `exports.BookServiceService`
 * `exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);` added
+
+This looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=\`which grpc_tools_node_protoc_plugin\``.
 
 ---
 

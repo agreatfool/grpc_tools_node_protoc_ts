@@ -10,7 +10,7 @@ More information about grpc_tools_node_protoc:
 * [source code](https://github.com/grpc/grpc-node/tree/master/packages/grpc-tools)
 * [doc how to use](https://github.com/grpc/grpc/blob/master/examples/node/static_codegen/README.md)
 
-And the versions bigger than 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
+And the versions over 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)(grpc-tools@1.8.1 required). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md). **New version 5.0.0 is recommended for users who using grpc-tools over v1.9.0.**
 
 ## Breaking changes
 ### v4.0.0
@@ -473,6 +473,24 @@ export namespace Example {
 ```
 
 ## Changes
+### 5.0.0
+Migrating to option `grpc_js` from [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0).
+
+Two points:
+
+* Using option `grpc_js` in `grpc_tools_node_protoc ... --grpc_out=grpc_js:...`
+* Style of generated js codes looks like traditional `grpc_tools_node_protoc ...  --plugin=protoc-gen-grpc=\`which grpc_tools_node_protoc_plugin\``
+
+Difference between grpc-tools version `1.8.1` and `1.9.0`, and also between `generate_package_definition` and `grpc_js` could be found here: [@grpc/grpc-js support @5.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
+
+Users who is using version 3.0.0 - 4.1.5 would not be affected. In version 5.0.0 options `generate_package_definition` and `grpc_js` are all available. Though, 5.0.0 is recommended for users who using grpc-tools@1.9.0 or over, don't forget to switch your option to `grpc_js`.
+
+See more details:
+
+* [PR#71](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/71)
+* [Broken ts imports after moving to grpc-js #70](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/70)
+* [Broken typescript exports after moving to @grpc/grpc-js#1600](https://github.com/grpc/grpc-node/issues/1600#issuecomment-705097639)
+
 ### 4.1.5
 Use string literal type for path. See: [PR#69](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/69).
 
@@ -480,7 +498,7 @@ Use string literal type for path. See: [PR#69](https://github.com/agreatfool/grp
 Add `.npmignore` to shrink the size of npm package. See: [PR#65](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/65).
 
 ### 4.1.3
-Update doc to solve the issues like: [Issue#63](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/63).
+Update doc to solve issues like: [Issue#63](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/63).
 
 ### 4.1.1 - 4.1.2
 Update grpc-js example codes. Fix vulnerabilities of example packages. Fix type of third param of Client class, see: [PR#62](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/62).

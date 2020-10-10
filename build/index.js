@@ -20,7 +20,7 @@ Utility_1.Utility.withAllStdIn((inputBuff) => {
         const codeGenResponse = new plugin_pb_1.CodeGeneratorResponse();
         const exportMap = new ExportMap_1.ExportMap();
         const fileNameToDescriptor = {};
-        const isGrpcJs = "generate_package_definition" === codeGenRequest.getParameter();
+        const isGrpcJs = ["generate_package_definition", "grpc_js"].includes(codeGenRequest.getParameter());
         codeGenRequest.getProtoFileList().forEach((protoFileDescriptor) => {
             fileNameToDescriptor[protoFileDescriptor.getName()] = protoFileDescriptor;
             exportMap.addFileDescriptor(protoFileDescriptor);

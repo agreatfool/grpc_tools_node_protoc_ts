@@ -31,7 +31,7 @@ proto/*.proto
 
 grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
---ts_out=generate_package_definition:./src/grpcjs/proto \
+--ts_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
 proto/*.proto
 
