@@ -483,7 +483,7 @@ Two points:
 
 Difference between grpc-tools version `1.8.1` and `1.9.0`, and also between `generate_package_definition` and `grpc_js` could be found here: [@grpc/grpc-js support @5.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/master/doc/grpcjs_support.md).
 
-Users who is using version 3.0.0 - 4.1.5 would not be affected. In version 5.0.0 options `generate_package_definition` and `grpc_js` are all available. Though, 5.0.0 is recommended for users who using grpc-tools@1.9.0 or over, don't forget to switch your option to `grpc_js`.
+Users who are still using version 3.0.0 - 4.1.5 would not be affected. In version 5.0.0 options `generate_package_definition` and `grpc_js` are all available. Though, 5.0.0 is recommended for users who using grpc-tools@1.9.0 or over, don't forget to switch your option to `grpc_js`.
 
 See more details:
 
