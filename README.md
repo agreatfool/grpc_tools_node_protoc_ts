@@ -457,6 +457,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.0.1
+Fix array.includes issue. See: [Issue#73](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/73), [Commit#1e4ae67](https://github.com/agreatfool/grpc_tools_node_protoc_ts/commit/1e4ae677d2f1f0066a21fe5e9dd48b10dd24f5af).
+
 ### 5.0.0
 Migrating to option `grpc_js` from [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0).
 
