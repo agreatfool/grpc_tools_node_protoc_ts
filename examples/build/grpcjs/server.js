@@ -59,7 +59,6 @@ class ServerImpl {
 }
 function startServer() {
     const server = new grpc.Server();
-    // @ts-ignore
     server.addService(book_grpc_pb_1.BookServiceService, new ServerImpl());
     server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {

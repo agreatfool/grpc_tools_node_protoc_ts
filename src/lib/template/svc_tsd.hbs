@@ -29,7 +29,7 @@ interface I{{{serviceName}}}Service_I{{{methodName}}} extends grpc.MethodDefinit
 
 export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
 
-export interface I{{{serviceName}}}Server {
+export interface I{{{serviceName}}}Server{{#if (fetchIsGrpcJs)}} extends grpc.UntypedServiceImplementation{{/if}} {
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
     {{lcFirst methodName}}: grpc.handleUnaryCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;

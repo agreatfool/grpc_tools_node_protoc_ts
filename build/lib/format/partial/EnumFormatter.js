@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EnumFormatter = void 0;
 var EnumFormatter;
 (function (EnumFormatter) {
     function format(enumDescriptor, indent) {

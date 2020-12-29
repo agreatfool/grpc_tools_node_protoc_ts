@@ -28,6 +28,11 @@ More information about grpc_tools_node_protoc:
 And the versions over 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)(grpc-tools@1.8.1 required). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/doc/grpcjs_support.md). **New version 5.0.0 is recommended for users who using grpc-tools over v1.9.0.**
 
 ## Breaking changes
+### v5.1.0
+Fix server implementation signature issue of `grpc_js` side. See: [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79).
+
+About the code changes, please read the doc at **Changes** part.
+
 ### v4.0.0
 Fix the issues along with [grpc-tools@1.9.0](https://github.com/grpc/grpc-node/releases/tag/grpc-tools%401.9.0), see: [PR#55](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/55). If you are using grpc-tools with version under `1.9.0`, you should `NOT` upgrade.
 
@@ -380,7 +385,7 @@ interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedService
 }
 
 interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetBook"
+    path: "/com.book.BookService/GetBook";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
@@ -389,7 +394,7 @@ interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.Get
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<book_pb.GetBookViaAuthor, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetBooksViaAuthor"
+    path: "/com.book.BookService/GetBooksViaAuthor";
     requestStream: false;
     responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookViaAuthor>;
@@ -398,7 +403,7 @@ interface IBookServiceService_IGetBooksViaAuthor extends grpc.MethodDefinition<b
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetGreatestBook"
+    path: "/com.book.BookService/GetGreatestBook";
     requestStream: true;
     responseStream: false;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
@@ -407,7 +412,7 @@ interface IBookServiceService_IGetGreatestBook extends grpc.MethodDefinition<boo
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
 interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
-    path: string; // "/com.book.BookService/GetBooks"
+    path: "/com.book.BookService/GetBooks";
     requestStream: true;
     responseStream: true;
     requestSerialize: grpc.serialize<book_pb.GetBookRequest>;
@@ -457,6 +462,39 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.1.0
+Fix server implementation signature issue of `grpc_js` side. See: [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79).
+
+Breaking change, only `grpc_js` side would be affected.
+
+The interface of service server now extends `grpc.UntypedServiceImplementation` (examples/src/grpcjs/proto/book_grpc_pb.d.ts).
+
+```typescript
+// from
+export interface IBookServiceServer {}
+
+// to
+export interface IBookServiceServer extends grpc.UntypedServiceImplementation {}
+```
+
+And the server implementation have to add a line of codes:
+
+```typescript
+class ServerImpl implements IBookServiceServer {
+    [name: string]: grpc.UntypedHandleCall;
+    // others ...
+}
+```
+
+If this line of code not added, there will be some error:
+
+```
+TS2420: Class 'ServerImpl' incorrectly implements interface 'IBookServiceServer'. 
+  Index signature is missing in type 'ServerImpl'.
+```
+
+Have a look at: [Typescript: Index signature is missing in type](https://stackoverflow.com/questions/37006008/typescript-index-signature-is-missing-in-type).
+
 ### 5.0.1
 Fix array.includes issue. See: [Issue#73](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/73), [Commit#1e4ae67](https://github.com/agreatfool/grpc_tools_node_protoc_ts/commit/1e4ae677d2f1f0066a21fe5e9dd48b10dd24f5af).
 

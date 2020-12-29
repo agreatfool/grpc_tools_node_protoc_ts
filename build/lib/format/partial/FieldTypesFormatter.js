@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FieldTypesFormatter = exports.JS_NUMBER = exports.JS_STRING = exports.JS_NORMAL = exports.ENUM_TYPE = exports.BYTES_TYPE = exports.MESSAGE_TYPE = void 0;
 const Utility_1 = require("../../Utility");
 exports.MESSAGE_TYPE = 11;
 exports.BYTES_TYPE = 12;

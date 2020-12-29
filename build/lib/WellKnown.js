@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WellKnownTypesMap = void 0;
 exports.WellKnownTypesMap = {
     "google/protobuf/compiler/plugin.proto": "google-protobuf/google/protobuf/compiler/plugin_pb",
     "google/protobuf/any.proto": "google-protobuf/google/protobuf/any_pb",

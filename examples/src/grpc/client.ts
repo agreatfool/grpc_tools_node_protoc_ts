@@ -29,7 +29,7 @@ const getBook = async (isbn: number) => {
 };
 
 const getBooks = () => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     const stream: grpc.ClientDuplexStream<GetBookRequest, Book> = client.getBooks();
 
     stream.on("data", (data: Book) => {
@@ -51,7 +51,7 @@ const getBooks = () => {
 };
 
 const getBooksViaAuthor = (author: string) => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     const request = new GetBookViaAuthor();
     request.setAuthor(author);
 
@@ -69,7 +69,7 @@ const getBooksViaAuthor = (author: string) => {
 };
 
 const getGreatestBook = () => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     const stream: grpc.ClientWritableStream<GetBookRequest> = client.getGreatestBook((err, data: Book) => {
       if (err != null) {
         log(`[getGreatestBook] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TplEngine = void 0;
 const LibFs = require("fs");
 const LibPath = require("path");
 const handlebars = require("handlebars");

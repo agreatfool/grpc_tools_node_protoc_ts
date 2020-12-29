@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProtoSvcTsdFormatter = void 0;
 const Utility_1 = require("../Utility");
 const TplEngine_1 = require("../TplEngine");
 const WellKnown_1 = require("../WellKnown");

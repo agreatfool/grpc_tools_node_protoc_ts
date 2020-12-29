@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExportMap = void 0;
 class ExportMap {
     constructor() {
         this.messageMap = {};

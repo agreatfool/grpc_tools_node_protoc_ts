@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ExtensionFormatter = void 0;
 const Utility_1 = require("../../Utility");
 const FieldTypesFormatter_1 = require("./FieldTypesFormatter");
 var ExtensionFormatter;

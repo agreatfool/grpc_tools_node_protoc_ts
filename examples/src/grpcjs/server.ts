@@ -11,7 +11,9 @@ const log = debug("SampleServer");
 
 class ServerImpl implements IBookServiceServer {
 
-    public getBook(call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: sendUnaryData<Book>) {
+    [name: string]: grpc.UntypedHandleCall;
+
+    public getBook(call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: sendUnaryData<Book>): void {
         const book = new Book();
 
         book.setTitle("DefaultBook");
@@ -71,7 +73,6 @@ class ServerImpl implements IBookServiceServer {
 function startServer() {
     const server = new grpc.Server();
 
-    // @ts-ignore
     server.addService(BookServiceService, new ServerImpl());
     server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {

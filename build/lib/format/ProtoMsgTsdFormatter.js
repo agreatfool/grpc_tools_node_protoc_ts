@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProtoMsgTsdFormatter = void 0;
 const Utility_1 = require("../Utility");
 const WellKnown_1 = require("../WellKnown");
 const MessageFormatter_1 = require("./partial/MessageFormatter");

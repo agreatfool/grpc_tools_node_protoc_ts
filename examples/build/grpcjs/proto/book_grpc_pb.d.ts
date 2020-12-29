@@ -54,7 +54,7 @@ interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.Ge
 
 export const BookServiceService: IBookServiceService;
 
-export interface IBookServiceServer {
+export interface IBookServiceServer extends grpc.UntypedServiceImplementation {
     getBook: grpc.handleUnaryCall<book_pb.GetBookRequest, book_pb.Book>;
     getBooksViaAuthor: grpc.handleServerStreamingCall<book_pb.GetBookViaAuthor, book_pb.Book>;
     getGreatestBook: handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
