@@ -9,11 +9,9 @@ import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
 
 const log = debug("SampleServer");
 
-class ServerImpl implements IBookServiceServer {
+const ServerImpl: IBookServiceServer = {
 
-    [name: string]: grpc.UntypedHandleCall;
-
-    public getBook(call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: sendUnaryData<Book>): void {
+    getBook: (call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: sendUnaryData<Book>): void => {
         const book = new Book();
 
         book.setTitle("DefaultBook");
@@ -21,9 +19,9 @@ class ServerImpl implements IBookServiceServer {
 
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);
-    }
+    },
 
-    public getBooks(call: grpc.ServerDuplexStream<GetBookRequest, Book>) {
+    getBooks: (call: grpc.ServerDuplexStream<GetBookRequest, Book>): void => {
         call.on("data", (request: GetBookRequest) => {
             const reply = new Book();
             reply.setTitle(`Book${request.getIsbn()}`);
@@ -36,9 +34,9 @@ class ServerImpl implements IBookServiceServer {
             log("[getBooks] Done.");
             call.end();
         });
-    }
+    },
 
-    public getBooksViaAuthor(call: grpc.ServerWritableStream<GetBookViaAuthor, Book>) {
+    getBooksViaAuthor: (call: grpc.ServerWritableStream<GetBookViaAuthor, Book>): void => {
         log(`[getBooksViaAuthor] Request: ${JSON.stringify(call.request.toObject())}`);
         for (let i = 1; i <= 10; i++) {
             const reply = new Book();
@@ -50,9 +48,9 @@ class ServerImpl implements IBookServiceServer {
         }
         log("[getBooksViaAuthor] Done.");
         call.end();
-    }
+    },
 
-    public getGreatestBook(call: grpc.ServerReadableStream<GetBookRequest, Book>, callback: sendUnaryData<Book>) {
+    getGreatestBook: (call: grpc.ServerReadableStream<GetBookRequest, Book>, callback: sendUnaryData<Book>): void => {
         let lastOne: GetBookRequest;
         call.on("data", (request: GetBookRequest) => {
             log(`[getGreatestBook] Request: ${JSON.stringify(request.toObject())}`);
@@ -66,14 +64,14 @@ class ServerImpl implements IBookServiceServer {
             log(`[getGreatestBook] Done: ${JSON.stringify(reply.toObject())}`);
             callback(null, reply);
         });
-    }
+    },
 
-}
+};
 
 function startServer() {
     const server = new grpc.Server();
 
-    server.addService(BookServiceService, new ServerImpl());
+    server.addService(BookServiceService, ServerImpl);
     server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {
             throw err;

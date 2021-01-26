@@ -6,15 +6,15 @@ const grpc = require("@grpc/grpc-js");
 const book_grpc_pb_1 = require("./proto/book_grpc_pb");
 const book_pb_1 = require("./proto/book_pb");
 const log = debug("SampleServer");
-class ServerImpl {
-    getBook(call, callback) {
+const ServerImpl = {
+    getBook: (call, callback) => {
         const book = new book_pb_1.Book();
         book.setTitle("DefaultBook");
         book.setAuthor("DefaultAuthor");
         log(`[getBook] Done: ${JSON.stringify(book.toObject())}`);
         callback(null, book);
-    }
-    getBooks(call) {
+    },
+    getBooks: (call) => {
         call.on("data", (request) => {
             const reply = new book_pb_1.Book();
             reply.setTitle(`Book${request.getIsbn()}`);
@@ -27,8 +27,8 @@ class ServerImpl {
             log("[getBooks] Done.");
             call.end();
         });
-    }
-    getBooksViaAuthor(call) {
+    },
+    getBooksViaAuthor: (call) => {
         log(`[getBooksViaAuthor] Request: ${JSON.stringify(call.request.toObject())}`);
         for (let i = 1; i <= 10; i++) {
             const reply = new book_pb_1.Book();
@@ -40,8 +40,8 @@ class ServerImpl {
         }
         log("[getBooksViaAuthor] Done.");
         call.end();
-    }
-    getGreatestBook(call, callback) {
+    },
+    getGreatestBook: (call, callback) => {
         let lastOne;
         call.on("data", (request) => {
             log(`[getGreatestBook] Request: ${JSON.stringify(request.toObject())}`);
@@ -55,11 +55,11 @@ class ServerImpl {
             log(`[getGreatestBook] Done: ${JSON.stringify(reply.toObject())}`);
             callback(null, reply);
         });
-    }
-}
+    },
+};
 function startServer() {
     const server = new grpc.Server();
-    server.addService(book_grpc_pb_1.BookServiceService, new ServerImpl());
+    server.addService(book_grpc_pb_1.BookServiceService, ServerImpl);
     server.bindAsync("127.0.0.1:50051", grpc.ServerCredentials.createInsecure(), (err, port) => {
         if (err) {
             throw err;
