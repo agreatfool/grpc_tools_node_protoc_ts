@@ -462,6 +462,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.1.1
+Add docs to explain previous breaking change a bit more. See: [PR#82](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/82).
+
 ### 5.1.0
 Fix server implementation signature issue of `grpc_js` side. See: [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79).
 
