@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    target-branch: 'main'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '19:00'
+    commit-message:
+      prefix: 'dependencies'
+      prefix-development: 'devDependencies'
+      include: 'scope'
+    open-pull-requests-limit: 5
+    versioning-strategy: 'increase-if-necessary'

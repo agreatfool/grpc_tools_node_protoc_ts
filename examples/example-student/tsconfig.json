@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"outDir": "dist",
+		"target": "ESNext",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"downlevelIteration": true,
+		"allowSyntheticDefaultImports": true,
+		"importHelpers": true,
+		"skipLibCheck": true,
+		"noEmitOnError": true,
+		"sourceMap": true,
+		"noImplicitAny": false,
+		"strict": false,
+		"alwaysStrict": false,
+		"noUnusedParameters": false,
+		"typeRoots": ["./node_modules/@types"]
+	},
+	"include": ["www/**/*.ts", "src/**/*"],
+	"exclude": ["./node_modules", "./dist"]
+}

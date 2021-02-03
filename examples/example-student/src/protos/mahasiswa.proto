@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package student;
+
+import "google/protobuf/empty.proto";
+
+service Student {
+  rpc InsertStudent(StudentRequest) returns (StudentResponse) {}
+  rpc ResultsStudent(google.protobuf.Empty) returns (StudentList) {}
+  rpc ResultStudent(StudentId) returns (StudentResponse) {}
+  rpc DeleteStudent(StudentId) returns (StudentResponse) {}
+  rpc UpdateStudent(StudentRequest) returns (StudentResponse) {}
+}
+
+message StudentRequest {
+  string id = 1;
+  string name = 2;
+  string npm = 3;
+  string bid = 4;
+  string fak = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message StudentResponse {
+    string id = 1;
+    string name = 2;
+    string npm = 3;
+    string bid = 4;
+    string fak = 5;
+    string created_at = 6;
+    string updated_at = 7;
+    int32 statusCode = 10;
+    string message = 11;
+}
+
+message StudentList {
+  repeated StudentRequest students = 1;
+  int32 statusCode = 2;
+  string message = 3;
+}
+
+message StudentId {
+  string id = 1;
+}
