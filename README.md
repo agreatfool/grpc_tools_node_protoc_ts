@@ -76,89 +76,89 @@ TSLint has been disabled in generated files. Please see the conversation: [#13](
 npm install grpc_tools_node_protoc_ts --save-dev
 ```
 
-  + ### Makefile
++ ### Makefile
     ```makefile
-    #run command -> make grpcwin || make grpclinmac
-    
-    INPUT_DIR := ${realpath your_proto_dir}
-    OUTPUT_DIR := ${realpath your_output_dir}
-    FIND_FILE := ${wildcard ${OUTPUT_DIR}/*.ts}
-    GRPC_TOOLS = npx grpc_tools_node_protoc
-    PROTOC_GEN_TS_PATH_WINDOWS := ${realpath node_modules/.bin/protoc-gen-ts.cmd}
-    PROTOC_GEN_TS_PATH_LINMAC := ${realpath node_modules/.bin/protoc-gen-ts}
+      #run command -> make grpcwin || make grpclinmac
 
-    #################################################################################
-    ##===============================================================================
-    ## GENERATE PROTO FILE FOR WINDOWS USING grpc_tools_node_protoc FOR @grpc/grpc-js
-    ##===============================================================================
-    #################################################################################
+      INPUT_DIR := ${realpath your_proto_dir}
+      OUTPUT_DIR := ${realpath your_output_dir}
+      FIND_FILE := ${wildcard ${OUTPUT_DIR}/*.ts}
+      GRPC_TOOLS = npx grpc_tools_node_protoc
+      PROTOC_GEN_TS_PATH_WINDOWS := ${realpath node_modules/.bin/protoc-gen-ts.cmd}
+      PROTOC_GEN_TS_PATH_LINMAC := ${realpath node_modules/.bin/protoc-gen-ts}
 
-    grpcwin:
-    ifneq (${FIND_FILE}, )
-    #remove old all file typedefs
-      rm ${OUTPUT_DIR}/**.{ts,js}
+      #################################################################################
+      ##===============================================================================
+      ## GENERATE PROTO FILE FOR WINDOWS USING grpc_tools_node_protoc FOR @grpc/grpc-js
+      ##===============================================================================
+      #################################################################################
 
-    #generate protofile typedefs
-      ${shell exec} ${GRPC_TOOLS} \
-      --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_WINDOWS} \
-      --grpc_out=grpc_js:${OUTPUT_DIR} \
-      --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
-      --ts_out=grpc_js:${OUTPUT_DIR} \
-      --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
-    else
-    #generate protofile typedefs if file not exist
-      ${shell exec} ${GRPC_TOOLS} \
-      --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_WINDOWS} \
-      --grpc_out=grpc_js:${OUTPUT_DIR} \
-      --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
-      --ts_out=grpc_js:${OUTPUT_DIR} \
-      --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
-    endif
+      grpcwin:
+      ifneq (${FIND_FILE}, )
+      #remove old all file typedefs
+        rm ${OUTPUT_DIR}/**.{ts,js}
 
-    ####################################################################################
-    ##==================================================================================
-    ## GENERATE PROTO FILE FOR LINUX/MAC USING grpc_tools_node_protoc FOR @grpc/grpc-js
-    ##==================================================================================
-    ####################################################################################
+      #generate protofile typedefs
+        ${shell exec} ${GRPC_TOOLS} \
+        --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_WINDOWS} \
+        --grpc_out=grpc_js:${OUTPUT_DIR} \
+        --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
+        --ts_out=grpc_js:${OUTPUT_DIR} \
+        --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
+      else
+      #generate protofile typedefs if file not exist
+        ${shell exec} ${GRPC_TOOLS} \
+        --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_WINDOWS} \
+        --grpc_out=grpc_js:${OUTPUT_DIR} \
+        --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
+        --ts_out=grpc_js:${OUTPUT_DIR} \
+        --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
+      endif
 
-    grpclinmac:
-    ifneq (${FIND_FILE}, )
-    #remove old all file typedefs
-      rm ${OUTPUT_DIR}/**.{ts,js}
+      ####################################################################################
+      ##==================================================================================
+      ## GENERATE PROTO FILE FOR LINUX/MAC USING grpc_tools_node_protoc FOR @grpc/grpc-js
+      ##==================================================================================
+      ####################################################################################
 
-    #generate protofile typedefs
-      ${shell exec} ${GRPC_TOOLS} \
-      --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_LINMAC} \
-      --grpc_out=grpc_js:${OUTPUT_DIR} \
-      --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
-      --ts_out=grpc_js:${OUTPUT_DIR} \
-      --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
-    else
-    #generate protofile typedefs if file not exist
-      ${shell exec} ${GRPC_TOOLS} \
-      --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_LINMAC} \
-      --grpc_out=grpc_js:${OUTPUT_DIR} \
-      --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
-      --ts_out=grpc_js:${OUTPUT_DIR} \
-      --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
-    endif
+      grpclinmac:
+      ifneq (${FIND_FILE}, )
+      #remove old all file typedefs
+        rm ${OUTPUT_DIR}/**.{ts,js}
+
+      #generate protofile typedefs
+        ${shell exec} ${GRPC_TOOLS} \
+        --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_LINMAC} \
+        --grpc_out=grpc_js:${OUTPUT_DIR} \
+        --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
+        --ts_out=grpc_js:${OUTPUT_DIR} \
+        --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
+      else
+      #generate protofile typedefs if file not exist
+        ${shell exec} ${GRPC_TOOLS} \
+        --plugin=protoc-gen-ts=${PROTOC_GEN_TS_PATH_LINMAC} \
+        --grpc_out=grpc_js:${OUTPUT_DIR} \
+        --js_out=import_style=commonjs,binary:${OUTPUT_DIR} \
+        --ts_out=grpc_js:${OUTPUT_DIR} \
+        --proto_path ${INPUT_DIR} ${INPUT_DIR}/*.proto
+      endif
     ```
-  + ### Shell/Bash
++ ### Shell/Bash
     ```sh
-    # generate js codes via grpc-tools
-    grpc_tools_node_protoc \
-    --js_out=import_style=commonjs,binary:./your_dest_dir \
-    --grpc_out=./your_dest_dir \
-    --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` \
-    -I ./proto \
-    ./your_proto_dir/*.proto
+      # generate js codes via grpc-tools
+      grpc_tools_node_protoc \
+      --js_out=import_style=commonjs,binary:./your_dest_dir \
+      --grpc_out=./your_dest_dir \
+      --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` \
+      -I ./proto \
+      ./your_proto_dir/*.proto
 
-    # generate d.ts codes
-    protoc \
-    --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
-    --ts_out=./your_dest_dir \
-    -I ./proto \
-    ./your_proto_dir/*.proto
+      # generate d.ts codes
+      protoc \
+      --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+      --ts_out=./your_dest_dir \
+      -I ./proto \
+      ./your_proto_dir/*.proto
   ```sh
 
 ## Example
