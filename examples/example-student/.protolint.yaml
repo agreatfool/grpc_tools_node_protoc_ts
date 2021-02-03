@@ -1,0 +1,10 @@
+lint:
+  rules:
+    no_default: true
+    add:
+      - MESSAGE_NAMES_UPPER_CAMEL_CASE
+      - SERVICE_NAMES_UPPER_CAMEL_CASE
+      - ENUM_NAMES_UPPER_CAMEL_CASE
+      - ENUM_FIELD_NAMES_UPPER_SNAKE_CASE
+      - IMPORTS_SORTED
+      - SYNTAX_CONSISTENT

@@ -1,0 +1,12 @@
+[*]
+root = true
+end_of_line = crlf
+charset = utf-8
+
+[*.{ts,spec.ts,test.ts,json}]
+tab_width = 2
+indent_style = tab
+
+[Makefile,Dockerfile,proto]
+tab_width = 2
+indent_style = tab
