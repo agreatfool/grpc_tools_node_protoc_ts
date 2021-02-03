@@ -159,7 +159,7 @@ npm install grpc_tools_node_protoc_ts --save-dev
       --ts_out=./your_dest_dir \
       -I ./proto \
       ./your_proto_dir/*.proto
-  ```sh
+    ```
 
 ## Example
 There is a complete & runnable example in folder `examples`.
