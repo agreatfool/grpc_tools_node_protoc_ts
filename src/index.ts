@@ -12,6 +12,7 @@ import {FileDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb
 import {ProtoMsgTsdFormatter} from "./lib/format/ProtoMsgTsdFormatter";
 import {ProtoSvcTsdFormatter} from "./lib/format/ProtoSvcTsdFormatter";
 import {TplEngine} from "./lib/TplEngine";
+import {MsgRender} from "./lib/template/MsgRender";
 
 Utility.withAllStdIn((inputBuff: Buffer) => {
 
@@ -37,6 +38,13 @@ Utility.withAllStdIn((inputBuff: Buffer) => {
             const msgTsdFile = new CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
             const msgModel = ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+
+            // FIXME
+            const fs = require("fs");
+            const { inspect } = require("util");
+            fs.writeFileSync("/tmp/console.txt", inspect(msgModel, { showHidden: true, depth: null }));
+            fs.writeFileSync("/tmp/msg.d.ts", new MsgRender(msgModel).render());
+
             msgTsdFile.setContent(TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
 

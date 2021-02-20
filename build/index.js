@@ -12,6 +12,7 @@ const plugin_pb_1 = require("google-protobuf/google/protobuf/compiler/plugin_pb"
 const ProtoMsgTsdFormatter_1 = require("./lib/format/ProtoMsgTsdFormatter");
 const ProtoSvcTsdFormatter_1 = require("./lib/format/ProtoSvcTsdFormatter");
 const TplEngine_1 = require("./lib/TplEngine");
+const MsgRender_1 = require("./lib/template/MsgRender");
 Utility_1.Utility.withAllStdIn((inputBuff) => {
     try {
         const typedInputBuff = new Uint8Array(inputBuff.length);
@@ -31,6 +32,11 @@ Utility_1.Utility.withAllStdIn((inputBuff) => {
             const msgTsdFile = new plugin_pb_1.CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
             const msgModel = ProtoMsgTsdFormatter_1.ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            // FIXME
+            const fs = require("fs");
+            const { inspect } = require("util");
+            fs.writeFileSync("/tmp/console.txt", inspect(msgModel, { showHidden: true, depth: null }));
+            fs.writeFileSync("/tmp/msg.d.ts", new MsgRender_1.MsgRender(msgModel).render());
             msgTsdFile.setContent(TplEngine_1.TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
             // service part
