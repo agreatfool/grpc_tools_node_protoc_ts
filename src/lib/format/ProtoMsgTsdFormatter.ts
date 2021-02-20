@@ -6,6 +6,7 @@ import {MessageFormatter} from "./partial/MessageFormatter";
 import {ExtensionFormatter} from "./partial/ExtensionFormatter";
 import {EnumFormatter} from "./partial/EnumFormatter";
 import {DependencyFilter} from "../DependencyFilter";
+import {TplEngine} from "../TplEngine";
 
 export namespace ProtoMsgTsdFormatter {
 
@@ -51,6 +52,10 @@ export namespace ProtoMsgTsdFormatter {
         });
         descriptor.getEnumTypeList().forEach((enumType) => {
             enums.push(EnumFormatter.format(enumType, ""));
+        });
+
+        TplEngine.registerHelper("formatName", (str) => {
+            return Utility.formatOccupiedName(str);
         });
 
         return {

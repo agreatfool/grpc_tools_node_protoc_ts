@@ -59,3 +59,29 @@ message OneOfSample {
         bool b_2 = 4;
     }
 }
+
+message ExtMsgString {
+    string extension = 1;
+}
+
+message ExtMsgList {
+    repeated string extension = 1;
+}
+
+message ExtMsgByte {
+    bytes extension = 1;
+}
+
+message ExtMsgByteList {
+    repeated bytes extension = 1;
+}
+
+message ExtMsgMap {
+    map<string, string> extension = 1;
+}
+
+message ExtMsgOneOf {
+    oneof ext {
+        string extension = 1;
+    }
+}

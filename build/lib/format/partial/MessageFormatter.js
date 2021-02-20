@@ -185,11 +185,16 @@ var MessageFormatter;
         TplEngine_1.TplEngine.registerHelper("printClearIfNotPresent", (fieldData) => {
             if (!fieldData.hasClearMethodCreated) {
                 fieldData.hasClearMethodCreated = true;
-                return `clear${fieldData.camelUpperName}${fieldData.isRepeatField ? "List" : ""}(): void;`;
+                if (fieldData.isRepeatField) {
+                    return `clear${fieldData.camelUpperName}List(): void;`;
+                }
+                else {
+                    return `clear${Utility_1.Utility.formatOccupiedName(fieldData.camelUpperName)}(): void;`;
+                }
             }
         });
         TplEngine_1.TplEngine.registerHelper("printRepeatedAddMethod", (fieldData, valueType) => {
-            return `add${fieldData.camelUpperName}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
+            return `add${Utility_1.Utility.formatOccupiedName(fieldData.camelUpperName)}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
         });
         TplEngine_1.TplEngine.registerHelper("oneOfName", (oneOfDecl) => {
             return Utility_1.Utility.oneOfName(oneOfDecl.getName());

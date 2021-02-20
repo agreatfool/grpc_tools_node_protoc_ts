@@ -84,6 +84,13 @@ export namespace Utility {
         return false;
     }
 
+    export function formatOccupiedName(name: string): string {
+        if (name === "Extension" || name === "JsPbMessageId") {
+            name += "$";
+        }
+        return name;
+    }
+
     // reserved Javascript keywords used by the Javascript generator
     // src: https://github.com/google/protobuf/blob/ed4321d1cb33199984118d801956822842771e7e/src/google/protobuf/compiler/js/js_generator.cc#L60-L119
     const reservedKeywords = [

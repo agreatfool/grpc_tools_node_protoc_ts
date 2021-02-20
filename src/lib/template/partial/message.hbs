@@ -7,7 +7,7 @@
 {{{../indent}}}    clear{{{this.camelUpperName}}}Map(): void;
     {{~else~}}{{!-- map spec else --}}
         {{~#if this.hasFieldPresence~}}{{!-- hasFieldPresence start --}}
-{{{../indent}}}    has{{{this.camelUpperName}}}(): boolean;
+{{{../indent}}}    has{{{formatName this.camelUpperName}}}(): boolean;
             {{#is this.hasClearMethodCreated false}}
 {{{../indent}}}    {{printClearIfNotPresent this}}
             {{/is}}
@@ -29,13 +29,13 @@
             {{~/is~}}
         {{~else~}}{{!-- repeat else --}}
             {{~#is this.type ../BYTES_TYPE~}}
-{{{../indent}}}    get{{{this.camelUpperName}}}(): Uint8Array | string;
+{{{../indent}}}    get{{{formatName this.camelUpperName}}}(): Uint8Array | string;
 {{{../indent}}}    get{{{this.camelUpperName}}}_asU8(): Uint8Array;
 {{{../indent}}}    get{{{this.camelUpperName}}}_asB64(): string;
-{{{../indent}}}    set{{{this.camelUpperName}}}(value: Uint8Array | string): {{{../message.messageName}}};
+{{{../indent}}}    set{{{formatName this.camelUpperName}}}(value: Uint8Array | string): {{{../message.messageName}}};
             {{~else~}}
-{{{../indent}}}    get{{{this.camelUpperName}}}(): {{{this.exportType}}}{{#if this.canBeUndefined}} | undefined{{/if}};
-{{{../indent}}}    set{{{this.camelUpperName}}}(value{{#is this.type ../MESSAGE_TYPE}}?{{/is}}: {{{this.exportType}}}): {{{../message.messageName}}};
+{{{../indent}}}    get{{{formatName this.camelUpperName}}}(): {{{this.exportType}}}{{#if this.canBeUndefined}} | undefined{{/if}};
+{{{../indent}}}    set{{{formatName this.camelUpperName}}}(value{{#is this.type ../MESSAGE_TYPE}}?{{/is}}: {{{this.exportType}}}): {{{../message.messageName}}};
             {{~/is~}}
         {{~/if~}}{{!-- repeat end --}}
     {{~/if~}}{{!-- map spec end --}}
