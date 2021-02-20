@@ -204,6 +204,155 @@ export namespace OneOfSample {
 
 }
 
+export class ExtMsgString extends jspb.Message { 
+    getExtension$(): string;
+    setExtension$(value: string): ExtMsgString;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgString.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgString): ExtMsgString.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgString, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgString;
+    static deserializeBinaryFromReader(message: ExtMsgString, reader: jspb.BinaryReader): ExtMsgString;
+}
+
+export namespace ExtMsgString {
+    export type AsObject = {
+        extension: string,
+    }
+}
+
+export class ExtMsgList extends jspb.Message { 
+    clearExtensionList(): void;
+    getExtensionList(): Array<string>;
+    setExtensionList(value: Array<string>): ExtMsgList;
+    addExtension$(value: string, index?: number): string;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgList.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgList): ExtMsgList.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgList, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgList;
+    static deserializeBinaryFromReader(message: ExtMsgList, reader: jspb.BinaryReader): ExtMsgList;
+}
+
+export namespace ExtMsgList {
+    export type AsObject = {
+        extensionList: Array<string>,
+    }
+}
+
+export class ExtMsgByte extends jspb.Message { 
+    getExtension$(): Uint8Array | string;
+    getExtension_asU8(): Uint8Array;
+    getExtension_asB64(): string;
+    setExtension$(value: Uint8Array | string): ExtMsgByte;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgByte.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgByte): ExtMsgByte.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgByte, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgByte;
+    static deserializeBinaryFromReader(message: ExtMsgByte, reader: jspb.BinaryReader): ExtMsgByte;
+}
+
+export namespace ExtMsgByte {
+    export type AsObject = {
+        extension: Uint8Array | string,
+    }
+}
+
+export class ExtMsgByteList extends jspb.Message { 
+    clearExtensionList(): void;
+    getExtensionList(): Array<Uint8Array | string>;
+    getExtensionList_asU8(): Array<Uint8Array>;
+    getExtensionList_asB64(): Array<string>;
+    setExtensionList(value: Array<Uint8Array | string>): ExtMsgByteList;
+    addExtension$(value: Uint8Array | string, index?: number): Uint8Array | string;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgByteList.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgByteList): ExtMsgByteList.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgByteList, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgByteList;
+    static deserializeBinaryFromReader(message: ExtMsgByteList, reader: jspb.BinaryReader): ExtMsgByteList;
+}
+
+export namespace ExtMsgByteList {
+    export type AsObject = {
+        extensionList: Array<Uint8Array | string>,
+    }
+}
+
+export class ExtMsgMap extends jspb.Message { 
+
+    getExtensionMap(): jspb.Map<string, string>;
+    clearExtensionMap(): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgMap.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgMap): ExtMsgMap.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgMap, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgMap;
+    static deserializeBinaryFromReader(message: ExtMsgMap, reader: jspb.BinaryReader): ExtMsgMap;
+}
+
+export namespace ExtMsgMap {
+    export type AsObject = {
+
+        extensionMap: Array<[string, string]>,
+    }
+}
+
+export class ExtMsgOneOf extends jspb.Message { 
+
+    hasExtension$(): boolean;
+    clearExtension$(): void;
+    getExtension$(): string;
+    setExtension$(value: string): ExtMsgOneOf;
+
+
+    getExtCase(): ExtMsgOneOf.ExtCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgOneOf.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgOneOf): ExtMsgOneOf.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgOneOf, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgOneOf;
+    static deserializeBinaryFromReader(message: ExtMsgOneOf, reader: jspb.BinaryReader): ExtMsgOneOf;
+}
+
+export namespace ExtMsgOneOf {
+    export type AsObject = {
+        extension: string,
+    }
+
+    export enum ExtCase {
+        EXT_NOT_SET = 0,
+    
+    EXTENSION = 1,
+
+    }
+
+}
+
 export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,

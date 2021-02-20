@@ -80,6 +80,13 @@ var Utility;
         return false;
     }
     Utility.isReserved = isReserved;
+    function formatOccupiedName(name) {
+        if (name === "Extension" || name === "JsPbMessageId") {
+            name += "$";
+        }
+        return name;
+    }
+    Utility.formatOccupiedName = formatOccupiedName;
     // reserved Javascript keywords used by the Javascript generator
     // src: https://github.com/google/protobuf/blob/ed4321d1cb33199984118d801956822842771e7e/src/google/protobuf/compiler/js/js_generator.cc#L60-L119
     const reservedKeywords = [

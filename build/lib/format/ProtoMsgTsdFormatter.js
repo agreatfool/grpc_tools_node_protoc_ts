@@ -7,6 +7,7 @@ const MessageFormatter_1 = require("./partial/MessageFormatter");
 const ExtensionFormatter_1 = require("./partial/ExtensionFormatter");
 const EnumFormatter_1 = require("./partial/EnumFormatter");
 const DependencyFilter_1 = require("../DependencyFilter");
+const TplEngine_1 = require("../TplEngine");
 var ProtoMsgTsdFormatter;
 (function (ProtoMsgTsdFormatter) {
     function format(descriptor, exportMap) {
@@ -39,6 +40,9 @@ var ProtoMsgTsdFormatter;
         });
         descriptor.getEnumTypeList().forEach((enumType) => {
             enums.push(EnumFormatter_1.EnumFormatter.format(enumType, ""));
+        });
+        TplEngine_1.TplEngine.registerHelper("formatName", (str) => {
+            return Utility_1.Utility.formatOccupiedName(str);
         });
         return {
             packageName,

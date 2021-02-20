@@ -261,11 +261,16 @@ export namespace MessageFormatter {
         TplEngine.registerHelper("printClearIfNotPresent", (fieldData: IMessageFieldType) => {
             if (!fieldData.hasClearMethodCreated) {
                 fieldData.hasClearMethodCreated = true;
-                return `clear${fieldData.camelUpperName}${fieldData.isRepeatField ? "List" : ""}(): void;`;
+
+                if (fieldData.isRepeatField) {
+                    return `clear${fieldData.camelUpperName}List(): void;`;
+                } else {
+                    return `clear${Utility.formatOccupiedName(fieldData.camelUpperName)}(): void;`;
+                }
             }
         });
         TplEngine.registerHelper("printRepeatedAddMethod", (fieldData: IMessageFieldType, valueType: string) => {
-            return `add${fieldData.camelUpperName}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
+            return `add${Utility.formatOccupiedName(fieldData.camelUpperName)}(value${fieldData.isOptionalValue ? "?" : ""}: ${valueType}, index?: number): ${valueType};`;
         });
         TplEngine.registerHelper("oneOfName", (oneOfDecl: OneofDescriptorProto) => {
             return Utility.oneOfName(oneOfDecl.getName());
