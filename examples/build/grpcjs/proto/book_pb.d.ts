@@ -9,13 +9,10 @@ import * as jspb from "google-protobuf";
 export class Book extends jspb.Message { 
     getIsbn(): number;
     setIsbn(value: number): Book;
-
     getTitle(): string;
     setTitle(value: string): Book;
-
     getAuthor(): string;
     setAuthor(value: string): Book;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Book.AsObject;
@@ -39,7 +36,6 @@ export class GetBookRequest extends jspb.Message {
     getIsbn(): number;
     setIsbn(value: number): GetBookRequest;
 
-
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetBookRequest.AsObject;
     static toObject(includeInstance: boolean, msg: GetBookRequest): GetBookRequest.AsObject;
@@ -59,7 +55,6 @@ export namespace GetBookRequest {
 export class GetBookViaAuthor extends jspb.Message { 
     getAuthor(): string;
     setAuthor(value: string): GetBookViaAuthor;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetBookViaAuthor.AsObject;
@@ -81,10 +76,8 @@ export class BookStore extends jspb.Message {
     getName(): string;
     setName(value: string): BookStore;
 
-
     getBooksMap(): jspb.Map<number, string>;
     clearBooksMap(): void;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BookStore.AsObject;
@@ -107,16 +100,12 @@ export namespace BookStore {
 export class SpecialCases extends jspb.Message { 
     getNormal(): string;
     setNormal(value: string): SpecialCases;
-
     getDefault(): string;
     setDefault(value: string): SpecialCases;
-
     getFunction(): string;
     setFunction(value: string): SpecialCases;
-
     getVar(): string;
     setVar(value: string): SpecialCases;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SpecialCases.AsObject;
@@ -144,24 +133,20 @@ export class OneOfSample extends jspb.Message {
     getA1(): boolean;
     setA1(value: boolean): OneOfSample;
 
-
     hasB1(): boolean;
     clearB1(): void;
     getB1(): boolean;
     setB1(value: boolean): OneOfSample;
-
 
     hasA2(): boolean;
     clearA2(): void;
     getA2(): boolean;
     setA2(value: boolean): OneOfSample;
 
-
     hasB2(): boolean;
     clearB2(): void;
     getB2(): boolean;
     setB2(value: boolean): OneOfSample;
-
 
     getSinglewordCase(): OneOfSample.SinglewordCase;
     getTwoWordsCase(): OneOfSample.TwoWordsCase;
@@ -186,20 +171,14 @@ export namespace OneOfSample {
 
     export enum SinglewordCase {
         SINGLEWORD_NOT_SET = 0,
-    
-    A1 = 1,
-
-    B1 = 2,
-
+        A1 = 1,
+        B1 = 2,
     }
 
     export enum TwoWordsCase {
         TWO_WORDS_NOT_SET = 0,
-    
-    A_2 = 3,
-
-    B_2 = 4,
-
+        A_2 = 3,
+        B_2 = 4,
     }
 
 }
@@ -207,7 +186,6 @@ export namespace OneOfSample {
 export class ExtMsgString extends jspb.Message { 
     getExtension$(): string;
     setExtension$(value: string): ExtMsgString;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtMsgString.AsObject;
@@ -231,7 +209,6 @@ export class ExtMsgList extends jspb.Message {
     setExtensionList(value: Array<string>): ExtMsgList;
     addExtension$(value: string, index?: number): string;
 
-
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtMsgList.AsObject;
     static toObject(includeInstance: boolean, msg: ExtMsgList): ExtMsgList.AsObject;
@@ -253,7 +230,6 @@ export class ExtMsgByte extends jspb.Message {
     getExtension_asU8(): Uint8Array;
     getExtension_asB64(): string;
     setExtension$(value: Uint8Array | string): ExtMsgByte;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtMsgByte.AsObject;
@@ -279,7 +255,6 @@ export class ExtMsgByteList extends jspb.Message {
     setExtensionList(value: Array<Uint8Array | string>): ExtMsgByteList;
     addExtension$(value: Uint8Array | string, index?: number): Uint8Array | string;
 
-
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtMsgByteList.AsObject;
     static toObject(includeInstance: boolean, msg: ExtMsgByteList): ExtMsgByteList.AsObject;
@@ -300,7 +275,6 @@ export class ExtMsgMap extends jspb.Message {
 
     getExtensionMap(): jspb.Map<string, string>;
     clearExtensionMap(): void;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtMsgMap.AsObject;
@@ -326,7 +300,6 @@ export class ExtMsgOneOf extends jspb.Message {
     getExtension$(): string;
     setExtension$(value: string): ExtMsgOneOf;
 
-
     getExtCase(): ExtMsgOneOf.ExtCase;
 
     serializeBinary(): Uint8Array;
@@ -346,9 +319,7 @@ export namespace ExtMsgOneOf {
 
     export enum ExtCase {
         EXT_NOT_SET = 0,
-    
-    EXTENSION = 1,
-
+        EXTENSION = 1,
     }
 
 }
