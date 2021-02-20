@@ -462,6 +462,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.1.2
+Fix `Extension` and `JsPbMessageId` issue, see: [Issue#84](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/84), and [PR#87](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/87).
+
 ### 5.1.1
 Add docs to explain previous breaking change a bit more. See: [PR#82](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/82).
 
