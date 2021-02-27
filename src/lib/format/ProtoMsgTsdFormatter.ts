@@ -1,7 +1,7 @@
 import {FileDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb";
 import {ExportMap} from "../ExportMap";
 import {Utility} from "../Utility";
-import {WellKnownTypesMap} from "../WellKnown";
+import {WellKnownTypesMap, WellKnownExtensionsMap} from "../WellKnown";
 import {MessageFormatter} from "./partial/MessageFormatter";
 import {ExtensionFormatter} from "./partial/ExtensionFormatter";
 import {EnumFormatter} from "./partial/EnumFormatter";
@@ -17,6 +17,7 @@ export namespace ProtoMsgTsdFormatter {
         messages: MessageFormatter.IMessageModel[];
         extensions: ExtensionFormatter.IExtensionModel[];
         enums: EnumFormatter.IEnumModel[];
+        wellKnownDeclarations: string[];
     }
 
     export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): IProtoMsgTsdModel {
@@ -27,6 +28,7 @@ export namespace ProtoMsgTsdFormatter {
         const messages: MessageFormatter.IMessageModel[] = [];
         const extensions: ExtensionFormatter.IExtensionModel[] = [];
         const enums: EnumFormatter.IEnumModel[] = [];
+        const wellKnownDeclarations: string[] = [];
 
         const upToRoot = Utility.getPathToRoot(fileName);
 
@@ -45,7 +47,7 @@ export namespace ProtoMsgTsdFormatter {
         });
 
         descriptor.getMessageTypeList().forEach((enumType) => {
-            messages.push(MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
+            messages.push(MessageFormatter.format(fileName, exportMap, enumType, "", descriptor, WellKnownExtensionsMap[fileName]?.extensions));
         });
         descriptor.getExtensionList().forEach((extension) => {
             extensions.push(ExtensionFormatter.format(fileName, exportMap, extension, ""));
@@ -58,6 +60,12 @@ export namespace ProtoMsgTsdFormatter {
             return Utility.formatOccupiedName(str);
         });
 
+        if (fileName in WellKnownExtensionsMap) {
+            WellKnownExtensionsMap[fileName]?.declarations?.forEach(declaration => {
+                wellKnownDeclarations.push(`\n${declaration}`);
+            });
+        }
+
         return {
             packageName,
             fileName,
@@ -65,6 +73,7 @@ export namespace ProtoMsgTsdFormatter {
             messages,
             extensions,
             enums,
+            wellKnownDeclarations,
         };
     }
 

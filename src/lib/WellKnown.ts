@@ -13,18 +13,27 @@ export const WellKnownTypesMap: { [key: string]: string } = {
     "google/protobuf/wrappers.proto": "google-protobuf/google/protobuf/wrappers_pb",
 };
 
-export const WellKnownExtensionsMap: { [key: string]: {[key: string]: string[]} } = {
+export type WellKnownExtension = { declarations?: string[], extensions: { [key: string]: string[] } };
+
+export const WellKnownExtensionsMap: { [key: string]: WellKnownExtension } = {
     "google/protobuf/timestamp.proto": {
-        "Timestamp": [
-            "toDate(): Date;",
-            "fromDate(date: Date): null;",
-            "static fromDate(date: Date): Timestamp;",
-        ]
+        "extensions": {
+            "Timestamp": [
+                "toDate(): Date;",
+                "fromDate(date: Date): null;",
+                "static fromDate(date: Date): Timestamp;",
+            ],
+        },
     },
     "google/protobuf/struct.proto": {
-        "ListValue": [
-            "toJavaScript(): Array<null | number | string | boolean | Array<any> | {}>;",
-            "static fromJavaScript(value: Array<null | number | string | boolean | Array<any> | {}>): ListValue;",
-        ]
+        "declarations": [
+            'export type JavaScriptValue = null | number | string | boolean | Array<any> | {};',
+        ],
+        "extensions": {
+            "ListValue": [
+                "toJavaScript(): Array<JavaScriptValue>;",
+                "static fromJavaScript(value: Array<JavaScriptValue>): ListValue;",
+            ],
+        },
     },
 }

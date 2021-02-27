@@ -11,12 +11,14 @@ const TplEngine_1 = require("../TplEngine");
 var ProtoMsgTsdFormatter;
 (function (ProtoMsgTsdFormatter) {
     function format(descriptor, exportMap) {
+        var _a, _b;
         const fileName = descriptor.getName();
         const packageName = descriptor.getPackage();
         const imports = [];
         const messages = [];
         const extensions = [];
         const enums = [];
+        const wellKnownDeclarations = [];
         const upToRoot = Utility_1.Utility.getPathToRoot(fileName);
         imports.push(`import * as jspb from "google-protobuf";`);
         descriptor.getDependencyList().forEach((dependency) => {
@@ -33,7 +35,8 @@ var ProtoMsgTsdFormatter;
             }
         });
         descriptor.getMessageTypeList().forEach((enumType) => {
-            messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
+            var _a;
+            messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor, (_a = WellKnown_1.WellKnownExtensionsMap[fileName]) === null || _a === void 0 ? void 0 : _a.extensions));
         });
         descriptor.getExtensionList().forEach((extension) => {
             extensions.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, ""));
@@ -44,6 +47,11 @@ var ProtoMsgTsdFormatter;
         TplEngine_1.TplEngine.registerHelper("formatName", (str) => {
             return Utility_1.Utility.formatOccupiedName(str);
         });
+        if (fileName in WellKnown_1.WellKnownExtensionsMap) {
+            (_b = (_a = WellKnown_1.WellKnownExtensionsMap[fileName]) === null || _a === void 0 ? void 0 : _a.declarations) === null || _b === void 0 ? void 0 : _b.forEach(declaration => {
+                wellKnownDeclarations.push(`\n${declaration}`);
+            });
+        }
         return {
             packageName,
             fileName,
@@ -51,6 +59,7 @@ var ProtoMsgTsdFormatter;
             messages,
             extensions,
             enums,
+            wellKnownDeclarations,
         };
     }
     ProtoMsgTsdFormatter.format = format;

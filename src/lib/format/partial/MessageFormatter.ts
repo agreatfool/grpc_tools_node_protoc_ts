@@ -11,7 +11,6 @@ import {EnumFormatter} from "./EnumFormatter";
 import {ExtensionFormatter} from "./ExtensionFormatter";
 import {OneofFormatter} from "./OneofFormatter";
 import {TplEngine} from "../../TplEngine";
-import {WellKnownExtensionsMap} from '../../WellKnown'
 
 export const OBJECT_TYPE_NAME = "AsObject";
 
@@ -107,7 +106,8 @@ export namespace MessageFormatter {
                            exportMap: ExportMap,
                            descriptor: DescriptorProto,
                            indent: string,
-                           fileDescriptor: FileDescriptorProto): IMessageModel {
+                           fileDescriptor: FileDescriptorProto,
+                           wellKnownExtensions: {[key: string]: string[]} = {}): IMessageModel {
 
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(defaultMessageType) as IMessageType;
@@ -120,8 +120,8 @@ export namespace MessageFormatter {
             return null;
         }
 
-        if (WellKnownExtensionsMap[fileName]?.[messageData.messageName]) {
-            messageData.extensions = WellKnownExtensionsMap[fileName][messageData.messageName];
+        if (wellKnownExtensions?.[messageData.messageName]) {
+            messageData.extensions = wellKnownExtensions[messageData.messageName];
         }
 
         const oneofGroups: FieldDescriptorProto[][] = [];

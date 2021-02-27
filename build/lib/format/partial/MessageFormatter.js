@@ -8,7 +8,6 @@ const EnumFormatter_1 = require("./EnumFormatter");
 const ExtensionFormatter_1 = require("./ExtensionFormatter");
 const OneofFormatter_1 = require("./OneofFormatter");
 const TplEngine_1 = require("../../TplEngine");
-const WellKnown_1 = require("../../WellKnown");
 exports.OBJECT_TYPE_NAME = "AsObject";
 var MessageFormatter;
 (function (MessageFormatter) {
@@ -49,8 +48,7 @@ var MessageFormatter;
         }
         return Utility_1.Utility.isProto2(descriptor);
     }
-    function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
-        var _a;
+    function format(fileName, exportMap, descriptor, indent, fileDescriptor, wellKnownExtensions = {}) {
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(MessageFormatter.defaultMessageType);
         messageData.messageName = descriptor.getName();
@@ -60,8 +58,8 @@ var MessageFormatter;
             // this message type is the entry tuple for a map - don't output it
             return null;
         }
-        if ((_a = WellKnown_1.WellKnownExtensionsMap[fileName]) === null || _a === void 0 ? void 0 : _a[messageData.messageName]) {
-            messageData.extensions = WellKnown_1.WellKnownExtensionsMap[fileName][messageData.messageName];
+        if (wellKnownExtensions === null || wellKnownExtensions === void 0 ? void 0 : wellKnownExtensions[messageData.messageName]) {
+            messageData.extensions = wellKnownExtensions[messageData.messageName];
         }
         const oneofGroups = [];
         descriptor.getFieldList().forEach((field) => {

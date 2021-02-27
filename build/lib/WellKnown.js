@@ -17,18 +17,24 @@ exports.WellKnownTypesMap = {
 };
 exports.WellKnownExtensionsMap = {
     "google/protobuf/timestamp.proto": {
-        "Timestamp": [
-            "toDate(): Date;",
-            "fromDate(date: Date): null;",
-            "static fromDate(date: Date): Timestamp;",
-        ]
+        "extensions": {
+            "Timestamp": [
+                "toDate(): Date;",
+                "fromDate(date: Date): null;",
+                "static fromDate(date: Date): Timestamp;",
+            ],
+        },
     },
     "google/protobuf/struct.proto": {
-        "ListValue": [
-            "type JavaScriptValue = null | number | string | boolean | Array<any> | {};",
-            "toJavaScript(): Array<JavaScriptValue>;",
-            "static fromJavaScript(value: Array<JavaScriptValue>): ListValue;",
-        ]
+        "declarations": [
+            'export type JavaScriptValue = null | number | string | boolean | Array<any> | {};',
+        ],
+        "extensions": {
+            "ListValue": [
+                "toJavaScript(): Array<JavaScriptValue>;",
+                "static fromJavaScript(value: Array<JavaScriptValue>): ListValue;",
+            ],
+        },
     },
 };
 //# sourceMappingURL=WellKnown.js.map
