@@ -16,9 +16,19 @@ exports.WellKnownTypesMap = {
     "google/protobuf/wrappers.proto": "google-protobuf/google/protobuf/wrappers_pb",
 };
 exports.WellKnownExtensionsMap = {
-    "google/protobuf/timestamp.proto": [
-        'toDate(): Date;',
-        'fromDate(date: Date): null;',
-    ],
+    "google/protobuf/timestamp.proto": {
+        "Timestamp": [
+            "toDate(): Date;",
+            "fromDate(date: Date): null;",
+            "static fromDate(date: Date): Timestamp;",
+        ]
+    },
+    "google/protobuf/struct.proto": {
+        "ListValue": [
+            "type JavaScriptValue = null | number | string | boolean | Array<any> | {};",
+            "toJavaScript(): Array<JavaScriptValue>;",
+            "static fromJavaScript(value: Array<JavaScriptValue>): ListValue;",
+        ]
+    },
 };
 //# sourceMappingURL=WellKnown.js.map

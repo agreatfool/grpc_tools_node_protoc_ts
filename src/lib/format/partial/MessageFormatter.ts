@@ -120,8 +120,8 @@ export namespace MessageFormatter {
             return null;
         }
 
-        if (WellKnownExtensionsMap[fileName]) {
-            messageData.extensions = WellKnownExtensionsMap[fileName];
+        if (WellKnownExtensionsMap[fileName]?.[messageData.messageName]) {
+            messageData.extensions = WellKnownExtensionsMap[fileName][messageData.messageName];
         }
 
         const oneofGroups: FieldDescriptorProto[][] = [];

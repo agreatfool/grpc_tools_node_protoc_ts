@@ -50,6 +50,7 @@ var MessageFormatter;
         return Utility_1.Utility.isProto2(descriptor);
     }
     function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
+        var _a;
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(MessageFormatter.defaultMessageType);
         messageData.messageName = descriptor.getName();
@@ -59,8 +60,8 @@ var MessageFormatter;
             // this message type is the entry tuple for a map - don't output it
             return null;
         }
-        if (WellKnown_1.WellKnownExtensionsMap[fileName]) {
-            messageData.extensions = WellKnown_1.WellKnownExtensionsMap[fileName];
+        if ((_a = WellKnown_1.WellKnownExtensionsMap[fileName]) === null || _a === void 0 ? void 0 : _a[messageData.messageName]) {
+            messageData.extensions = WellKnown_1.WellKnownExtensionsMap[fileName][messageData.messageName];
         }
         const oneofGroups = [];
         descriptor.getFieldList().forEach((field) => {
