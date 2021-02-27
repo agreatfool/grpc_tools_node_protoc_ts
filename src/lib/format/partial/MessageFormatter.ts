@@ -11,6 +11,7 @@ import {EnumFormatter} from "./EnumFormatter";
 import {ExtensionFormatter} from "./ExtensionFormatter";
 import {OneofFormatter} from "./OneofFormatter";
 import {TplEngine} from "../../TplEngine";
+import {WellKnownExtensionsMap} from '../../WellKnown'
 
 export const OBJECT_TYPE_NAME = "AsObject";
 
@@ -25,6 +26,7 @@ export namespace MessageFormatter {
         formattedEnumListStr: EnumFormatter.IEnumModel[];
         formattedOneofListStr: OneofFormatter.IOneofModel[];
         formattedExtListStr: ExtensionFormatter.IExtensionModel[];
+        extensions?: string[];
     }
 
     export const defaultMessageType = JSON.stringify({
@@ -116,6 +118,10 @@ export namespace MessageFormatter {
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
             return null;
+        }
+
+        if (WellKnownExtensionsMap[fileName]) {
+            messageData.extensions = WellKnownExtensionsMap[fileName];
         }
 
         const oneofGroups: FieldDescriptorProto[][] = [];

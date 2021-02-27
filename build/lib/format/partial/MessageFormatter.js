@@ -8,6 +8,7 @@ const EnumFormatter_1 = require("./EnumFormatter");
 const ExtensionFormatter_1 = require("./ExtensionFormatter");
 const OneofFormatter_1 = require("./OneofFormatter");
 const TplEngine_1 = require("../../TplEngine");
+const WellKnown_1 = require("../../WellKnown");
 exports.OBJECT_TYPE_NAME = "AsObject";
 var MessageFormatter;
 (function (MessageFormatter) {
@@ -57,6 +58,9 @@ var MessageFormatter;
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
             return null;
+        }
+        if (WellKnown_1.WellKnownExtensionsMap[fileName]) {
+            messageData.extensions = WellKnown_1.WellKnownExtensionsMap[fileName];
         }
         const oneofGroups = [];
         descriptor.getFieldList().forEach((field) => {

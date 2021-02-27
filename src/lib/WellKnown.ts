@@ -12,3 +12,10 @@ export const WellKnownTypesMap: { [key: string]: string } = {
     "google/protobuf/type.proto": "google-protobuf/google/protobuf/type_pb",
     "google/protobuf/wrappers.proto": "google-protobuf/google/protobuf/wrappers_pb",
 };
+
+export const WellKnownExtensionsMap: { [key: string]: string[] } = {
+    "google/protobuf/timestamp.proto": [
+        'toDate(): Date;',
+        'fromDate(date: Date): null;',
+    ],
+}
