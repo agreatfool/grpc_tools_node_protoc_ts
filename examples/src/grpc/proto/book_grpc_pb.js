@@ -3,6 +3,7 @@
 'use strict';
 var grpc = require('grpc');
 var book_pb = require('./book_pb.js');
+var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
 function serialize_com_book_Book(arg) {
   if (!(arg instanceof book_pb.Book)) {

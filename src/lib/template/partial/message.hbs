@@ -45,6 +45,11 @@
 {{{../indent}}}    get{{oneOfName this}}Case(): {{{../message.messageName}}}.{{oneOfName this}}Case;
 {{/each}}
 {{~/if~}}{{!-- oneofDeclList end --}}
+{{~#if message.extensions~}} {{!-- extensions start --}}
+{{#each message.extensions}}
+{{{indent}}}    {{{ this }}}
+{{/each}}
+{{~/if~}} {{!-- extensions end --}}
 {{{indent}}}    serializeBinary(): Uint8Array;
 {{{indent}}}    toObject(includeInstance?: boolean): {{{message.messageName}}}.{{{objectTypeName}}};
 {{{indent}}}    static toObject(includeInstance: boolean, msg: {{{message.messageName}}}): {{{message.messageName}}}.{{{objectTypeName}}};

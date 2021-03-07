@@ -25,6 +25,7 @@ export namespace MessageFormatter {
         formattedEnumListStr: EnumFormatter.IEnumModel[];
         formattedOneofListStr: OneofFormatter.IOneofModel[];
         formattedExtListStr: ExtensionFormatter.IExtensionModel[];
+        extensions?: string[];
     }
 
     export const defaultMessageType = JSON.stringify({
@@ -105,7 +106,8 @@ export namespace MessageFormatter {
                            exportMap: ExportMap,
                            descriptor: DescriptorProto,
                            indent: string,
-                           fileDescriptor: FileDescriptorProto): IMessageModel {
+                           fileDescriptor: FileDescriptorProto,
+                           wellKnownExtensions: {[key: string]: string[]} = {}): IMessageModel {
 
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(defaultMessageType) as IMessageType;
@@ -116,6 +118,10 @@ export namespace MessageFormatter {
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
             return null;
+        }
+
+        if (wellKnownExtensions?.[messageData.messageName]) {
+            messageData.extensions = wellKnownExtensions[messageData.messageName];
         }
 
         const oneofGroups: FieldDescriptorProto[][] = [];

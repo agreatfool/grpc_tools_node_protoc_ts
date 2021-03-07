@@ -48,7 +48,7 @@ var MessageFormatter;
         }
         return Utility_1.Utility.isProto2(descriptor);
     }
-    function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
+    function format(fileName, exportMap, descriptor, indent, fileDescriptor, wellKnownExtensions = {}) {
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(MessageFormatter.defaultMessageType);
         messageData.messageName = descriptor.getName();
@@ -57,6 +57,9 @@ var MessageFormatter;
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
             return null;
+        }
+        if (wellKnownExtensions === null || wellKnownExtensions === void 0 ? void 0 : wellKnownExtensions[messageData.messageName]) {
+            messageData.extensions = wellKnownExtensions[messageData.messageName];
         }
         const oneofGroups = [];
         descriptor.getFieldList().forEach((field) => {

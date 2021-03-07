@@ -2,10 +2,13 @@ syntax = "proto3";
 
 package com.book;
 
+import "google/protobuf/timestamp.proto";
+
 message Book {
     int64 isbn = 1;
     string title = 2;
     string author = 3;
+    google.protobuf.Timestamp publicationDate = 4;
 }
 
 message GetBookRequest {

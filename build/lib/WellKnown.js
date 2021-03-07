@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WellKnownTypesMap = void 0;
+exports.WellKnownExtensionsMap = exports.WellKnownTypesMap = void 0;
 exports.WellKnownTypesMap = {
     "google/protobuf/compiler/plugin.proto": "google-protobuf/google/protobuf/compiler/plugin_pb",
     "google/protobuf/any.proto": "google-protobuf/google/protobuf/any_pb",
@@ -14,5 +14,27 @@ exports.WellKnownTypesMap = {
     "google/protobuf/timestamp.proto": "google-protobuf/google/protobuf/timestamp_pb",
     "google/protobuf/type.proto": "google-protobuf/google/protobuf/type_pb",
     "google/protobuf/wrappers.proto": "google-protobuf/google/protobuf/wrappers_pb",
+};
+exports.WellKnownExtensionsMap = {
+    "google/protobuf/timestamp.proto": {
+        "extensions": {
+            "Timestamp": [
+                "toDate(): Date;",
+                "fromDate(date: Date): null;",
+                "static fromDate(date: Date): Timestamp;",
+            ],
+        },
+    },
+    "google/protobuf/struct.proto": {
+        "declarations": [
+            'export type JavaScriptValue = null | number | string | boolean | Array<any> | {};',
+        ],
+        "extensions": {
+            "ListValue": [
+                "toJavaScript(): Array<JavaScriptValue>;",
+                "static fromJavaScript(value: Array<JavaScriptValue>): ListValue;",
+            ],
+        },
+    },
 };
 //# sourceMappingURL=WellKnown.js.map
