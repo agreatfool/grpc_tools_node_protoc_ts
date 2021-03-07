@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
 export class Book extends jspb.Message { 
     getIsbn(): number;
@@ -13,6 +14,11 @@ export class Book extends jspb.Message {
     setTitle(value: string): Book;
     getAuthor(): string;
     setAuthor(value: string): Book;
+
+    hasPublicationdate(): boolean;
+    clearPublicationdate(): void;
+    getPublicationdate(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setPublicationdate(value?: google_protobuf_timestamp_pb.Timestamp): Book;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Book.AsObject;
@@ -29,6 +35,7 @@ export namespace Book {
         isbn: number,
         title: string,
         author: string,
+        publicationdate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     }
 }
 

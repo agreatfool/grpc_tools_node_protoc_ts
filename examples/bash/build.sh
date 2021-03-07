@@ -13,12 +13,14 @@ grpc_tools_node_protoc \
 --grpc_out=./src/grpc/proto \
 --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` \
 -I ./proto \
+proto/google/protobuf/*.proto \
 proto/*.proto
 
 grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
 --ts_out=./src/grpc/proto \
 -I ./proto \
+proto/google/protobuf/*.proto \
 proto/*.proto
 
 # grpc-js
@@ -27,12 +29,14 @@ grpc_tools_node_protoc \
 --js_out=import_style=commonjs,binary:./src/grpcjs/proto \
 --grpc_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
+proto/google/protobuf/*.proto \
 proto/*.proto
 
 grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
 --ts_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
+proto/google/protobuf/*.proto \
 proto/*.proto
 
 # TypeScript compiling
