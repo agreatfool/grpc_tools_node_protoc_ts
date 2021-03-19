@@ -19,6 +19,10 @@ export namespace Utility {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    export function toSnakeCase(str: string): string {
+        return str.replace(/([A-Z])/g, "_$1").toLowerCase();
+    }
+
     export function isProto2(fileDescriptor: FileDescriptorProto): boolean {
         // Empty syntax defaults to proto2
         return (fileDescriptor.getSyntax() === "" || fileDescriptor.getSyntax() === PROTO2_SYNTAX);

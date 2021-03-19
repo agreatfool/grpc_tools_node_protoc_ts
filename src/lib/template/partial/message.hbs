@@ -60,19 +60,19 @@
 {{{indent}}}    export type {{{objectTypeName}}} = {
 {{#each message.fields}}{{!-- fields start --}}
     {{~#if this.isMapField~}}{{!-- map spec start --}}
-{{{../indent}}}        {{{this.camelCaseName}}}Map: Array<[{{{this.mapFieldInfo.keyTypeName}}}{{~#is this.mapFieldInfo.keyType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}, {{{this.mapFieldInfo.valueTypeName}}}{{~#is this.mapFieldInfo.valueType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}]>,
+{{{../indent}}}        {{{this.snakeCaseName}}}Map: Array<[{{{this.mapFieldInfo.keyTypeName}}}{{~#is this.mapFieldInfo.keyType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}, {{{this.mapFieldInfo.valueTypeName}}}{{~#is this.mapFieldInfo.valueType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}]>,
     {{~else~}}{{!-- map spec else --}}
         {{~#if this.isRepeatField~}}{{!-- repeat start --}}
             {{~#is this.type ../BYTES_TYPE~}}
-{{{../indent}}}        {{{this.camelCaseName}}}List: Array<Uint8Array | string>,
+{{{../indent}}}        {{{this.snakeCaseName}}}List: Array<Uint8Array | string>,
             {{~else~}}
-{{{../indent}}}        {{{this.camelCaseName}}}List: Array<{{{this.exportType}}}{{~#is this.type ../MESSAGE_TYPE~}}.AsObject{{~/is~}}>,
+{{{../indent}}}        {{{this.snakeCaseName}}}List: Array<{{{this.exportType}}}{{~#is this.type ../MESSAGE_TYPE~}}.AsObject{{~/is~}}>,
             {{~/is~}}
         {{else}}{{!-- repeat else --}}
             {{~#is this.type ../BYTES_TYPE~}}
-{{{../indent}}}        {{{this.camelCaseName}}}: Uint8Array | string,
+{{{../indent}}}        {{{this.snakeCaseName}}}: Uint8Array | string,
             {{~else~}}
-{{{../indent}}}        {{{this.camelCaseName}}}{{~#if this.canBeUndefined~}}?{{~/if~}}: {{{this.fieldObjectType}}},
+{{{../indent}}}        {{{this.snakeCaseName}}}{{~#if this.canBeUndefined~}}?{{~/if~}}: {{{this.fieldObjectType}}},
             {{~/is~}}
         {{~/if~}}{{!-- repeat end --}}
     {{~/if~}}{{!-- map spec end --}}
