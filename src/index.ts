@@ -24,6 +24,8 @@ Utility.withAllStdIn((inputBuff: Buffer) => {
         const exportMap = new ExportMap();
         const fileNameToDescriptor: { [key: string]: FileDescriptorProto } = {};
 
+        codeGenResponse.setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL);
+
         const isGrpcJs = ["generate_package_definition", "grpc_js"].indexOf(codeGenRequest.getParameter()) !== -1;
 
         codeGenRequest.getProtoFileList().forEach((protoFileDescriptor) => {
