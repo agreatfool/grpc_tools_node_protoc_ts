@@ -85,3 +85,7 @@ message ExtMsgOneOf {
         string extension = 1;
     }
 }
+
+message OptTest {
+    optional string name = 1;
+}

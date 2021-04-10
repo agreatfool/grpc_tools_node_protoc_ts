@@ -55,13 +55,13 @@ var MessageFormatter;
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(MessageFormatter.defaultMessageType);
         const proto3OptionalFields = new Set();
-        descriptor.getFieldList().forEach(field => {
+        descriptor.getFieldList().forEach((field) => {
             if (field.hasName() && field.hasProto3Optional()) {
                 proto3OptionalFields.add(field.getName());
             }
         });
         messageData.messageName = descriptor.getName();
-        messageData.oneofDeclList = descriptor.getOneofDeclList().filter(oneOfDecl => {
+        messageData.oneofDeclList = descriptor.getOneofDeclList().filter((oneOfDecl) => {
             const name = oneOfDecl.getName();
             return !(name && name.length > 1 && proto3OptionalFields.has(name.substring(1)));
         });

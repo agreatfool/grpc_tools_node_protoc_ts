@@ -324,6 +324,29 @@ export namespace ExtMsgOneOf {
 
 }
 
+export class OptTest extends jspb.Message { 
+
+    hasName(): boolean;
+    clearName(): void;
+    getName(): string | undefined;
+    setName(value: string): OptTest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OptTest.AsObject;
+    static toObject(includeInstance: boolean, msg: OptTest): OptTest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OptTest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OptTest;
+    static deserializeBinaryFromReader(message: OptTest, reader: jspb.BinaryReader): OptTest;
+}
+
+export namespace OptTest {
+    export type AsObject = {
+        name?: string,
+    }
+}
+
 export enum EnumSample {
     UNKNOWN = 0,
     STARTED = 1,

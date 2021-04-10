@@ -114,16 +114,16 @@ export namespace MessageFormatter {
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(defaultMessageType) as IMessageType;
 
-        const proto3OptionalFields = new Set<string>()
-        descriptor.getFieldList().forEach(field => {
+        const proto3OptionalFields = new Set<string>();
+        descriptor.getFieldList().forEach((field) => {
             if (field.hasName() && field.hasProto3Optional()) {
-                proto3OptionalFields.add(field.getName())
+                proto3OptionalFields.add(field.getName());
             }
         });
 
         messageData.messageName = descriptor.getName();
-        messageData.oneofDeclList = descriptor.getOneofDeclList().filter(oneOfDecl => {
-            const name = oneOfDecl.getName()
+        messageData.oneofDeclList = descriptor.getOneofDeclList().filter((oneOfDecl) => {
+            const name = oneOfDecl.getName();
             return !(name && name.length > 1 && proto3OptionalFields.has(name.substring(1)));
         });
         const messageOptions = descriptor.getOptions();
@@ -268,7 +268,7 @@ export namespace MessageFormatter {
             messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
-            const name = oneOfDecl.getName()
+            const name = oneOfDecl.getName();
             if (name && name.length > 1 && proto3OptionalFields.has(name.substring(1))) {
                 // Skip synthetic one-ofs for proto3 optional fields
                 return;
