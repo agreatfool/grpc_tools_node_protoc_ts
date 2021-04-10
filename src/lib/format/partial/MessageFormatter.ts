@@ -90,6 +90,10 @@ export namespace MessageFormatter {
             return false;
         }
 
+        if (field.hasProto3Optional()) {
+            return true;
+        }
+
         if (field.hasOneofIndex()) {
             return true;
         }
@@ -110,8 +114,18 @@ export namespace MessageFormatter {
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(defaultMessageType) as IMessageType;
 
+        const proto3OptionalFields = new Set<string>();
+        descriptor.getFieldList().forEach((field) => {
+            if (field.hasName() && field.hasProto3Optional()) {
+                proto3OptionalFields.add(field.getName());
+            }
+        });
+
         messageData.messageName = descriptor.getName();
-        messageData.oneofDeclList = descriptor.getOneofDeclList();
+        messageData.oneofDeclList = descriptor.getOneofDeclList().filter((oneOfDecl) => {
+            const name = oneOfDecl.getName();
+            return !(name && name.length > 1 && proto3OptionalFields.has(name.substring(1)));
+        });
         const messageOptions = descriptor.getOptions();
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
@@ -227,6 +241,8 @@ export namespace MessageFormatter {
                     if (!Utility.isProto2(fileDescriptor) || (field.getLabel() === FieldDescriptorProto.Label.LABEL_OPTIONAL)) {
                         canBeUndefined = true;
                     }
+                } else if (field.getProto3Optional()) {
+                    canBeUndefined = true;
                 } else {
                     if (Utility.isProto2(fileDescriptor)) {
                         canBeUndefined = true;
@@ -252,6 +268,11 @@ export namespace MessageFormatter {
             messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
+            const name = oneOfDecl.getName();
+            if (name && name.length > 1 && proto3OptionalFields.has(name.substring(1))) {
+                // Skip synthetic one-ofs for proto3 optional fields
+                return;
+            }
             messageData.formattedOneofListStr.push(OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));
         });
         descriptor.getExtensionList().forEach((extension) => {

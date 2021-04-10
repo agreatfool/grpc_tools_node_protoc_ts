@@ -8,14 +8,14 @@ mkdir -p ./src/grpcjs/proto
 
 # grpc
 # JavaScript code generating
-grpc_tools_node_protoc \
+./node_modules/.bin/grpc_tools_node_protoc \
 --js_out=import_style=commonjs,binary:./src/grpc/proto \
 --grpc_out=./src/grpc/proto \
---plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` \
+--plugin=protoc-gen-grpc=./node_modules/.bin/grpc_tools_node_protoc_plugin \
 -I ./proto \
 proto/*.proto
 
-grpc_tools_node_protoc \
+./node_modules/.bin/grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
 --ts_out=./src/grpc/proto \
 -I ./proto \
@@ -23,13 +23,13 @@ proto/*.proto
 
 # grpc-js
 # JavaScript code generating
-grpc_tools_node_protoc \
+./node_modules/.bin/grpc_tools_node_protoc \
 --js_out=import_style=commonjs,binary:./src/grpcjs/proto \
 --grpc_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \
 proto/*.proto
 
-grpc_tools_node_protoc \
+./node_modules/.bin/grpc_tools_node_protoc \
 --plugin=protoc-gen-ts=../bin/protoc-gen-ts \
 --ts_out=grpc_js:./src/grpcjs/proto \
 -I ./proto \

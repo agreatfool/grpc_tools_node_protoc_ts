@@ -40,6 +40,9 @@ var MessageFormatter;
         if (field.getLabel() === descriptor_pb_1.FieldDescriptorProto.Label.LABEL_REPEATED) {
             return false;
         }
+        if (field.hasProto3Optional()) {
+            return true;
+        }
         if (field.hasOneofIndex()) {
             return true;
         }
@@ -51,8 +54,17 @@ var MessageFormatter;
     function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(MessageFormatter.defaultMessageType);
+        const proto3OptionalFields = new Set();
+        descriptor.getFieldList().forEach((field) => {
+            if (field.hasName() && field.hasProto3Optional()) {
+                proto3OptionalFields.add(field.getName());
+            }
+        });
         messageData.messageName = descriptor.getName();
-        messageData.oneofDeclList = descriptor.getOneofDeclList();
+        messageData.oneofDeclList = descriptor.getOneofDeclList().filter((oneOfDecl) => {
+            const name = oneOfDecl.getName();
+            return !(name && name.length > 1 && proto3OptionalFields.has(name.substring(1)));
+        });
         const messageOptions = descriptor.getOptions();
         if (messageOptions !== undefined && messageOptions.getMapEntry()) {
             // this message type is the entry tuple for a map - don't output it
@@ -155,6 +167,9 @@ var MessageFormatter;
                         canBeUndefined = true;
                     }
                 }
+                else if (field.getProto3Optional()) {
+                    canBeUndefined = true;
+                }
                 else {
                     if (Utility_1.Utility.isProto2(fileDescriptor)) {
                         canBeUndefined = true;
@@ -177,6 +192,11 @@ var MessageFormatter;
             messageData.formattedEnumListStr.push(EnumFormatter_1.EnumFormatter.format(enumType, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
+            const name = oneOfDecl.getName();
+            if (name && name.length > 1 && proto3OptionalFields.has(name.substring(1))) {
+                // Skip synthetic one-ofs for proto3 optional fields
+                return;
+            }
             messageData.formattedOneofListStr.push(OneofFormatter_1.OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));
         });
         descriptor.getExtensionList().forEach((extension) => {
