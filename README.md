@@ -28,6 +28,9 @@ More information about grpc_tools_node_protoc (grpc-tools):
 And the versions over 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)(grpc-tools@1.8.1 required). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/doc/grpcjs_support.md). **New version 5.0.0 is recommended for users who using grpc-tools over v1.9.0.**
 
 ## Breaking changes
+### v5.2.0
+Add support for proto3 `optional`. `grpc-tools` version of `1.11.1` is `REQUIRED`. See: [Issue#88](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/88) and [PR#97](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/97).
+
 ### v5.1.0
 Fix server implementation signature issue of `grpc_js` side. See: [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79).
 
@@ -83,7 +86,7 @@ Dirs:
     * server.sh: start the server
     * client.sh: start the client & send requests
 
-### book.proto
+### examples/proto/book.proto
 ```proto
 syntax = "proto3";
 
@@ -146,9 +149,39 @@ message OneOfSample {
         bool b_2 = 4;
     }
 }
+
+message ExtMsgString {
+    string extension = 1;
+}
+
+message ExtMsgList {
+    repeated string extension = 1;
+}
+
+message ExtMsgByte {
+    bytes extension = 1;
+}
+
+message ExtMsgByteList {
+    repeated bytes extension = 1;
+}
+
+message ExtMsgMap {
+    map<string, string> extension = 1;
+}
+
+message ExtMsgOneOf {
+    oneof ext {
+        string extension = 1;
+    }
+}
+
+message OptTest {
+    optional string name = 1;
+}
 ```
 
-### book_pb.d.ts
+### examples/grpcjs/proto/book_pb.d.ts
 ```typescript
 // package: com.book
 // file: book.proto
@@ -161,13 +194,10 @@ import * as jspb from "google-protobuf";
 export class Book extends jspb.Message { 
     getIsbn(): number;
     setIsbn(value: number): Book;
-
     getTitle(): string;
     setTitle(value: string): Book;
-
     getAuthor(): string;
     setAuthor(value: string): Book;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Book.AsObject;
@@ -191,7 +221,6 @@ export class GetBookRequest extends jspb.Message {
     getIsbn(): number;
     setIsbn(value: number): GetBookRequest;
 
-
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetBookRequest.AsObject;
     static toObject(includeInstance: boolean, msg: GetBookRequest): GetBookRequest.AsObject;
@@ -211,7 +240,6 @@ export namespace GetBookRequest {
 export class GetBookViaAuthor extends jspb.Message { 
     getAuthor(): string;
     setAuthor(value: string): GetBookViaAuthor;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetBookViaAuthor.AsObject;
@@ -233,10 +261,8 @@ export class BookStore extends jspb.Message {
     getName(): string;
     setName(value: string): BookStore;
 
-
     getBooksMap(): jspb.Map<number, string>;
     clearBooksMap(): void;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BookStore.AsObject;
@@ -259,16 +285,12 @@ export namespace BookStore {
 export class SpecialCases extends jspb.Message { 
     getNormal(): string;
     setNormal(value: string): SpecialCases;
-
     getDefault(): string;
     setDefault(value: string): SpecialCases;
-
     getFunction(): string;
     setFunction(value: string): SpecialCases;
-
     getVar(): string;
     setVar(value: string): SpecialCases;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SpecialCases.AsObject;
@@ -296,24 +318,20 @@ export class OneOfSample extends jspb.Message {
     getA1(): boolean;
     setA1(value: boolean): OneOfSample;
 
-
     hasB1(): boolean;
     clearB1(): void;
     getB1(): boolean;
     setB1(value: boolean): OneOfSample;
-
 
     hasA2(): boolean;
     clearA2(): void;
     getA2(): boolean;
     setA2(value: boolean): OneOfSample;
 
-
     hasB2(): boolean;
     clearB2(): void;
     getB2(): boolean;
     setB2(value: boolean): OneOfSample;
-
 
     getSinglewordCase(): OneOfSample.SinglewordCase;
     getTwoWordsCase(): OneOfSample.TwoWordsCase;
@@ -338,22 +356,180 @@ export namespace OneOfSample {
 
     export enum SinglewordCase {
         SINGLEWORD_NOT_SET = 0,
-    
-    A1 = 1,
-
-    B1 = 2,
-
+        A1 = 1,
+        B1 = 2,
     }
 
     export enum TwoWordsCase {
         TWO_WORDS_NOT_SET = 0,
-    
-    A_2 = 3,
-
-    B_2 = 4,
-
+        A_2 = 3,
+        B_2 = 4,
     }
 
+}
+
+export class ExtMsgString extends jspb.Message { 
+    getExtension$(): string;
+    setExtension$(value: string): ExtMsgString;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgString.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgString): ExtMsgString.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgString, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgString;
+    static deserializeBinaryFromReader(message: ExtMsgString, reader: jspb.BinaryReader): ExtMsgString;
+}
+
+export namespace ExtMsgString {
+    export type AsObject = {
+        extension: string,
+    }
+}
+
+export class ExtMsgList extends jspb.Message { 
+    clearExtensionList(): void;
+    getExtensionList(): Array<string>;
+    setExtensionList(value: Array<string>): ExtMsgList;
+    addExtension$(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgList.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgList): ExtMsgList.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgList, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgList;
+    static deserializeBinaryFromReader(message: ExtMsgList, reader: jspb.BinaryReader): ExtMsgList;
+}
+
+export namespace ExtMsgList {
+    export type AsObject = {
+        extensionList: Array<string>,
+    }
+}
+
+export class ExtMsgByte extends jspb.Message { 
+    getExtension$(): Uint8Array | string;
+    getExtension_asU8(): Uint8Array;
+    getExtension_asB64(): string;
+    setExtension$(value: Uint8Array | string): ExtMsgByte;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgByte.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgByte): ExtMsgByte.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgByte, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgByte;
+    static deserializeBinaryFromReader(message: ExtMsgByte, reader: jspb.BinaryReader): ExtMsgByte;
+}
+
+export namespace ExtMsgByte {
+    export type AsObject = {
+        extension: Uint8Array | string,
+    }
+}
+
+export class ExtMsgByteList extends jspb.Message { 
+    clearExtensionList(): void;
+    getExtensionList(): Array<Uint8Array | string>;
+    getExtensionList_asU8(): Array<Uint8Array>;
+    getExtensionList_asB64(): Array<string>;
+    setExtensionList(value: Array<Uint8Array | string>): ExtMsgByteList;
+    addExtension$(value: Uint8Array | string, index?: number): Uint8Array | string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgByteList.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgByteList): ExtMsgByteList.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgByteList, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgByteList;
+    static deserializeBinaryFromReader(message: ExtMsgByteList, reader: jspb.BinaryReader): ExtMsgByteList;
+}
+
+export namespace ExtMsgByteList {
+    export type AsObject = {
+        extensionList: Array<Uint8Array | string>,
+    }
+}
+
+export class ExtMsgMap extends jspb.Message { 
+
+    getExtensionMap(): jspb.Map<string, string>;
+    clearExtensionMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgMap.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgMap): ExtMsgMap.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgMap, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgMap;
+    static deserializeBinaryFromReader(message: ExtMsgMap, reader: jspb.BinaryReader): ExtMsgMap;
+}
+
+export namespace ExtMsgMap {
+    export type AsObject = {
+
+        extensionMap: Array<[string, string]>,
+    }
+}
+
+export class ExtMsgOneOf extends jspb.Message { 
+
+    hasExtension$(): boolean;
+    clearExtension$(): void;
+    getExtension$(): string;
+    setExtension$(value: string): ExtMsgOneOf;
+
+    getExtCase(): ExtMsgOneOf.ExtCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ExtMsgOneOf.AsObject;
+    static toObject(includeInstance: boolean, msg: ExtMsgOneOf): ExtMsgOneOf.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ExtMsgOneOf, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ExtMsgOneOf;
+    static deserializeBinaryFromReader(message: ExtMsgOneOf, reader: jspb.BinaryReader): ExtMsgOneOf;
+}
+
+export namespace ExtMsgOneOf {
+    export type AsObject = {
+        extension: string,
+    }
+
+    export enum ExtCase {
+        EXT_NOT_SET = 0,
+        EXTENSION = 1,
+    }
+
+}
+
+export class OptTest extends jspb.Message { 
+
+    hasName(): boolean;
+    clearName(): void;
+    getName(): string | undefined;
+    setName(value: string): OptTest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OptTest.AsObject;
+    static toObject(includeInstance: boolean, msg: OptTest): OptTest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OptTest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OptTest;
+    static deserializeBinaryFromReader(message: OptTest, reader: jspb.BinaryReader): OptTest;
+}
+
+export namespace OptTest {
+    export type AsObject = {
+        name?: string,
+    }
 }
 
 export enum EnumSample {
@@ -366,7 +542,7 @@ export enum EnumSample {
 }
 ```
 
-### book_grpc_pb.d.ts
+### examples/grpcjs/proto/book_grpc_pb.d.ts
 ```typescript
 // package: com.book
 // file: book.proto
@@ -374,7 +550,8 @@ export enum EnumSample {
 /* tslint:disable */
 /* eslint-disable */
 
-import * as grpc from "grpc";
+import * as grpc from "@grpc/grpc-js";
+import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as book_pb from "./book_pb";
 
 interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
@@ -423,10 +600,10 @@ interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.Ge
 
 export const BookServiceService: IBookServiceService;
 
-export interface IBookServiceServer {
+export interface IBookServiceServer extends grpc.UntypedServiceImplementation {
     getBook: grpc.handleUnaryCall<book_pb.GetBookRequest, book_pb.Book>;
     getBooksViaAuthor: grpc.handleServerStreamingCall<book_pb.GetBookViaAuthor, book_pb.Book>;
-    getGreatestBook: grpc.handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
+    getGreatestBook: handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
     getBooks: grpc.handleBidiStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
 }
 
@@ -446,7 +623,7 @@ export interface IBookServiceClient {
 }
 
 export class BookServiceClient extends grpc.Client implements IBookServiceClient {
-    constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
+    constructor(address: string, credentials: grpc.ChannelCredentials, options?: Partial<grpc.ClientOptions>);
     public getBook(request: book_pb.GetBookRequest, callback: (error: grpc.ServiceError | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
     public getBook(request: book_pb.GetBookRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: book_pb.Book) => void): grpc.ClientUnaryCall;
@@ -462,6 +639,15 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.2.0
+Add support for proto3 `optional`. `grpc-tools` version `1.11.1` is `RQUIRED`. See: [Issue#88](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/88) and [PR#97](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/97).
+
+Some info:
+
+- google-protobuf changes: https://github.com/protocolbuffers/protobuf/blob/master/CHANGES.txt
+- google-protobuf releases: https://github.com/protocolbuffers/protobuf/releases
+- grpc-tools releases: https://github.com/grpc/grpc-node/releases
+
 ### 5.1.3
 Fix wrong publishing, 5.1.2 contains some temp compiled codes. See: [Issue#89](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/89).
 
