@@ -29,8 +29,7 @@
   "homepage": "https://github.com/agreatfool/grpc_tools_node_protoc_ts#readme",
   "dependencies": {
     "google-protobuf": "3.15.8",
-    "handlebars": "4.7.6",
-    "handlebars-helpers": "0.10.0"
+    "handlebars": "4.7.6"
   },
   "devDependencies": {
     "@types/google-protobuf": "3.7.4",
