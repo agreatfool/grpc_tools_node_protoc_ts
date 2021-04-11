@@ -639,6 +639,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.2.1
+Remove lib `handlebars-helpers`. [PR#98](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/98).
+
 ### 5.2.0
 Add support for proto3 `optional`. `grpc-tools` version `1.11.1` is `RQUIRED`. See: [Issue#88](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/88) and [PR#97](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/97).
 
