@@ -1,9 +1,15 @@
 import * as LibFs from "fs";
 import * as LibPath from "path";
 import * as handlebars from "handlebars";
-import * as helpers from "handlebars-helpers";
 
-helpers({handlebars});
+handlebars.registerHelper("is", function(arg1, arg2, options) {
+    /* tslint:disable:triple-equals */
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    /* tslint:disable:triple-equals */
+});
+handlebars.registerHelper("eq", function(arg1, arg2, options) {
+    return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+});
 handlebars.registerHelper("curlyLeft", () => {
     return "{";
 });

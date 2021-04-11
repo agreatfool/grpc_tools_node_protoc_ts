@@ -4,8 +4,14 @@ exports.TplEngine = void 0;
 const LibFs = require("fs");
 const LibPath = require("path");
 const handlebars = require("handlebars");
-const helpers = require("handlebars-helpers");
-helpers({ handlebars });
+handlebars.registerHelper("is", function (arg1, arg2, options) {
+    /* tslint:disable:triple-equals */
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    /* tslint:disable:triple-equals */
+});
+handlebars.registerHelper("eq", function (arg1, arg2, options) {
+    return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+});
 handlebars.registerHelper("curlyLeft", () => {
     return "{";
 });
