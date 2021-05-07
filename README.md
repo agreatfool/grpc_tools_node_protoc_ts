@@ -639,6 +639,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.2.2
+Fix vulnerabilities. See: [PR#102](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/102).
+
 ### 5.2.1
 Remove lib `handlebars-helpers`. [PR#98](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/98).
 
