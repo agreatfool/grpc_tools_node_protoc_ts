@@ -36,7 +36,7 @@ export interface I{{{serviceName}}}Server{{#if (fetchIsGrpcJs)}} extends grpc.Un
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
             {{#if (fetchIsGrpcJs)}}
-    {{lcFirst methodName}}: handleClientStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
+    {{lcFirst methodName}}: grpc.handleClientStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
             {{else}}
     {{lcFirst methodName}}: grpc.handleClientStreamingCall<{{{requestTypeName}}}, {{{responseTypeName}}}>;
             {{/if}}

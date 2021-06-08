@@ -34,7 +34,6 @@ var ProtoSvcTsdFormatter;
         // Need to import the non-service file that was generated for this .proto file
         if (isGrpcJs) {
             imports.push(`import * as grpc from "@grpc/grpc-js";`);
-            imports.push(`import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";`);
         }
         else {
             imports.push(`import * as grpc from "grpc";`);

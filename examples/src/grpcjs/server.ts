@@ -2,7 +2,6 @@
 
 import * as debug from "debug";
 import * as grpc from "@grpc/grpc-js";
-import {sendUnaryData} from "@grpc/grpc-js/build/src/server-call";
 
 import {BookServiceService, IBookServiceServer} from "./proto/book_grpc_pb";
 import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
@@ -11,7 +10,7 @@ const log = debug("SampleServer");
 
 const ServerImpl: IBookServiceServer = {
 
-    getBook: (call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: sendUnaryData<Book>): void => {
+    getBook: (call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: grpc.sendUnaryData<Book>): void => {
         const book = new Book();
 
         book.setTitle("DefaultBook");
@@ -50,7 +49,7 @@ const ServerImpl: IBookServiceServer = {
         call.end();
     },
 
-    getGreatestBook: (call: grpc.ServerReadableStream<GetBookRequest, Book>, callback: sendUnaryData<Book>): void => {
+    getGreatestBook: (call: grpc.ServerReadableStream<GetBookRequest, Book>, callback: grpc.sendUnaryData<Book>): void => {
         let lastOne: GetBookRequest;
         call.on("data", (request: GetBookRequest) => {
             log(`[getGreatestBook] Request: ${JSON.stringify(request.toObject())}`);
