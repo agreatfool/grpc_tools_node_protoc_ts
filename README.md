@@ -28,6 +28,15 @@ More information about grpc_tools_node_protoc (grpc-tools):
 And the versions over 3.0.0 support [@grpc/grpc-js](https://www.npmjs.com/package/@grpc/grpc-js)(grpc-tools@1.8.1 required). Please read the doc: [@grpc/grpc-js support](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/doc/grpcjs_support.md). **New version 5.0.0 is recommended for users who using grpc-tools over v1.9.0.**
 
 ## Breaking changes
+### v5.3.0
+Since `@grpc/grpc-js@1.2.0` fixed the signature issue of `handleClientStreamingCall` exporting. It's no longer necessary to import it manually in `*_pb.d.ts` files like:
+
+```typescript
+import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
+```
+
+Users who are using versions lower than `@grpc/grpc-js@1.2.0` would be impacted, need to upgrade.
+
 ### v5.2.0
 Add support for proto3 `optional`. `grpc-tools` version of `1.11.1` is `REQUIRED`. See: [Issue#88](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/88) and [PR#97](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/97).
 
@@ -638,6 +647,17 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.3.0
+Fix signature issue of `handleClientStreamingCall` exporting. See [PR#105](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/105).
+
+Since `@grpc/grpc-js@1.2.0` fixed the signature issue of `handleClientStreamingCall` exporting. It's no longer necessary to import it manually in `*_pb.d.ts` files like:
+
+```typescript
+import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
+```
+
+Users who are using versions lower than `@grpc/grpc-js@1.2.0` would be impacted, need to upgrade.
+
 ### 5.2.2
 Fix vulnerabilities. See: [PR#102](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/102).
 
