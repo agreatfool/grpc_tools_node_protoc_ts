@@ -99,8 +99,6 @@ const server = new grpc.Server();
 server.addService(BookServiceService, Impl);
 ```
 
-This style is `recommended`. Since you can append more attributes in the `Impl` object, though they are not defined in `IBookServiceServer`, and you don't need to add `[name: string]: grpc.UntypedHandleCall` in your codes.
-
 ### Class Style
 
 ```typescript
@@ -120,4 +118,52 @@ const server = new grpc.Server();
 server.addService(BookServiceService, new Impl());
 ```
 
-This style is `NOT` recommended. Since only those already defined in the `IBookServiceServer` can be existing in this `Impl` class, and `[name: string]: grpc.UntypedHandleCall` is required for Class style.
+Only those already defined in the `IBookServiceServer` can be existing in this `Impl` class, and `[name: string]: grpc.UntypedHandleCall;` is required for Class style.
+
+**Class style with magic generics**
+
+The following is how you can break the restriction above, to add attributes to a class style implementation of a server:
+
+```typescript
+// First we need to set up some magic generics inspired by https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79#issuecomment-770173789
+type KnownKeys<T> = {
+  [K in keyof T]: string extends K ? never : number extends K ? never : K
+} extends { [_ in keyof T]: infer U } ? U : never;
+
+type KnownOnly<T extends Record<any, any>> = Pick<T, KnownKeys<T>>;
+
+// Next we declare a new type using the above generics:
+type ITypedBookServer = KnownOnly<IBookServiceServer>;
+
+// Now we declare the class
+class Impl implements ITypedBookServer  {
+    attr: string;
+
+    constructor(attr: string) {
+        this.attr = attr;
+    }
+
+    public getBook(call: grpc.ServerUnaryCall<GetBookRequest, Book>, callback: sendUnaryData<Book>): void {}
+
+    public getBooks(call: grpc.ServerDuplexStream<GetBookRequest, Book>) {}
+
+    public getBooksViaAuthor(call: grpc.ServerWritableStream<GetBookViaAuthor, Book>) {}
+
+    public getGreatestBook(call: grpc.ServerReadableStream<GetBookRequest, Book>, callback: sendUnaryData<Book>) {}
+}
+
+// now we need to initialize the above Impl. First we need to extend grpc.Server
+class TypedServerOverride extends grpc.Server {
+    addTypedService<TypedServiceImplementation extends Record<any,any>>(service: ServiceDefinition, implementation: TypedServiceImplementation): void {
+        this.addService(service, implementation);
+    }
+}
+
+// now perform the actual initialization
+const server = new TypedServerOverride();
+server.addTypedService<ITypedBookServer>(BookServiceService, new Impl("hello world"));
+```
+
+Runnable example could be found here:
+* [examples/bash/grpcjs/server.magic_generics.sh](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.3.1/examples/bash/grpcjs/server.magic_generics.sh)
+* [examples/src/grpcjs/server.magic_generics.ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.3.1/examples/src/grpcjs/server.magic_generics.ts)
