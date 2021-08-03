@@ -647,6 +647,11 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.3.1
+Update doc and Add runnable example for magic generics class style server implementation. See [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79#issuecomment-890109586) and [Issue#108](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/108) and [PR#109](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/109). 
+
+Updated doc could be found here: [@grpc/grpc-js server implementation signature issue](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.3.1/doc/server_impl_signature.md).
+
 ### 5.3.0
 Fix signature issue of `handleClientStreamingCall` exporting. See [PR#105](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/105).
 
