@@ -4,7 +4,7 @@ import * as debug from "debug";
 import * as grpc from "grpc";
 
 import { BookServiceService, IBookServiceServer } from "./proto/book_grpc_pb";
-import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
+import { Book, GetBookRequest, GetBookViaAuthor, GetBookListRequest, BookList } from "./proto/book_pb";
 
 const log = debug("SampleServer");
 
@@ -62,6 +62,22 @@ class ServerImpl implements IBookServiceServer {
             log(`[getGreatestBook] Done: ${JSON.stringify(reply.toObject())}`);
             callback(null, reply);
         });
+    }
+
+    public getBookList(call: grpc.ServerUnaryCall<GetBookListRequest>, callback: grpc.sendUnaryData<BookList>) {
+        const author = call.request.getAuthor();
+        const books = new BookList();
+
+        const book1 = new Book();
+        book1.setTitle("DefaultBook1").setAuthor(author);
+        const book2 = new Book();
+        book2.setTitle("DefaultBook2").setAuthor(author);
+
+        books.addBooks(book1);
+        books.addBooks(book2);
+
+        log(`[getBookList] Done: 1: ${JSON.stringify(book1.toObject())}, 2: ${JSON.stringify(book2.toObject())}`);
+        callback(null, books);
     }
 
 }

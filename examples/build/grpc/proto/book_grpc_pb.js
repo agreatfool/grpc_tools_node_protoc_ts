@@ -15,6 +15,28 @@ function deserialize_com_book_Book(buffer_arg) {
   return book_pb.Book.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_com_book_BookList(arg) {
+  if (!(arg instanceof book_pb.BookList)) {
+    throw new Error('Expected argument of type com.book.BookList');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_com_book_BookList(buffer_arg) {
+  return book_pb.BookList.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_com_book_GetBookListRequest(arg) {
+  if (!(arg instanceof book_pb.GetBookListRequest)) {
+    throw new Error('Expected argument of type com.book.GetBookListRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_com_book_GetBookListRequest(buffer_arg) {
+  return book_pb.GetBookListRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_com_book_GetBookRequest(arg) {
   if (!(arg instanceof book_pb.GetBookRequest)) {
     throw new Error('Expected argument of type com.book.GetBookRequest');
@@ -82,6 +104,17 @@ var BookServiceService = exports.BookServiceService = {
     requestDeserialize: deserialize_com_book_GetBookRequest,
     responseSerialize: serialize_com_book_Book,
     responseDeserialize: deserialize_com_book_Book,
+  },
+  getBookList: {
+    path: '/com.book.BookService/GetBookList',
+    requestStream: false,
+    responseStream: false,
+    requestType: book_pb.GetBookListRequest,
+    responseType: book_pb.BookList,
+    requestSerialize: serialize_com_book_GetBookListRequest,
+    requestDeserialize: deserialize_com_book_GetBookListRequest,
+    responseSerialize: serialize_com_book_BookList,
+    responseDeserialize: deserialize_com_book_BookList,
   },
 };
 

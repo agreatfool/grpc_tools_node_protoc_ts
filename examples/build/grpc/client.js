@@ -75,11 +75,28 @@ const getGreatestBook = () => {
         stream.end();
     });
 };
+const getBookList = async (author) => {
+    return new Promise((resolve, reject) => {
+        const request = new book_pb_1.GetBookListRequest();
+        request.setAuthor(author);
+        log(`[getBookList] Request: ${JSON.stringify(request.toObject())}`);
+        client.getBookList(request, (err, books) => {
+            if (err != null) {
+                debug(`[getBookList] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
+                reject(err);
+                return;
+            }
+            log(`[getBookList] Books: ${JSON.stringify(books.toObject())}`);
+            resolve(books);
+        });
+    });
+};
 async function main() {
     await getBook(1);
     await getBooks();
     await getBooksViaAuthor("DefaultAuthor");
     await getGreatestBook();
+    await getBookList("ListBooksWithAuthor");
 }
 main().then((_) => _);
 process.on("uncaughtException", (err) => {

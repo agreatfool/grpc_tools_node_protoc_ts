@@ -16,11 +16,21 @@ message GetBookViaAuthor {
     string author = 1;
 }
 
+message GetBookListRequest {
+    string author = 1;
+    repeated Book books = 2;
+}
+
+message BookList {
+    repeated Book books = 1;
+}
+
 service BookService {
     rpc GetBook (GetBookRequest) returns (Book) {}
     rpc GetBooksViaAuthor (GetBookViaAuthor) returns (stream Book) {}
     rpc GetGreatestBook (stream GetBookRequest) returns (Book) {}
     rpc GetBooks (stream GetBookRequest) returns (stream Book) {}
+    rpc GetBookList (GetBookListRequest) returns (BookList) {}
 }
 
 message BookStore {

@@ -12,6 +12,7 @@ interface IBookServiceService extends grpc.ServiceDefinition<grpc.UntypedService
     getBooksViaAuthor: IBookServiceService_IGetBooksViaAuthor;
     getGreatestBook: IBookServiceService_IGetGreatestBook;
     getBooks: IBookServiceService_IGetBooks;
+    getBookList: IBookServiceService_IGetBookList;
 }
 
 interface IBookServiceService_IGetBook extends grpc.MethodDefinition<book_pb.GetBookRequest, book_pb.Book> {
@@ -50,6 +51,15 @@ interface IBookServiceService_IGetBooks extends grpc.MethodDefinition<book_pb.Ge
     responseSerialize: grpc.serialize<book_pb.Book>;
     responseDeserialize: grpc.deserialize<book_pb.Book>;
 }
+interface IBookServiceService_IGetBookList extends grpc.MethodDefinition<book_pb.GetBookListRequest, book_pb.BookList> {
+    path: "/com.book.BookService/GetBookList";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<book_pb.GetBookListRequest>;
+    requestDeserialize: grpc.deserialize<book_pb.GetBookListRequest>;
+    responseSerialize: grpc.serialize<book_pb.BookList>;
+    responseDeserialize: grpc.deserialize<book_pb.BookList>;
+}
 
 export const BookServiceService: IBookServiceService;
 
@@ -58,6 +68,7 @@ export interface IBookServiceServer {
     getBooksViaAuthor: grpc.handleServerStreamingCall<book_pb.GetBookViaAuthor, book_pb.Book>;
     getGreatestBook: grpc.handleClientStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
     getBooks: grpc.handleBidiStreamingCall<book_pb.GetBookRequest, book_pb.Book>;
+    getBookList: grpc.handleUnaryCall<book_pb.GetBookListRequest, book_pb.BookList>;
 }
 
 export interface IBookServiceClient {
@@ -73,6 +84,9 @@ export interface IBookServiceClient {
     getBooks(): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
     getBooks(options: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
     getBooks(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
+    getBookList(request: book_pb.GetBookListRequest, callback: (error: grpc.ServiceError | null, response: book_pb.BookList) => void): grpc.ClientUnaryCall;
+    getBookList(request: book_pb.GetBookListRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: book_pb.BookList) => void): grpc.ClientUnaryCall;
+    getBookList(request: book_pb.GetBookListRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: book_pb.BookList) => void): grpc.ClientUnaryCall;
 }
 
 export class BookServiceClient extends grpc.Client implements IBookServiceClient {
@@ -88,4 +102,7 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
     public getGreatestBook(metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: book_pb.Book) => void): grpc.ClientWritableStream<book_pb.GetBookRequest>;
     public getBooks(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
     public getBooks(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<book_pb.GetBookRequest, book_pb.Book>;
+    public getBookList(request: book_pb.GetBookListRequest, callback: (error: grpc.ServiceError | null, response: book_pb.BookList) => void): grpc.ClientUnaryCall;
+    public getBookList(request: book_pb.GetBookListRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: book_pb.BookList) => void): grpc.ClientUnaryCall;
+    public getBookList(request: book_pb.GetBookListRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: book_pb.BookList) => void): grpc.ClientUnaryCall;
 }

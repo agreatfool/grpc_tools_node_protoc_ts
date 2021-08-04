@@ -4,7 +4,7 @@ import * as debug from "debug";
 import * as grpc from "grpc";
 
 import { BookServiceClient } from "./proto/book_grpc_pb";
-import { Book, GetBookRequest, GetBookViaAuthor } from "./proto/book_pb";
+import { Book, GetBookRequest, GetBookViaAuthor, GetBookListRequest, BookList } from "./proto/book_pb";
 
 const log = debug("SampleClient");
 
@@ -88,11 +88,30 @@ const getGreatestBook = () => {
   });
 };
 
+const getBookList = async (author: string) => {
+  return new Promise((resolve, reject) => {
+    const request = new GetBookListRequest();
+    request.setAuthor(author);
+
+    log(`[getBookList] Request: ${JSON.stringify(request.toObject())}`);
+
+    client.getBookList(request, (err, books: BookList) => {
+      if (err != null) {
+        debug(`[getBookList] err:\nerr.message: ${err.message}\nerr.stack:\n${err.stack}`);
+        reject(err); return;
+      }
+      log(`[getBookList] Books: ${JSON.stringify(books.toObject())}`);
+      resolve(books);
+    });
+  });
+};
+
 async function main() {
   await getBook(1);
   await getBooks();
   await getBooksViaAuthor("DefaultAuthor");
   await getGreatestBook();
+  await getBookList("ListBooksWithAuthor");
 }
 
 main().then((_) => _);

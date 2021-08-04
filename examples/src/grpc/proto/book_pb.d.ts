@@ -72,6 +72,53 @@ export namespace GetBookViaAuthor {
     }
 }
 
+export class GetBookListRequest extends jspb.Message { 
+    getAuthor(): string;
+    setAuthor(value: string): GetBookListRequest;
+    clearBooksList(): void;
+    getBooksList(): Array<Book>;
+    setBooksList(value: Array<Book>): GetBookListRequest;
+    addBooks(value?: Book, index?: number): Book;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetBookListRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetBookListRequest): GetBookListRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetBookListRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetBookListRequest;
+    static deserializeBinaryFromReader(message: GetBookListRequest, reader: jspb.BinaryReader): GetBookListRequest;
+}
+
+export namespace GetBookListRequest {
+    export type AsObject = {
+        author: string,
+        booksList: Array<Book.AsObject>,
+    }
+}
+
+export class BookList extends jspb.Message { 
+    clearBooksList(): void;
+    getBooksList(): Array<Book>;
+    setBooksList(value: Array<Book>): BookList;
+    addBooks(value?: Book, index?: number): Book;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): BookList.AsObject;
+    static toObject(includeInstance: boolean, msg: BookList): BookList.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: BookList, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): BookList;
+    static deserializeBinaryFromReader(message: BookList, reader: jspb.BinaryReader): BookList;
+}
+
+export namespace BookList {
+    export type AsObject = {
+        booksList: Array<Book.AsObject>,
+    }
+}
+
 export class BookStore extends jspb.Message { 
     getName(): string;
     setName(value: string): BookStore;

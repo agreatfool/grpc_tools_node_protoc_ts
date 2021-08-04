@@ -65,6 +65,18 @@ class ServerImpl {
             callback(null, reply);
         });
     }
+    getBookList(call, callback) {
+        const author = call.request.getAuthor();
+        const books = new book_pb_1.BookList();
+        const book1 = new book_pb_1.Book();
+        book1.setTitle("DefaultBook1").setAuthor(author);
+        const book2 = new book_pb_1.Book();
+        book2.setTitle("DefaultBook2").setAuthor(author);
+        books.addBooks(book1);
+        books.addBooks(book2);
+        log(`[getBookList] Done: 1: ${JSON.stringify(book1.toObject())}, 2: ${JSON.stringify(book2.toObject())}`);
+        callback(null, books);
+    }
 }
 function startServer() {
     const server = new TypedServerOverride();
