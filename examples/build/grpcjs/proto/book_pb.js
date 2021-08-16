@@ -30,6 +30,8 @@ goog.exportSymbol('proto.com.book.GetBookListRequest', null, global);
 goog.exportSymbol('proto.com.book.GetBookRequest', null, global);
 goog.exportSymbol('proto.com.book.GetBookViaAuthor', null, global);
 goog.exportSymbol('proto.com.book.OneOfSample', null, global);
+goog.exportSymbol('proto.com.book.OneOfSample.FootypeCase', null, global);
+goog.exportSymbol('proto.com.book.OneOfSample.MiddleCase', null, global);
 goog.exportSymbol('proto.com.book.OneOfSample.SinglewordCase', null, global);
 goog.exportSymbol('proto.com.book.OneOfSample.TwoWordsCase', null, global);
 goog.exportSymbol('proto.com.book.OptTest', null, global);
@@ -1541,7 +1543,7 @@ proto.com.book.SpecialCases.prototype.setVar = function(value) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.com.book.OneOfSample.oneofGroups_ = [[1,2],[3,4]];
+proto.com.book.OneOfSample.oneofGroups_ = [[1,2],[3,4],[5,6],[7,8]];
 
 /**
  * @enum {number}
@@ -1573,6 +1575,38 @@ proto.com.book.OneOfSample.TwoWordsCase = {
  */
 proto.com.book.OneOfSample.prototype.getTwoWordsCase = function() {
   return /** @type {proto.com.book.OneOfSample.TwoWordsCase} */(jspb.Message.computeOneofCase(this, proto.com.book.OneOfSample.oneofGroups_[1]));
+};
+
+/**
+ * @enum {number}
+ */
+proto.com.book.OneOfSample.MiddleCase = {
+  MIDDLE_NOT_SET: 0,
+  A3: 5,
+  B3: 6
+};
+
+/**
+ * @return {proto.com.book.OneOfSample.MiddleCase}
+ */
+proto.com.book.OneOfSample.prototype.getMiddleCase = function() {
+  return /** @type {proto.com.book.OneOfSample.MiddleCase} */(jspb.Message.computeOneofCase(this, proto.com.book.OneOfSample.oneofGroups_[2]));
+};
+
+/**
+ * @enum {number}
+ */
+proto.com.book.OneOfSample.FootypeCase = {
+  FOOTYPE_NOT_SET: 0,
+  AB: 7,
+  BB: 8
+};
+
+/**
+ * @return {proto.com.book.OneOfSample.FootypeCase}
+ */
+proto.com.book.OneOfSample.prototype.getFootypeCase = function() {
+  return /** @type {proto.com.book.OneOfSample.FootypeCase} */(jspb.Message.computeOneofCase(this, proto.com.book.OneOfSample.oneofGroups_[3]));
 };
 
 
@@ -1609,7 +1643,11 @@ proto.com.book.OneOfSample.toObject = function(includeInstance, msg) {
     a1: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     b1: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     a2: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
-    b2: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+    b2: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    a3: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    b3: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
+    ab: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    bb: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -1661,6 +1699,22 @@ proto.com.book.OneOfSample.deserializeBinaryFromReader = function(msg, reader) {
     case 4:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setB2(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setA3(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setB3(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAb(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBb(value);
       break;
     default:
       reader.skipField();
@@ -1716,6 +1770,34 @@ proto.com.book.OneOfSample.serializeBinaryToWriter = function(message, writer) {
   if (f != null) {
     writer.writeBool(
       4,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 5));
+  if (f != null) {
+    writer.writeBool(
+      5,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 6));
+  if (f != null) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 7));
+  if (f != null) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 8));
+  if (f != null) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -1863,6 +1945,150 @@ proto.com.book.OneOfSample.prototype.clearB2 = function() {
  */
 proto.com.book.OneOfSample.prototype.hasB2 = function() {
   return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional bool A3 = 5;
+ * @return {boolean}
+ */
+proto.com.book.OneOfSample.prototype.getA3 = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.setA3 = function(value) {
+  return jspb.Message.setOneofField(this, 5, proto.com.book.OneOfSample.oneofGroups_[2], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.clearA3 = function() {
+  return jspb.Message.setOneofField(this, 5, proto.com.book.OneOfSample.oneofGroups_[2], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.com.book.OneOfSample.prototype.hasA3 = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional bool B3 = 6;
+ * @return {boolean}
+ */
+proto.com.book.OneOfSample.prototype.getB3 = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.setB3 = function(value) {
+  return jspb.Message.setOneofField(this, 6, proto.com.book.OneOfSample.oneofGroups_[2], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.clearB3 = function() {
+  return jspb.Message.setOneofField(this, 6, proto.com.book.OneOfSample.oneofGroups_[2], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.com.book.OneOfSample.prototype.hasB3 = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional string aB = 7;
+ * @return {string}
+ */
+proto.com.book.OneOfSample.prototype.getAb = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.setAb = function(value) {
+  return jspb.Message.setOneofField(this, 7, proto.com.book.OneOfSample.oneofGroups_[3], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.clearAb = function() {
+  return jspb.Message.setOneofField(this, 7, proto.com.book.OneOfSample.oneofGroups_[3], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.com.book.OneOfSample.prototype.hasAb = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional string bB = 8;
+ * @return {string}
+ */
+proto.com.book.OneOfSample.prototype.getBb = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.setBb = function(value) {
+  return jspb.Message.setOneofField(this, 8, proto.com.book.OneOfSample.oneofGroups_[3], value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.com.book.OneOfSample} returns this
+ */
+proto.com.book.OneOfSample.prototype.clearBb = function() {
+  return jspb.Message.setOneofField(this, 8, proto.com.book.OneOfSample.oneofGroups_[3], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.com.book.OneOfSample.prototype.hasBb = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 
