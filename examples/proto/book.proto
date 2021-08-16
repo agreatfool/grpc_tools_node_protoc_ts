@@ -68,6 +68,16 @@ message OneOfSample {
         bool a_2 = 3;
         bool b_2 = 4;
     }
+
+    oneof mIDdle {
+        bool A3 = 5;
+        bool B3 = 6;
+    }
+
+    oneof fooType {
+        string aB = 7;
+        string bB = 8;
+    }
 }
 
 message ExtMsgString {

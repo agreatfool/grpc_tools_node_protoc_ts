@@ -25,7 +25,11 @@ export namespace Utility {
     }
 
     export function oneOfName(name: string) {
-        return Utility.uppercaseFirst(Utility.snakeToCamel(name));
+        const parts = name.split("_");
+        for (const [index, part] of parts.entries()) {
+            parts[index] = Utility.uppercaseFirst(Utility.snakeToCamel(part).toLowerCase());
+        }
+        return parts.join("");
     }
 
     export function generateIndent(indentLevel: number): string {

@@ -195,8 +195,30 @@ export class OneOfSample extends jspb.Message {
     getB2(): boolean;
     setB2(value: boolean): OneOfSample;
 
+    hasA3(): boolean;
+    clearA3(): void;
+    getA3(): boolean;
+    setA3(value: boolean): OneOfSample;
+
+    hasB3(): boolean;
+    clearB3(): void;
+    getB3(): boolean;
+    setB3(value: boolean): OneOfSample;
+
+    hasAb(): boolean;
+    clearAb(): void;
+    getAb(): string;
+    setAb(value: string): OneOfSample;
+
+    hasBb(): boolean;
+    clearBb(): void;
+    getBb(): string;
+    setBb(value: string): OneOfSample;
+
     getSinglewordCase(): OneOfSample.SinglewordCase;
     getTwoWordsCase(): OneOfSample.TwoWordsCase;
+    getMiddleCase(): OneOfSample.MiddleCase;
+    getFootypeCase(): OneOfSample.FootypeCase;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): OneOfSample.AsObject;
@@ -214,6 +236,10 @@ export namespace OneOfSample {
         b1: boolean,
         a2: boolean,
         b2: boolean,
+        a3: boolean,
+        b3: boolean,
+        ab: string,
+        bb: string,
     }
 
     export enum SinglewordCase {
@@ -226,6 +252,18 @@ export namespace OneOfSample {
         TWO_WORDS_NOT_SET = 0,
         A_2 = 3,
         B_2 = 4,
+    }
+
+    export enum MiddleCase {
+        MIDDLE_NOT_SET = 0,
+        A3 = 5,
+        B3 = 6,
+    }
+
+    export enum FootypeCase {
+        FOOTYPE_NOT_SET = 0,
+        AB = 7,
+        BB = 8,
     }
 
 }

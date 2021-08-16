@@ -24,7 +24,11 @@ var Utility;
     }
     Utility.isProto2 = isProto2;
     function oneOfName(name) {
-        return Utility.uppercaseFirst(Utility.snakeToCamel(name));
+        const parts = name.split("_");
+        for (const [index, part] of parts.entries()) {
+            parts[index] = Utility.uppercaseFirst(Utility.snakeToCamel(part).toLowerCase());
+        }
+        return parts.join("");
     }
     Utility.oneOfName = oneOfName;
     function generateIndent(indentLevel) {
