@@ -647,6 +647,9 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 ```
 
 ## Changes
+### 5.3.2
+Fix wrong `oneof` name issue. See: [Issue#113](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/113) and [PR#116](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/116).
+
 ### 5.3.1
 Update doc and Add runnable example for magic generics class style server implementation. See [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79#issuecomment-890109586) and [Issue#108](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/108) and [PR#109](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/109). 
 
