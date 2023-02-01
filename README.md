@@ -56,7 +56,7 @@ See detail: [PR#30](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull
 
 ### v2.2.0
 Fix definition changes according to the version change of grpc official TypeScript definition, see: [index.d.ts@1.9.0](https://github.com/grpc/grpc-node/blob/v1.9.0/packages/grpc-native-core/index.d.ts).    
-Detailed changes could be found here: [PR#14](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/14/files). 
+Detailed changes could be found here: [PR#14](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/14/files).
 
 ### v2.0.0
 Since v2.x.x, current project supports the official definition of grpc, see: [index.d.ts@1.8.4](https://github.com/grpc/grpc-node/blob/v1.8.4/packages/grpc-native-core/index.d.ts).     
@@ -200,7 +200,7 @@ message OptTest {
 
 import * as jspb from "google-protobuf";
 
-export class Book extends jspb.Message { 
+export class Book extends jspb.Message {
     getIsbn(): number;
     setIsbn(value: number): Book;
     getTitle(): string;
@@ -226,7 +226,7 @@ export namespace Book {
     }
 }
 
-export class GetBookRequest extends jspb.Message { 
+export class GetBookRequest extends jspb.Message {
     getIsbn(): number;
     setIsbn(value: number): GetBookRequest;
 
@@ -246,7 +246,7 @@ export namespace GetBookRequest {
     }
 }
 
-export class GetBookViaAuthor extends jspb.Message { 
+export class GetBookViaAuthor extends jspb.Message {
     getAuthor(): string;
     setAuthor(value: string): GetBookViaAuthor;
 
@@ -266,7 +266,7 @@ export namespace GetBookViaAuthor {
     }
 }
 
-export class BookStore extends jspb.Message { 
+export class BookStore extends jspb.Message {
     getName(): string;
     setName(value: string): BookStore;
 
@@ -291,7 +291,7 @@ export namespace BookStore {
     }
 }
 
-export class SpecialCases extends jspb.Message { 
+export class SpecialCases extends jspb.Message {
     getNormal(): string;
     setNormal(value: string): SpecialCases;
     getDefault(): string;
@@ -320,7 +320,7 @@ export namespace SpecialCases {
     }
 }
 
-export class OneOfSample extends jspb.Message { 
+export class OneOfSample extends jspb.Message {
 
     hasA1(): boolean;
     clearA1(): void;
@@ -377,7 +377,7 @@ export namespace OneOfSample {
 
 }
 
-export class ExtMsgString extends jspb.Message { 
+export class ExtMsgString extends jspb.Message {
     getExtension$(): string;
     setExtension$(value: string): ExtMsgString;
 
@@ -397,7 +397,7 @@ export namespace ExtMsgString {
     }
 }
 
-export class ExtMsgList extends jspb.Message { 
+export class ExtMsgList extends jspb.Message {
     clearExtensionList(): void;
     getExtensionList(): Array<string>;
     setExtensionList(value: Array<string>): ExtMsgList;
@@ -419,7 +419,7 @@ export namespace ExtMsgList {
     }
 }
 
-export class ExtMsgByte extends jspb.Message { 
+export class ExtMsgByte extends jspb.Message {
     getExtension$(): Uint8Array | string;
     getExtension_asU8(): Uint8Array;
     getExtension_asB64(): string;
@@ -441,7 +441,7 @@ export namespace ExtMsgByte {
     }
 }
 
-export class ExtMsgByteList extends jspb.Message { 
+export class ExtMsgByteList extends jspb.Message {
     clearExtensionList(): void;
     getExtensionList(): Array<Uint8Array | string>;
     getExtensionList_asU8(): Array<Uint8Array>;
@@ -465,7 +465,7 @@ export namespace ExtMsgByteList {
     }
 }
 
-export class ExtMsgMap extends jspb.Message { 
+export class ExtMsgMap extends jspb.Message {
 
     getExtensionMap(): jspb.Map<string, string>;
     clearExtensionMap(): void;
@@ -487,7 +487,7 @@ export namespace ExtMsgMap {
     }
 }
 
-export class ExtMsgOneOf extends jspb.Message { 
+export class ExtMsgOneOf extends jspb.Message {
 
     hasExtension$(): boolean;
     clearExtension$(): void;
@@ -518,7 +518,7 @@ export namespace ExtMsgOneOf {
 
 }
 
-export class OptTest extends jspb.Message { 
+export class OptTest extends jspb.Message {
 
     hasName(): boolean;
     clearName(): void;
@@ -651,7 +651,7 @@ export class BookServiceClient extends grpc.Client implements IBookServiceClient
 Fix wrong `oneof` name issue. See: [Issue#113](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/113) and [PR#116](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/116).
 
 ### 5.3.1
-Update doc and Add runnable example for magic generics class style server implementation. See [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79#issuecomment-890109586) and [Issue#108](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/108) and [PR#109](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/109). 
+Update doc and Add runnable example for magic generics class style server implementation. See [Issue#79](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/79#issuecomment-890109586) and [Issue#108](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/108) and [PR#109](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/109).
 
 Updated doc could be found here: [@grpc/grpc-js server implementation signature issue](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.3.1/doc/server_impl_signature.md).
 
@@ -717,7 +717,7 @@ class ServerImpl implements IBookServiceServer {
 If this line of code not added, there will be some error:
 
 ```
-TS2420: Class 'ServerImpl' incorrectly implements interface 'IBookServiceServer'. 
+TS2420: Class 'ServerImpl' incorrectly implements interface 'IBookServiceServer'.
   Index signature is missing in type 'ServerImpl'.
 ```
 
@@ -748,7 +748,7 @@ Two points:
 
 Difference between grpc-tools version `1.8.1` and `1.9.0`, and also between `generate_package_definition` and `grpc_js` could be found here: [@grpc/grpc-js support @5.0.0](https://github.com/agreatfool/grpc_tools_node_protoc_ts/blob/v5.0.0/doc/grpcjs_support.md).
 
-Users who are still using version 3.0.0 - 4.1.5 would not be affected. In version 5.0.0 options `generate_package_definition` and `grpc_js` are all available. 
+Users who are still using version 3.0.0 - 4.1.5 would not be affected. In version 5.0.0 options `generate_package_definition` and `grpc_js` are all available.
 
 Though, 5.0.0 is recommended for users who using grpc-tools@1.9.0 or over, don't forget to switch your option to `grpc_js`. And remember, if you switch the cli command option to `grpc_js`, you have to adjust your typescript implementation, see: [examples/src/grpcjs](https://github.com/agreatfool/grpc_tools_node_protoc_ts/tree/v5.0.0/examples/src/grpcjs).
 
@@ -837,7 +837,7 @@ Add a new server implementation interface signature, with this the server implem
 Fix issue of reversed JavaScript keyword code generation. See: [Issue#20](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/20) & [PR#21](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/21).
 
 ### 2.2.4
-Fix issue of conflicted I{$MethodName} name, see: [Issue#19](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/19). 
+Fix issue of conflicted I{$MethodName} name, see: [Issue#19](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/19).
 
 ### 2.2.3
 Fix definitions. [fix: add missing argument grpc.Client~CallOptions for requests](https://github.com/agreatfool/grpc_tools_node_protoc_ts/pull/15/commits/ea3bff861201446346a2e6dfe511edc8f0cb6fdf)
@@ -875,7 +875,7 @@ Since this tool is used to generate `typescript signature` for the codes generat
 If you want your project to have no vulnerabilities detected, you could simply install this tool into global (out of your application project). And use it when you want to generate the typescript signature in development as usual.
 
 ## About Docker
-Sample below, just the idea, not perfect. Also some more info: [Issue#38](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/38#issuecomment-465475399). 
+Sample below, just the idea, not perfect. Also some more info: [Issue#38](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/38#issuecomment-465475399).
 
 ```Dockerfile
 FROM node:8.4.0
@@ -921,8 +921,3 @@ npm list -g --depth=0 | grep grpc-tools
 tsc --version
 # Version 3.7.3
 ```
-
-## Credits
-<a href="https://www.jetbrains.com/?from=grpc_tools_node_protoc_ts">
-    <img src="doc/images/jetbrains.png" width="100px" height="100px">
-</a>
