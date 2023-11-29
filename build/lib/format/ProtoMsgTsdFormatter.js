@@ -10,7 +10,7 @@ const DependencyFilter_1 = require("../DependencyFilter");
 const TplEngine_1 = require("../TplEngine");
 var ProtoMsgTsdFormatter;
 (function (ProtoMsgTsdFormatter) {
-    function format(descriptor, exportMap) {
+    function format(descriptor, exportMap, useFromObject) {
         const fileName = descriptor.getName();
         const packageName = descriptor.getPackage();
         const imports = [];
@@ -33,7 +33,7 @@ var ProtoMsgTsdFormatter;
             }
         });
         descriptor.getMessageTypeList().forEach((enumType) => {
-            messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
+            messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor, useFromObject));
         });
         descriptor.getExtensionList().forEach((extension) => {
             extensions.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, ""));

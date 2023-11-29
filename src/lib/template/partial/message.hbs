@@ -48,6 +48,9 @@
 {{{indent}}}    serializeBinary(): Uint8Array;
 {{{indent}}}    toObject(includeInstance?: boolean): {{{message.messageName}}}.{{{objectTypeName}}};
 {{{indent}}}    static toObject(includeInstance: boolean, msg: {{{message.messageName}}}): {{{message.messageName}}}.{{{objectTypeName}}};
+{{#if useFromObject}}
+{{{indent}}}    static fromObject(obj: {{{message.messageName}}}.{{{objectTypeName}}}): {{{message.messageName}}};
+{{/if}}
 {{{indent}}}    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 {{{indent}}}    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
 {{{indent}}}    static serializeBinaryToWriter(message: {{{message.messageName}}}, writer: jspb.BinaryWriter): void;

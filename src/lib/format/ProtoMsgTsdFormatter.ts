@@ -19,7 +19,7 @@ export namespace ProtoMsgTsdFormatter {
         enums: EnumFormatter.IEnumModel[];
     }
 
-    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): IProtoMsgTsdModel {
+    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap, useFromObject: boolean): IProtoMsgTsdModel {
         const fileName = descriptor.getName();
         const packageName = descriptor.getPackage();
 
@@ -45,7 +45,7 @@ export namespace ProtoMsgTsdFormatter {
         });
 
         descriptor.getMessageTypeList().forEach((enumType) => {
-            messages.push(MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
+            messages.push(MessageFormatter.format(fileName, exportMap, enumType, "", descriptor, useFromObject));
         });
         descriptor.getExtensionList().forEach((extension) => {
             extensions.push(ExtensionFormatter.format(fileName, exportMap, extension, ""));
