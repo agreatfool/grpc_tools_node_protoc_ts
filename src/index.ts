@@ -26,7 +26,17 @@ Utility.withAllStdIn((inputBuff: Buffer) => {
 
         codeGenResponse.setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL);
 
-        const isGrpcJs = ["generate_package_definition", "grpc_js"].indexOf(codeGenRequest.getParameter()) !== -1;
+        const parameters = codeGenRequest.getParameter().split(",");
+        let isGrpcJs = false;
+        let useFromObject = false;
+        for (let param of parameters) {
+            if (["generate_package_definition", "grpc_js"].indexOf(param) !== -1) {
+                isGrpcJs = true;
+            }
+            if (param === "from_object") {
+                useFromObject = true;
+            }
+        }
 
         codeGenRequest.getProtoFileList().forEach((protoFileDescriptor) => {
             fileNameToDescriptor[protoFileDescriptor.getName()] = protoFileDescriptor;
@@ -38,7 +48,7 @@ Utility.withAllStdIn((inputBuff: Buffer) => {
             const msgFileName = Utility.filePathFromProtoWithoutExt(fileName);
             const msgTsdFile = new CodeGeneratorResponse.File();
             msgTsdFile.setName(msgFileName + ".d.ts");
-            const msgModel = ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            const msgModel = ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap, useFromObject);
             msgTsdFile.setContent(TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
 

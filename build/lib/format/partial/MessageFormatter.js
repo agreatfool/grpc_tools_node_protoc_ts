@@ -51,7 +51,7 @@ var MessageFormatter;
         }
         return Utility_1.Utility.isProto2(descriptor);
     }
-    function format(fileName, exportMap, descriptor, indent, fileDescriptor) {
+    function format(fileName, exportMap, descriptor, indent, fileDescriptor, useFromObject) {
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(MessageFormatter.defaultMessageType);
         const proto3OptionalFields = new Set();
@@ -182,7 +182,7 @@ var MessageFormatter;
             messageData.fields.push(fieldData);
         });
         descriptor.getNestedTypeList().forEach((nested) => {
-            const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor);
+            const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor, useFromObject);
             if (msgOutput !== null) {
                 // If the message class is a Map entry then it isn't output, so don't print the namespace block
                 messageData.nestedTypes.push(msgOutput);
@@ -225,6 +225,7 @@ var MessageFormatter;
             BYTES_TYPE: FieldTypesFormatter_1.BYTES_TYPE,
             MESSAGE_TYPE: FieldTypesFormatter_1.MESSAGE_TYPE,
             message: messageData,
+            useFromObject,
         };
     }
     MessageFormatter.format = format;

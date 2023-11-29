@@ -83,6 +83,7 @@ export namespace MessageFormatter {
         BYTES_TYPE: number;
         MESSAGE_TYPE: number;
         message: IMessageType;
+        useFromObject: boolean;
     }
 
     function hasFieldPresence(field: FieldDescriptorProto, descriptor: FileDescriptorProto): boolean {
@@ -109,7 +110,8 @@ export namespace MessageFormatter {
                            exportMap: ExportMap,
                            descriptor: DescriptorProto,
                            indent: string,
-                           fileDescriptor: FileDescriptorProto): IMessageModel {
+                           fileDescriptor: FileDescriptorProto,
+                           useFromObject: boolean): IMessageModel {
 
         const nextIndent = `${indent}    `;
         const messageData = JSON.parse(defaultMessageType) as IMessageType;
@@ -258,7 +260,7 @@ export namespace MessageFormatter {
         });
 
         descriptor.getNestedTypeList().forEach((nested) => {
-            const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor);
+            const msgOutput = format(fileName, exportMap, nested, nextIndent, fileDescriptor, useFromObject);
             if (msgOutput !== null) {
                 // If the message class is a Map entry then it isn't output, so don't print the namespace block
                 messageData.nestedTypes.push(msgOutput);
@@ -303,6 +305,7 @@ export namespace MessageFormatter {
             BYTES_TYPE,
             MESSAGE_TYPE,
             message: messageData,
+            useFromObject,
         };
     }
 
