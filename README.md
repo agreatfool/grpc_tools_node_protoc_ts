@@ -64,6 +64,63 @@ Though the usage of tool, and generated codes shall not been changed, it's good 
 
 TSLint has been disabled in generated files. Please see the conversation: [#13](https://github.com/agreatfool/grpc_tools_node_protoc_ts/issues/13).
 
+## Tools related and how to install
+
+### protobuf
+This tool is used to generate js codes from proto files.
+
+On MAC OsX using Homebrew, you will find 2 protobuf formula:
+
+- protobuf (25.x)
+- protobuf@3 (3.x.x)
+
+Which we need is `protobuf@3`. Otherwise, you will encounter the error [protoc-gen-js: program not found or is not executable
+#704](https://github.com/grpc/grpc-web/issues/704#issuecomment-1215965557). Please install it by
+
+```bash
+$ brew install protobuf@3
+```
+
+If you have already installed `protobuf`. You need to edit your `PATH`, like:
+
+```bash
+$ echo 'export PATH="/opt/homebrew/opt/protobuf@3/bin:$PATH"' >> ~/.zshrc
+```
+
+You may need to know more about this command, like the `--js_out` flag: [link](https://github.com/protocolbuffers/protobuf-javascript#the---js_out-flag). Please read the doc of this project: [protocolbuffers/protobuf-javascript](https://github.com/protocolbuffers/protobuf-javascript/blob/main/README.md).
+
+### grpc-tools
+This tool ([npm](https://www.npmjs.com/package/grpc-tools)) is part of the [grpc/grpc-node](https://github.com/grpc/grpc-node) project. It's an npm package, could be installed by
+
+```bash
+$ npm install -g grpc-tools
+```
+
+Or, you could install it in your project package.json rather than install it in the global env.
+
+This tool provides 2 commands:
+
+- grpc_tools_node_protoc
+- grpc_tools_node_protoc_plugin
+
+`grpc_tools_node_protoc` actually is the same/alternative as `protoc`(if you installed the `protobuf@3`). But the shipped libprotoc version could be different, you can choose any one you like. I think using this npm package is the better choice, which could be installed in project level easily.
+
+```bash
+$ protoc --version
+libprotoc 3.20.3
+$ grpc_tools_node_protoc --version
+libprotoc 3.19.1
+```
+
+The must have tool we need in this package is the plugin command: `grpc_tools_node_protoc_plugin`. It's used to generate protobuf js codes `*_grpc_pb.js` (pairing with `*_pb.js` codes). Like:
+
+```bash
+# ***
+--grpc_out=grpc_js:./src/grpcjs/proto \
+--plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` \
+# ***
+```
+
 ## How to use
 ```bash
 npm install grpc_tools_node_protoc_ts --save-dev
