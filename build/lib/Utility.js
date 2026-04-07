@@ -153,5 +153,5 @@ var Utility;
         "while",
         "with",
     ];
-})(Utility = exports.Utility || (exports.Utility = {}));
+})(Utility || (exports.Utility = Utility = {}));
 //# sourceMappingURL=Utility.js.map

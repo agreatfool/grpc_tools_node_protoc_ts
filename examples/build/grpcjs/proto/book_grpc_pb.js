@@ -118,4 +118,4 @@ var BookServiceService = exports.BookServiceService = {
   },
 };
 
-exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService);
+exports.BookServiceClient = grpc.makeGenericClientConstructor(BookServiceService, 'BookService');

@@ -39,5 +39,5 @@ var TplEngine;
         return handlebars.compile(LibFs.readFileSync(`${LibPath.join(TPL_BASE_PATH, templateName)}.hbs`).toString());
     }
     TplEngine.compile = compile;
-})(TplEngine = exports.TplEngine || (exports.TplEngine = {}));
+})(TplEngine || (exports.TplEngine = TplEngine = {}));
 //# sourceMappingURL=TplEngine.js.map

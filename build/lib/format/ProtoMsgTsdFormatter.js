@@ -54,5 +54,5 @@ var ProtoMsgTsdFormatter;
         };
     }
     ProtoMsgTsdFormatter.format = format;
-})(ProtoMsgTsdFormatter = exports.ProtoMsgTsdFormatter || (exports.ProtoMsgTsdFormatter = {}));
+})(ProtoMsgTsdFormatter || (exports.ProtoMsgTsdFormatter = ProtoMsgTsdFormatter = {}));
 //# sourceMappingURL=ProtoMsgTsdFormatter.js.map

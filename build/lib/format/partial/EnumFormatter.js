@@ -16,5 +16,5 @@ var EnumFormatter;
         };
     }
     EnumFormatter.format = format;
-})(EnumFormatter = exports.EnumFormatter || (exports.EnumFormatter = {}));
+})(EnumFormatter || (exports.EnumFormatter = EnumFormatter = {}));
 //# sourceMappingURL=EnumFormatter.js.map

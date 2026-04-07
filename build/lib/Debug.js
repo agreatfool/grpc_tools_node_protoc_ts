@@ -10,5 +10,5 @@ var Debug;
         LibFs.appendFileSync(LOG_PATH, LibUtil.inspect(info, { showHidden: true, depth: null }) + "\n");
     }
     Debug.log = log;
-})(Debug = exports.Debug || (exports.Debug = {}));
+})(Debug || (exports.Debug = Debug = {}));
 //# sourceMappingURL=Debug.js.map

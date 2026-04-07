@@ -95,5 +95,5 @@ var ProtoSvcTsdFormatter;
         };
     }
     ProtoSvcTsdFormatter.format = format;
-})(ProtoSvcTsdFormatter = exports.ProtoSvcTsdFormatter || (exports.ProtoSvcTsdFormatter = {}));
+})(ProtoSvcTsdFormatter || (exports.ProtoSvcTsdFormatter = ProtoSvcTsdFormatter = {}));
 //# sourceMappingURL=ProtoSvcTsdFormatter.js.map

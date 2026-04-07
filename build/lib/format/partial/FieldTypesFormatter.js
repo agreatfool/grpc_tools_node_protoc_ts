@@ -80,5 +80,5 @@ var FieldTypesFormatter;
         return fieldType;
     }
     FieldTypesFormatter.getFieldType = getFieldType;
-})(FieldTypesFormatter = exports.FieldTypesFormatter || (exports.FieldTypesFormatter = {}));
+})(FieldTypesFormatter || (exports.FieldTypesFormatter = FieldTypesFormatter = {}));
 //# sourceMappingURL=FieldTypesFormatter.js.map

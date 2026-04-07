@@ -19,5 +19,5 @@ var OneofFormatter;
         };
     }
     OneofFormatter.format = format;
-})(OneofFormatter = exports.OneofFormatter || (exports.OneofFormatter = {}));
+})(OneofFormatter || (exports.OneofFormatter = OneofFormatter = {}));
 //# sourceMappingURL=OneofFormatter.js.map

@@ -228,5 +228,5 @@ var MessageFormatter;
         };
     }
     MessageFormatter.format = format;
-})(MessageFormatter = exports.MessageFormatter || (exports.MessageFormatter = {}));
+})(MessageFormatter || (exports.MessageFormatter = MessageFormatter = {}));
 //# sourceMappingURL=MessageFormatter.js.map
